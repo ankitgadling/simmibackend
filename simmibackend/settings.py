@@ -23,11 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@kayr08p*4q4inc5@adel6$h)bz#fywn0bh7tcxvdf3x4c8!@*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-<<<<<<< HEAD
+
 DEBUG = True
-=======
-DEBUG = "True"
->>>>>>> origin
 
 ALLOWED_HOSTS = ['127.0.0.1','localhost','simmibackendtest.herokuapp.com']
 
@@ -47,14 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
     'contact',
     'rest_framework',
     'corsheaders',
-=======
     'donate',
-    'rest_framework',
->>>>>>> origin
 ]
 
 MIDDLEWARE = [
