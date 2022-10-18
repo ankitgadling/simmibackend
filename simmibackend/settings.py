@@ -23,10 +23,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@kayr08p*4q4inc5@adel6$h)bz#fywn0bh7tcxvdf3x4c8!@*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+<<<<<<< HEAD
+DEBUG = True
+=======
 DEBUG = "True"
+>>>>>>> origin
 
-ALLOWED_HOSTS = ['127.0.0.1','simmibackendtest.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','simmibackendtest.herokuapp.com']
 
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+    "http://127.0.0.1:8000",
+    "https://simmifrontendtest.netlify.app/",
+]
 
 # Application definition
 
@@ -37,11 +47,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
+    'contact',
+    'rest_framework',
+    'corsheaders',
+=======
     'donate',
     'rest_framework',
+>>>>>>> origin
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
