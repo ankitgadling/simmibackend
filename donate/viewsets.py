@@ -16,3 +16,8 @@ class PaymentDetailViewset(viewsets.ModelViewSet):
     
     queryset=models.payment_details.objects.all()
     serializer_class=serializers.PaymentDetailSerializers
+
+class Give_help_Viewset(viewsets.ModelViewSet):
+    
+    queryset=models.Give_Your_Help.objects.all()
+    serializer_class=serializers.Give_help_serializers
