@@ -6,13 +6,7 @@ class DonateFormSerializer(serializers.ModelSerializer):
     class Meta:
         model=donate_form
         fields="__all__"
-        def validate(self, validated_data):
-            if validated_data.get('phn_no'):
-                phone = validated_data.get('phn_no')
-                if len(phone) < 10:
-                    raise serializers.ValidationError("Length of phone-no can't be < 10")
-            
-            return validated_data
+        
 
 
 class PaymentFormSerializers(serializers.ModelSerializer):
