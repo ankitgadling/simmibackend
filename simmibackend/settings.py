@@ -32,7 +32,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://127.0.0.1:8000",
-    "https://simmifrontendtest.netlify.app/",
+    "https://simmifrontendtest.netlify.app",
 ]
 
 # Application definition
@@ -45,9 +45,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'contact',
-    'rest_framework',
     'corsheaders',
     'donate',
+    'rest_framework',
+    'volunteer',
+    'carrers',
 ]
 
 MIDDLEWARE = [
@@ -67,7 +69,7 @@ ROOT_URLCONF = 'simmibackend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR,'temps/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,20 +85,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'simmibackend.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-      
-
+        'NAME': BASE_DIR/'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

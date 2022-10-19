@@ -15,13 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from carrers.views import GetJobs
 from contact.views import contact
 from .router import router
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('api/simmi-admin/', admin.site.urls),
     path('contact/', contact),
-    path('api/',include(router.urls))
+    path('api/donation/',include(router.urls)),
+    path('api/carrers/',include("carrers.urls"))
 ]
