@@ -23,6 +23,5 @@ from .router import router
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('contact/', contact),
-    path('admin/', admin.site.urls),
     path('api/',include(router.urls))
 ]
