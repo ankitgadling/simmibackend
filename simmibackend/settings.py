@@ -91,11 +91,7 @@ WSGI_APPLICATION = 'simmibackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'freedb_Djangotestdb',
-        'HOST':'sql.freedb.tech',
-        'PORT':'3306',
-        'USER':'freedb_simmi',
-        'PASSWORD':'p@t6zQQjJrMxE%v'
+        'NAME': BASE_DIR/'db.sqlite',
     }
 }
 
