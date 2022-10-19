@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'simmibackend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.sqlite',
         'NAME': BASE_DIR/'db.sqlite',
     }
 }
