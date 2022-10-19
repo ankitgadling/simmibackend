@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from carrers.views import GetJobs
 from contact.views import contact
+from .views import home
 from .router import router
 
 
