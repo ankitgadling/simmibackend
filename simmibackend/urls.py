@@ -17,12 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from carrers.views import GetJobs
 from contact.views import contact
-from .views import home
+#from .views import home
 from .router import router
 
 
 urlpatterns = [
-    path('',home),
+    #path('',home),
     path('api/simmi-admin/', admin.site.urls),
     path('contact/', contact),
     path('api/donation/',include(router.urls)),
