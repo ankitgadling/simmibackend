@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'donate',
     'rest_framework',
+    'volunteer'
 ]
 
 MIDDLEWARE = [
