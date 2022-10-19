@@ -16,7 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from contact.views import contact
+from .router import router
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('contact.urls')),
+    path('contact/', contact),
+    path('api/',include(router.urls))
 ]

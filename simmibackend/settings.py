@@ -23,6 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@kayr08p*4q4inc5@adel6$h)bz#fywn0bh7tcxvdf3x4c8!@*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','localhost','simmibackendtest.herokuapp.com']
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'contact',
     'rest_framework',
     'corsheaders',
+    'donate',
 ]
 
 MIDDLEWARE = [
@@ -73,6 +75,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+               
             ],
         },
     },
@@ -86,8 +89,11 @@ WSGI_APPLICATION = 'simmibackend.wsgi.application'
 
 DATABASES = {
     'default': {
+        
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+      
+
     }
 }
 
