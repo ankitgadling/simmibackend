@@ -23,5 +23,6 @@ from .router import router
 urlpatterns = [
     path('api/simmi-admin/', admin.site.urls),
     path('contact/', contact),
+    path('api/donation/',include(router.urls)),
     path('api/carrers/',include("carrers.urls"))
 ]
