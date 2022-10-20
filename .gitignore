@@ -1,0 +1,8 @@
+# virtual env
+bin/
+inlclude/
+lib/
+venv/
+*.cfg
+
+__pycache__/
