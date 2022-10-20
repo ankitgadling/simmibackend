@@ -23,9 +23,9 @@ from .router import router
 
 urlpatterns = [
     path('',home),
+    path('api/account/',include("accounts.urls")),
     path('api/simmi-admin/', admin.site.urls),
     path('contact/', contact),
     path('api/donation/',include(router.urls)),
     path('api/carrers/',include("carrers.urls")),
-    path('api/account/',include("accounts.urls")),
 ]
