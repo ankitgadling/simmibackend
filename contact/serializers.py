@@ -8,10 +8,10 @@ class ContactSerializer(serializers.ModelSerializer):
         model = Contact
         fields = '__all__'
 
-    def validate(self, validated_data):
-        if validated_data.get('phone'):
-            phone = validated_data.get('phone')
-            if len(phone) < 10:
-                raise serializers.ValidationError("Length of phone-no can't be < 10")
+    # def validate(self, validated_data):
+    #     if validated_data.get('phone'):
+    #         phone = validated_data.get('phone')
+    #         if len(phone) < 10:
+    #             raise serializers.ValidationError("Length of phone-no can't be < 10")
         
-        return validated_data
+    #     return validated_data
