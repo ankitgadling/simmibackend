@@ -28,3 +28,7 @@ pip install -r requirements.txt
 git fetch origin
 git merge origin/main
 ```
+or
+```
+git pull origin
+```
