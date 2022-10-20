@@ -28,4 +28,5 @@ urlpatterns = [
     path('contact/', contact),
     path('api/donation/',include(router.urls)),
     path('api/carrers/',include("carrers.urls")),
+    path('blogs/',include('blog.urls')),
 ]
