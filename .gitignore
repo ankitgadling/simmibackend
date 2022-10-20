@@ -6,3 +6,4 @@ venv/
 *.cfg
 
 __pycache__/
+.DS_STORE
