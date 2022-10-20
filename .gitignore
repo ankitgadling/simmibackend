@@ -1,0 +1,10 @@
+# virtual env
+bin/
+inlclude/
+lib/
+venv/
+*.cfg
+
+__pycache__/
+.DS_STORE
+db.sqlite3
