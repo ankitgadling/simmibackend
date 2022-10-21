@@ -19,6 +19,9 @@ from carrers.views import GetJobs
 from contact.views import contact
 from .views import home
 from .router import router
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 
 urlpatterns = [
@@ -29,4 +32,9 @@ urlpatterns = [
     path('api/donation/',include(router.urls)),
     path('api/carrers/',include("carrers.urls")),
     path('blogs/',include('blog.urls')),
+    path('api/gallery/',include("galleryapp.urls")),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
