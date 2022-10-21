@@ -14,7 +14,6 @@ from rest_framework.decorators import api_view
 class register_api(generics.GenericAPIView):
     create_queryset = registration.objects.all()
     serializer_class = Registrationserializers
-    permission_class = (permissions.AllowAny,)
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -34,7 +33,6 @@ def user(request):
 
 
 class Login_api(generics.GenericAPIView):
-    permission_class = (permissions.AllowAny,)
     serializer_class = logindetailserializers
 
     def post(self, request, format=None):
