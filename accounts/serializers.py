@@ -14,6 +14,7 @@ class Registrationserializers(serializers.ModelSerializer):
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.email = validated_data.get('email', instance.email)
         instance.username = validated_data.get('username', instance.username)
+        instance.password = validated_data.get('password', instance.password)
         instance.save()
         return instance
 
