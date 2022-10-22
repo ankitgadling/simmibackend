@@ -2,3 +2,4 @@ venv/
 *.cfg
 
 .DS_STORE
+**/__pycache__/

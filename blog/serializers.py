@@ -12,4 +12,4 @@ class BlogSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Blog
-        exclude = ['category']
+        fields = '__all__'
