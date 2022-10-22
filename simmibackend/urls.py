@@ -21,7 +21,7 @@ from .views import home
 from .router import router
 from django.conf import settings
 from django.conf.urls.static import static
-
+from userprofile import urls
 
 
 urlpatterns = [
@@ -33,6 +33,7 @@ urlpatterns = [
     path('api/carrers/',include("carrers.urls")),
     path('blogs/',include('blog.urls')),
     path('api/gallery/',include("galleryapp.urls")),
+    path('profile/', include(urls)),
 ]
 
 if settings.DEBUG:
