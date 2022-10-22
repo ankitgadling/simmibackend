@@ -32,7 +32,7 @@ urlpatterns = [
     path('api/donation/',include(router.urls)),
     path('api/carrers/',include("carrers.urls")),
     path('blogs/',include('blog.urls')),
-    path('api/gallery/',include("galleryapp.urls")),
+    path('api/gallery/',include("gallery.urls")),
     path('profile/', include(urls)),
 ]
 
