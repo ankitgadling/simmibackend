@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'carrers',
     'knox',
     'blog',
-    'galleryapp',
+    'gallery',
     'userprofile',
 ]
 
