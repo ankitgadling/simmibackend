@@ -3,3 +3,4 @@ venv/
 
 .DS_STORE
 **/__pycache__/
+db.sqlite3
