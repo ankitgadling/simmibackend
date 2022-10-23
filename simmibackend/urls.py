@@ -34,6 +34,7 @@ urlpatterns = [
     path('blogs/',include('blog.urls')),
     path('api/gallery/',include("gallery.urls")),
     path('profile/', include(urls)),
+    path('latestnews/', include('latestnews.urls'))
 ]
 
 if settings.DEBUG:
