@@ -9,6 +9,7 @@ class Gallerytable(models.Model):
         ("Women empowerment","Women empowerment") 
    )
     title = models.CharField(max_length=50)
+    admin = models.CharField(max_length=50,default="Test Admin")
     photo = models.ImageField(upload_to = "gallery")
     content = models.TextField()
     category = models.CharField(max_length=50,choices=options)
