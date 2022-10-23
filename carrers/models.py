@@ -6,6 +6,8 @@ class Jobs(models.Model):
     title = models.CharField(max_length=50)
     department = models.CharField(max_length=50)
     status = models.CharField(max_length=50)
+    job_type = models.CharField(max_length=50,default="Work from office")
+    admin = models.CharField(max_length=50,default="Test Admin")
     location = models.CharField(max_length=50)
     immediate_supervisor = models.CharField(max_length=50)
     salary_range = models.CharField(max_length=50)
