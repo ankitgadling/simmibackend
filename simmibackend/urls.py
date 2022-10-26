@@ -30,9 +30,9 @@ urlpatterns = [
     path('api/simmi-admin/', admin.site.urls),
     path('contact/', contact),
     path('api/donation/',include(router.urls)),
-    path('api/carrers/',include("carrers.urls")),
+    path('api/carrers',include("carrers.urls")),
     path('blogs/',include('blog.urls')),
-    path('api/gallery/',include("gallery.urls")),
+    path('api/gallery',include("gallery.urls")),
     path('profile/', include(urls)),
     path('latestnews/', include('latestnews.urls'))
 ]
