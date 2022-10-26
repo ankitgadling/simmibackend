@@ -8,6 +8,7 @@ from knox.models import AuthToken
 from django.contrib import messages
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 
@@ -34,7 +35,7 @@ def user(request):
 
 class Login_api(generics.GenericAPIView):
     serializer_class = logindetailserializers
-
+    @csrf_exempt
     def post(self, request, format=None):
         serializer = AuthTokenSerializer(data=request.data)
         if serializer.is_valid():
