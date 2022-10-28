@@ -15,7 +15,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=50)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     content = models.TextField()
-    image = models.ImageField(upload_to='media/blogs')
+    image = models.ImageField(upload_to='blogs')
     date_posted = models.DateField(auto_now_add=True)
 
     def __str__(self) -> str:
