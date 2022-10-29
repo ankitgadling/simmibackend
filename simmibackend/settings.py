@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'gallery',
     'userprofile',
     'latestnews',
+    'user_transactions'
 ]
 
 MIDDLEWARE = [
