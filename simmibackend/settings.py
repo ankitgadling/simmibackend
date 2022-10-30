@@ -57,10 +57,8 @@ INSTALLED_APPS = [
     'gallery',
     'userprofile',
     'latestnews',
-
-    'certifications'
-
-    'user_transactions'
+    'certifications',
+    'user_transactions',
 
 ]
 
