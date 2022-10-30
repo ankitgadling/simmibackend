@@ -22,7 +22,7 @@ from .router import router
 from django.conf import settings
 from django.conf.urls.static import static
 from userprofile import urls
-
+# from certifications import urls
 
 urlpatterns = [
     path('',home),
@@ -34,7 +34,9 @@ urlpatterns = [
     path('blogs/',include('blog.urls')),
     path('api/gallery/',include("gallery.urls")),
     path('profile/', include(urls)),
-    path('latestnews/', include('latestnews.urls'))
+    path('latestnews/', include('latestnews.urls')),
+    
+
 ]
 
 if settings.DEBUG:
