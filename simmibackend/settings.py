@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'knox',
     'blog',
     'gallery',
-    'userprofile',
+    #'userprofile',
     'latestnews',
     'certifications',
     'user_transactions',
