@@ -21,8 +21,7 @@ from .views import home
 from .router import router
 from django.conf import settings
 from django.conf.urls.static import static
-from userprofile import urls
-# from certifications import urls
+#from userprofile import urls
 
 urlpatterns = [
     path('',home),
@@ -33,7 +32,7 @@ urlpatterns = [
     path('api/carrers/',include("carrers.urls")),
     path('blogs/',include('blog.urls')),
     path('api/gallery/',include("gallery.urls")),
-    path('profile/', include(urls)),
+    #path('profile/', include(urls)),
     path('latestnews/', include('latestnews.urls')),
 
     
