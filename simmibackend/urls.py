@@ -26,7 +26,7 @@ from userprofile import urls
 
 urlpatterns = [
     path('',home),
-    path('api/account/',include("accounts.urls")),
+    path('api/account/',include("account.urls")),
     path('api/simmi-admin/', admin.site.urls),
     path('contact/', contact),
     path('api/donation/',include(router.urls)),
