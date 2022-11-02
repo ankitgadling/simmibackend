@@ -1,6 +1,6 @@
 from django.contrib import admin
-from account.models import SimmiUser
+from account.models import SimmiUserDetails
 
 class UserModelAdmin(admin.ModelAdmin):
-    list_display = ('email', 'first_name','last_name','ph_no', 'is_admin')
-admin.site.register(SimmiUser,UserModelAdmin)
+     list_display = ('user', 'first_name','last_name','ph_no' )
+admin.site.register(SimmiUserDetails,UserModelAdmin)
