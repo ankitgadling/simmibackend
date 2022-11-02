@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'knox',
     'blog',
     'gallery',
-    #'userprofile',
     'latestnews',
     'certifications',
     'user_transactions',
@@ -155,4 +154,3 @@ MEDIA_URL = 'media/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'account.SimmiUser'
