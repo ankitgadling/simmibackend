@@ -1,9 +1,9 @@
 from rest_framework.serializers import ModelSerializer 
 from .models import user_transactions
-from account.models import SimmiUser
+from django.contrib.auth.models import User
 class Userserializer(ModelSerializer):
     class Meta:
-        model = SimmiUser
+        model = User
         fields = ["username"]
 
 class user_transactionserializer(ModelSerializer):
