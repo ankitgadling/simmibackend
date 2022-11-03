@@ -9,7 +9,8 @@ class Registrationserializers(serializers.Serializer):
     first_name = serializers.CharField(max_length=50)
     last_name = serializers.CharField(max_length=50)
     ph_no = serializers.CharField(max_length=50)
-    email = EmailField(max_length=None, min_length=None, allow_blank=False)
+    email = serializers.CharField(max_length=50)
+    #email = EmailField(max_length=None, min_length=None, allow_blank=False)
     password = serializers.CharField(max_length=50)
     class Meta:
         extra_kwargs = {
