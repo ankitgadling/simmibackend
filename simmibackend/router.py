@@ -1,7 +1,7 @@
 from donate.viewsets import DonateViewset, PaymentViewset,PaymentDetailViewset,Give_help_Viewset
 from rest_framework import routers
 from volunteer.viewsets import Volunteerviewsets
-from certifications.viewsets import CertificateViewset
+#from certifications.viewsets import CertificateViewset
 
 
 router=routers.DefaultRouter()
