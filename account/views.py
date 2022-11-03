@@ -51,5 +51,3 @@ class Login_api(generics.GenericAPIView):
             return Response({
                 "msg": "User Not Found...!"
             })
-
-
