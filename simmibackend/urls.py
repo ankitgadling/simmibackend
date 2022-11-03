@@ -34,7 +34,7 @@ urlpatterns = [
     path('api/gallery/',include("gallery.urls")),
     #path('profile/', include(urls)),
     path('latestnews/', include('latestnews.urls')),
-    path('api/certification',include('certifications.urls')),
+    path('api/certification/',include('certifications.urls')),
     path('api/transactions/',include('user_transactions.urls'))
 
 ]
