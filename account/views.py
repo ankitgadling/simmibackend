@@ -32,7 +32,10 @@ class Login_api(generics.GenericAPIView):
         password = request.data['password']
         user = authenticate(username = username , password = password)
         if user is not None:
-            obj = SimmiUserDetails.objects.get(user=user)
+            try:
+                obj = SimmiUserDetails.objects.get(user=user)
+            except SimmiUserDetails.DoesNotExist:
+                obj = None
             token = AuthToken.objects.create(user)[1]
             obj = userdetails(obj)
             obj ={
@@ -48,5 +51,3 @@ class Login_api(generics.GenericAPIView):
             return Response({
                 "msg": "User Not Found...!"
             })
-
-
