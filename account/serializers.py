@@ -15,6 +15,7 @@ class Registrationserializers(serializers.Serializer):
         extra_kwargs = {
             'password': {'write_only': True}
         }
+        
     def create(self, validated_data):
         username = validated_data['email']
         password = validated_data['password']
