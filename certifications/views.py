@@ -1,3 +1,4 @@
+from urllib import request
 from django.shortcuts import render
 from rest_framework import generics
 from rest_framework import status
@@ -8,6 +9,9 @@ from rest_framework.response import Response
 from .serilaizers import certificationSerializer, user_certificateSerializer
 #from accounts.models import registration
 from rest_framework import status
+from rest_framework.mixins import DestroyModelMixin,CreateModelMixin,UpdateModelMixin,RetrieveModelMixin,ListModelMixin
+from rest_framework.parsers import JSONParser
+from rest_framework.generics import GenericAPIView
 
 from .serilaizers import user_certificateSerializer,certificationSerializer
 
@@ -15,6 +19,9 @@ class genview(generics.ListCreateAPIView):
     queryset=certfication.objects.all()
     serializer_class=certificationSerializer
     
-class userview(generics.ListCreateAPIView):
-    queryset=user_certificates.objects.all()
-    serializer_class=user_certificateSerializer
+
+class userview(GenericAPIView,ListModelMixin,CreateModelMixin):
+    queryset = user_certificates.objects.all()
+    serializer_class = user_certificateSerializer
+    def get(self,request,*args,**kwargs):
+        return self.list(request,*args,**kwargs) 
