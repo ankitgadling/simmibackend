@@ -21,3 +21,9 @@ class Give_help_Viewset(viewsets.ModelViewSet):
     
     queryset=models.Give_Your_Help.objects.all()
     serializer_class=serializers.Give_help_serializers
+
+
+class Upi_viewset(viewsets.ModelViewSet):
+    
+    queryset=models.upi_tran.objects.all()
+    serializer_class=serializers.Upitranserializers

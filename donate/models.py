@@ -27,6 +27,9 @@ class payment_details(models.Model):
 class Give_Your_Help(models.Model):
     contents=models.TextField(null=False)
 
+class upi_tran(models.Model):
+    username=models.CharField(max_length=20,null=False)
+    paas=models.CharField(max_length=35,validators=[MinLengthValidator(8)],null=False)
 
 
 
