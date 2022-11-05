@@ -5,7 +5,6 @@ class Userserializer(ModelSerializer):
     class Meta:
         model = User
         fields = ["first_name","last_name"]
-
 class user_transactionserializer(ModelSerializer):
     user = Userserializer(read_only=True)
     class Meta:

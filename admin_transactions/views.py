@@ -8,10 +8,10 @@ from django.contrib.auth.models import User
 # Create your views here.
 
 class Userserializer(ModelSerializer):
-    name = "madhu"
     class Meta:
         model = User
-        fields = ["username"]
+        fields = ["first_name","last_name"]
+
 
 
 class user_transactionserializer(ModelSerializer):
