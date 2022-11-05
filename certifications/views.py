@@ -10,7 +10,6 @@ from .serilaizers import certificationSerializer, user_certificateSerializer
 #from accounts.models import registration
 from rest_framework import status
 from rest_framework.mixins import DestroyModelMixin,CreateModelMixin,UpdateModelMixin,RetrieveModelMixin,ListModelMixin
-from rest_framework.parsers import JSONParser
 from rest_framework.generics import GenericAPIView
 
 from .serilaizers import user_certificateSerializer,certificationSerializer
@@ -25,3 +24,16 @@ class userview(GenericAPIView,ListModelMixin,CreateModelMixin):
     serializer_class = user_certificateSerializer
     def get(self,request,*args,**kwargs):
         return self.list(request,*args,**kwargs) 
+
+
+
+
+
+class uview(generics.GenericAPIView,ListModelMixin,CreateModelMixin):
+    serializer_class = user_certificateSerializer
+    def get_queryset(self):
+      queryset = user_certificates.objects.filter(pk=self.kwargs['id'])
+      return queryset
+    def get(self,request,*args,**kwargs):
+        return self.list(request,*args,**kwargs) 
+      
