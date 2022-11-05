@@ -30,6 +30,7 @@ class userSerializer(serializers.ModelSerializer):
     class Meta:
         model= User
         fields=['username']
+        
 
 
 class certificationSerializer(serializers.ModelSerializer):
@@ -45,3 +46,4 @@ class user_certificateSerializer(serializers.ModelSerializer):
     class Meta:
         model=user_certificates
         fields="__all__"
+        
