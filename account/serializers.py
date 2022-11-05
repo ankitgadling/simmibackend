@@ -57,7 +57,7 @@ class userdetails(serializers.ModelSerializer):
 
 
 class logindetailserializers(serializers.Serializer):
-    username = serializers.CharField()
+    email = serializers.CharField()
     password = serializers.CharField()
 
 #     def create(self, data):
