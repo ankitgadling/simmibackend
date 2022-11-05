@@ -1,6 +1,6 @@
-
+from about.models import *
 from rest_framework.serializers import ModelSerializer
-from .models import Advisory_board,Team,Senior_technical_committee,About,Founders,Senior_management_committee,Our_initiatives,Our_campaigns
+
 
 class Aboutserializers(ModelSerializer):
     class Meta:

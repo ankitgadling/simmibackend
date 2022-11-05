@@ -37,7 +37,8 @@ urlpatterns = [
     path('api/certification/',include('certifications.urls')),
     path('api/transactions/',include('user_transactions.urls')),
     path('api/about/',include('about.urls')),
-    path('api/admin_transactions/',include('admin_transactions.urls'))
+    path('api/admin_transactions/',include('admin_transactions.urls')),
+    path('api/admin_about/',include('admin_about.urls')),
 
 ]
 
