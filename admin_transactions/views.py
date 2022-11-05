@@ -11,7 +11,7 @@ class Userserializer(ModelSerializer):
     name = "madhu"
     class Meta:
         model = User
-        fields = ["first_name","last_name"]
+        fields = ["username"]
 
 
 class user_transactionserializer(ModelSerializer):

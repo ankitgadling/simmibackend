@@ -44,7 +44,7 @@ class Registrationserializers(serializers.Serializer):
             user = User.objects.get(username=username)
             raise serializers.ValidationError("Already used this email...!")
         except User.DoesNotExist: 
-            user = User.objects.create_user(username=username,password=password)
+            user = User.objects.create_user(username=username,password=password ,first_name=first_name,last_name=last_name)
             userdetails = SimmiUserDetails.objects.create(user=user,first_name=first_name,last_name=last_name,ph_no=ph_no)
             return user
 
