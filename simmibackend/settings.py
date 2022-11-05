@@ -58,7 +58,8 @@ INSTALLED_APPS = [
     'latestnews',
     'certifications',
     'user_transactions',
-    'about'
+    'about',
+    'admin_transactions'
 
 ]
 
