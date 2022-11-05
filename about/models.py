@@ -10,6 +10,7 @@ class About(models.Model):
     title = models.CharField(max_length=50)
     sub_title = models.CharField(max_length=80)
     desc = models.TextField()
+    sub_desc=models.TextField()
 
 class Founders(models.Model):
     name = models.CharField(max_length=50)
