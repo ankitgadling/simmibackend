@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from rest_framework.generics import GenericAPIView,ListCreateAPIView,RetrieveUpdateDestroyAPIView
+from rest_framework.generics import GenericAPIView,ListAPIView,RetrieveUpdateDestroyAPIView
 from .serializers import AdminSerializer
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 # Create your views here.
 
-class AdmimDetailsView(ListCreateAPIView):
+class AdmimDetailsView(ListAPIView):
     queryset = User.objects.filter(is_staff=True)
     serializer_class = AdminSerializer
     
