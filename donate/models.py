@@ -1,13 +1,15 @@
 from django.core.validators import MaxLengthValidator,MinLengthValidator
-from pyexpat import model
 from django.db import models
+from django.contrib.auth.models import User
 # Create your models here.
 class donate_form(models.Model):
     name=models.CharField(max_length=100,null=False)
     phn_no=models.CharField(max_length=12,validators=[MinLengthValidator(10)],null=False)
     pan_no=models.IntegerField(validators=[MinLengthValidator(10),MaxLengthValidator(10)],null=False)
     address=models.TextField(null=False)
+    date=models.DateField(auto_now=True,null=False)
     email=models.EmailField(null=False)
+    user=user=models.ForeignKey(User, on_delete=models.CASCADE)
     amount=models.IntegerField(null=False)
     purpose=models.TextField(null=False)
 
