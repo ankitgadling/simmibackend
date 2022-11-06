@@ -13,7 +13,7 @@ class AdmimDetailsView(ListAPIView):
         listadmins = []
         Admins = User.objects.filter(is_staff=True)    
         for admin in Admins:
-            listadmins.append({"admin_id":admin.id,"username":admin.username,"name":str(admin.first_name)+" "+str(admin.last_name)})
+            listadmins.append({"admin_id":admin.id,"name":str(admin.first_name)+" "+str(admin.last_name)})
         return Response(listadmins)
 class AdmimDetailsView2(RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
@@ -22,6 +22,6 @@ class AdmimDetailsView2(RetrieveUpdateDestroyAPIView):
     def get(self,request,pk=None,*args,**kwargs):
         try:
             admin = User.objects.get(id=pk)    
-            return Response({"admin_id":admin.id,"username":admin.username,"name":str(admin.first_name)+" "+str(admin.last_name)})
+            return Response({"admin_id":admin.id,"name":str(admin.first_name)+" "+str(admin.last_name)})
         except User.DoesNotExist:
             return Response({"msg":"Admin Not Found....!"})
