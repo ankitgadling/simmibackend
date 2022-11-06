@@ -10,3 +10,6 @@ class Volunteer(models.Model):
     aadhar_no=models.CharField(max_length=16,validators=[MinLengthValidator(16)],null=False)
     dob=models.DateField(null=False)
     blood_group=models.CharField(max_length=10,null=False)
+
+    def __str__(self):
+        return self.name
