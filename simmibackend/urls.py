@@ -32,14 +32,13 @@ urlpatterns = [
     path('api/carrers/',include("carrers.urls")),
     path('blogs/',include('blog.urls')),
     path('api/gallery/',include("gallery.urls")),
-    #path('profile/', include(urls)),
     path('latestnews/', include('latestnews.urls')),
     path('api/certification/',include('certifications.urls')),
     path('api/transactions/',include('user_transactions.urls')),
     path('api/about/',include('about.urls')),
     path('api/admin_transactions/',include('admin_transactions.urls')),
     path('api/admin_about/',include('admin_about.urls')),
-
+    path('api/admin_details/',include('admin_details.urls')),
 ]
 
 if settings.DEBUG:

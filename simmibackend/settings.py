@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'about',
     'admin_transactions',
     'admin_about',
+    'admin_details'
 
 ]
 
