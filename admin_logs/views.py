@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from .serializers import Adminloginserializer
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from account.models import SimmiUserDetails
 # Create your views here.
 
 class admin_login(GenericAPIView):
@@ -17,12 +18,17 @@ class admin_login(GenericAPIView):
         admin = authenticate(username=username,password=password)
         
         if admin is not None:
+            # try:
+            #     profile = SimmiUserDetails.objects.get(user=admin)
+            #     profile = "https://res.cloudinary.com/dcc8pmavm/image/upload/v1/"+str(profile.profile)+".png"
+            # except SimmiUserDetails.DoesNotExist:
+            profile = "https://res.cloudinary.com/dcc8pmavm/image/upload/v1/media/user%20profiles/admin_gdm3wb.jpg"
             if admin.is_staff == True:
                 request.session['admin'] = admin.username
                 if admin.is_superuser == True:
-                    return Response({"msg":"Login Successful...!","admin":admin.username,"admin-type":"Super-admin"})
+                    return Response({"msg":"Login Successful...!","admin":admin.username,"profile":profile,"admin-type":"Super-admin"})
                 else:
-                    return Response({"msg":"Login Successful...!","admin":admin.username,"admin-type":"Normal-admin"})
+                    return Response({"msg":"Login Successful...!","admin":admin.username,"profile":profile,"admin-type":"Normal-admin"})
             else:
                 return Response("This user is not an admin...!",404)
         else:
