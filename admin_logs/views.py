@@ -18,11 +18,11 @@ class admin_login(GenericAPIView):
         admin = authenticate(username=username,password=password)
         
         if admin is not None:
-            # try:
-            #     profile = SimmiUserDetails.objects.get(user=admin)
-            #     profile = "https://res.cloudinary.com/dcc8pmavm/image/upload/v1/"+str(profile.profile)+".png"
-            # except SimmiUserDetails.DoesNotExist:
-            profile = "https://res.cloudinary.com/dcc8pmavm/image/upload/v1/media/user%20profiles/admin_gdm3wb.jpg"
+            try:
+                profile3 = SimmiUserDetails.objects.get(user=admin)
+                profile = profile3.profile.url
+            except SimmiUserDetails.DoesNotExist:
+                profile = "https://res.cloudinary.com/dcc8pmavm/image/upload/v1/media/user%20profiles/admin_gdm3wb.jpg"
             if admin.is_staff == True:
                 request.session['admin'] = admin.username
                 if admin.is_superuser == True:
