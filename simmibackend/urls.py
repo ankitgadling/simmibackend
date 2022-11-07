@@ -39,6 +39,7 @@ urlpatterns = [
     path('api/admin_transactions/',include('admin_transactions.urls')),
     path('api/admin_about/',include('admin_about.urls')),
     path('api/admin_details/',include('admin_details.urls')),
+    path('api/admin_logs/',include('admin_logs.urls'))
 ]
 
 if settings.DEBUG:
