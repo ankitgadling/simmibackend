@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'carrers',
     'knox',
     'blog',
+    'events',
     'gallery',
     'latestnews',
     'certifications',

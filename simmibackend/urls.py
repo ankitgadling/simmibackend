@@ -33,6 +33,7 @@ urlpatterns = [
     path('blogs/',include('blog.urls')),
     path('api/gallery/',include("gallery.urls")),
     path('latestnews/', include('latestnews.urls')),
+    path('api/events/',include('events.urls')),
     path('api/certification/',include('certifications.urls')),
     path('api/transactions/',include('user_transactions.urls')),
     path('api/about/',include('about.urls')),
