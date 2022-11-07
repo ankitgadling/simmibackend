@@ -11,6 +11,7 @@ class Event(models.Model):
     time = models.CharField(max_length=30)
     image = models.ImageField(upload_to='events')
     date = models.DateField(auto_now_add=True)
+    attendence = models.IntegerField(default=0)
 
     def __str__(self):
         return self.event_name

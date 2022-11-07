@@ -3,7 +3,7 @@ from .models import *
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = "__all__"    
+        exclude = ['attendence']    
 
 class ExtraImagesSerializer(serializers.ModelSerializer):
     class Meta:
