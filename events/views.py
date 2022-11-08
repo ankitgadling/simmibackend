@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from rest_framework.generics import GenericAPIView, ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin,DestroyModelMixin,UpdateModelMixin,RetrieveModelMixin
 from rest_framework.response import Response
 from .models import *
-from .serializers import EventSerializer,ExtraImagesSerializer, SpeakerSerializer
+from .serializers import EventSerializer,ExtraImagesSerializer
 # Create your views here.
 
 
@@ -74,16 +74,3 @@ class EventModifyView(UpdateModelMixin,GenericAPIView,RetrieveModelMixin,Destroy
         return self.destroy(request,*args,**kwargs)
 
 
-class AllSpeakers(ListAPIView):
-    queryset = Speaker.objects.all()
-    serializer_class = SpeakerSerializer
-
-
-class PostSpeaker(CreateAPIView):
-    queryset = Speaker.objects.all()
-    serializer_class = SpeakerSerializer
-
-
-class CRUDSpeaker(RetrieveUpdateDestroyAPIView):
-    queryset = Speaker.objects.all()
-    serializer_class = SpeakerSerializer

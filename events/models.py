@@ -22,5 +22,4 @@ class EventImages(models.Model):
     image = models.ImageField(upload_to='events/extra_images')   
 
 
-class Speaker(Event):
-    speaker_profile = models.ImageField(upload_to='events/speaker_profile')
+
