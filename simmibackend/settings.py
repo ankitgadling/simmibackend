@@ -65,7 +65,8 @@ INSTALLED_APPS = [
     'admin_transactions',
     'admin_about',
     'admin_details',
-    'admin_logs'
+    'admin_logs',
+    'speaker',
 
 ]
 
