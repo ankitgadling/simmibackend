@@ -17,6 +17,9 @@ class Founders(models.Model):
     position = models.CharField(max_length=80)
     img = models.ImageField(upload_to = "about/Founders/")
     desc = models.TextField()
+    instaid=models.URLField(default="https://www.instagram.com/")
+    tweetid=models.URLField(default="https://twitter.com/")
+    fbid=models.URLField(default="https://www.facebook.com/Meta/")
 
 class Advisory_board(models.Model):
     
@@ -24,9 +27,9 @@ class Advisory_board(models.Model):
     position = models.CharField(max_length=80)
     img = models.ImageField(upload_to = "about/Board Commitee Members/")
     desc = models.TextField()
-    instaid=models.URLField()
-    tweetid=models.URLField()
-    fbid=models.URLField()
+    instaid=models.URLField(default="https://www.instagram.com/")
+    tweetid=models.URLField(default="https://twitter.com/")
+    fbid=models.URLField(default="https://www.facebook.com/Meta/")
 
 class Senior_management_committee(models.Model):
     
@@ -34,9 +37,9 @@ class Senior_management_committee(models.Model):
     position = models.CharField(max_length=80)
     img = models.ImageField(upload_to = "about/Senior Commitee Members/")
     desc = models.TextField()
-    instaid=models.URLField()
-    tweetid=models.URLField()
-    fbid=models.URLField()
+    instaid=models.URLField(default="https://www.instagram.com/")
+    tweetid=models.URLField(default="https://twitter.com/")
+    fbid=models.URLField(default="https://www.facebook.com/Meta/")
 
 class Senior_technical_committee(models.Model):
     
@@ -44,9 +47,9 @@ class Senior_technical_committee(models.Model):
     position = models.CharField(max_length=80)
     img = models.ImageField(upload_to = "about/Senior tech Commitee Members/")
     desc = models.TextField()
-    instaid=models.URLField()
-    tweetid=models.URLField()
-    fbid=models.URLField()
+    instaid=models.URLField(default="https://www.instagram.com/")
+    tweetid=models.URLField(default="https://twitter.com/")
+    fbid=models.URLField(default="https://www.facebook.com/Meta/")
 
 class Team(models.Model):
 
