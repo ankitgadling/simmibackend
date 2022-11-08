@@ -24,6 +24,9 @@ class Advisory_board(models.Model):
     position = models.CharField(max_length=80)
     img = models.ImageField(upload_to = "about/Board Commitee Members/")
     desc = models.TextField()
+    instaid=models.URLField()
+    tweetid=models.URLField()
+    fbid=models.URLField()
 
 class Senior_management_committee(models.Model):
     
@@ -31,6 +34,9 @@ class Senior_management_committee(models.Model):
     position = models.CharField(max_length=80)
     img = models.ImageField(upload_to = "about/Senior Commitee Members/")
     desc = models.TextField()
+    instaid=models.URLField()
+    tweetid=models.URLField()
+    fbid=models.URLField()
 
 class Senior_technical_committee(models.Model):
     
@@ -38,6 +44,9 @@ class Senior_technical_committee(models.Model):
     position = models.CharField(max_length=80)
     img = models.ImageField(upload_to = "about/Senior tech Commitee Members/")
     desc = models.TextField()
+    instaid=models.URLField()
+    tweetid=models.URLField()
+    fbid=models.URLField()
 
 class Team(models.Model):
 
