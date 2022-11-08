@@ -54,6 +54,7 @@ class EventModifyView(UpdateModelMixin,GenericAPIView,RetrieveModelMixin,Destroy
         for ex in ex_im:
             extra_images.append(ex.image.url)
         ev = {
+                "id":event.id
                 "name":event.event_name,
                 "event_descriptn":event.event_description,
                 "speaker_name":event.speaker_name,
