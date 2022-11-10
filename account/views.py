@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from django.views.decorators.csrf import csrf_exempt
 from account.models import SimmiUserDetails
+from rest_framework.views import APIView
 # Create your views here.
 
 class register_api(generics.GenericAPIView):
@@ -76,3 +77,15 @@ class Login_api(generics.GenericAPIView):
             })
 
 
+
+# class LogoutView(APIView):
+#     authentication_classes = (TokenAuthentication,)
+#     permission_classes = (IsAuthenticated,)
+
+#     def post(self, request, format=None):
+#         request._auth.delete()
+#         user_logged_out.send(sender=request.user.__class__,
+#                              request=request, user=request.user)
+#         #user = User.objects.get()
+#         logout(request,user)
+#         return Response(None, status=status.HTTP_204_NO_CONTENT)

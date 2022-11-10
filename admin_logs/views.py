@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from .serializers import Adminloginserializer
+from .serializers import Adminloginserializer,ChangePasswordSerializer
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from account.models import SimmiUserDetails
 from simmibackend.settings import SUPER_USER_KEY
+from django.contrib.auth.hashers import check_password
+
 # Create your views here.
 
 class admin_login(GenericAPIView):
@@ -50,3 +52,24 @@ class admin_logout(GenericAPIView):
         except KeyError:
             pass
         return Response({"msg":"Logout Successful...!"}) 
+
+class ChangePassword(GenericAPIView):
+    queryset = User.objects.all()
+    serializer_class = ChangePasswordSerializer
+    
+    def post(self,request):
+        old_password = request.data['old_password']
+        new_password = request.data['new_password']
+        confirm_password = request.data['confirm_password']
+        admin = request.session['admin']
+        if confirm_password == new_password:
+            admin = User.objects.get(username=admin)
+            if check_password(old_password , admin.password):
+                admin.set_password(new_password)
+                admin.save()
+                return Response('Password Changed...')
+            else:
+                return Response('wrong old password..!',400)    
+        else:
+            return Response('invalide confirm password..!',400)
+        
