@@ -1,5 +1,6 @@
 from django.db import models
 import datetime
+from django.utils import timezone
 
 # Create your models here.
 class Gallerytable(models.Model):
@@ -12,7 +13,7 @@ class Gallerytable(models.Model):
     title = models.CharField(max_length=50)
     admin = models.CharField(max_length=50,default="Test Admin")
     photo = models.ImageField(upload_to = "gallery")
-    date = models.DateField(default=datetime.datetime.now())
+    date = models.DateField(default=timezone.now)
     content = models.TextField()
     category = models.CharField(max_length=50,choices=options)
     #","livelihood",
