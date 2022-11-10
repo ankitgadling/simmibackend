@@ -5,3 +5,7 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = "__all__"    
 
+class EventSerializer2(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        exclude = ['attendence']    

@@ -4,7 +4,7 @@ from rest_framework.mixins import CreateModelMixin,DestroyModelMixin,UpdateModel
 from rest_framework.response import Response
 from .models import *
 from datetime import date
-from .serializers import EventSerializer
+from .serializers import EventSerializer,EventSerializer2
 # Create your views here.
 
 
@@ -45,23 +45,27 @@ class AllEvents(GenericAPIView,ListModelMixin):
 
 class EventCreateView(CreateModelMixin,GenericAPIView):
     queryset = Event.objects.all()
-    serializer_class = EventSerializer
+    serializer_class = EventSerializer2
     
-    def post(self,request):
-        event_name = request.data['event_name']
-        speaker_name = request.data['speaker_name']
-        event_description = request.data['event_description']
-        Perk_of_attendig_event = request.data['Perk_of_attendig_event']
-        category = request.data['category']
-        time = request.data['time']
-        image_1 = request.data['image_1']
-        place = request.data['place']
-        image_2 = request.data['image_2']
-        image_3 = request.data['image_3']
+    def post(self,request,*args,**kwargs):
+        return self.create(request,*args,**kwargs)
+    
+    # def post(self,request):
+    #     print(request.data)
+    #     event_name = request.data['event_name']
+    #     speaker_name = request.data['speaker_name']
+    #     event_description = request.data['event_description']
+    #     Perk_of_attendig_event = request.data['Perk_of_attendig_event']
+    #     category = request.data['category']
+    #     time = request.data['time']
+    #     image_1 = request.data['image_1']
+    #     place = request.data['place']
+    #     image_2 = request.data['image_2']
+    #     image_3 = request.data['image_3']
         
-        Event.objects.create(event_name=event_name,event_description=event_description,speaker_name=speaker_name,Perk_of_attendig_event=Perk_of_attendig_event
-                            ,category=category,time=time,image_1=image_1,image_2=image_2,image_3=image_3,place=place)
-        return Response("Event Added...!")
+    #     Event.objects.create(event_name=event_name,event_description=event_description,speaker_name=speaker_name,Perk_of_attendig_event=Perk_of_attendig_event
+    #                         ,category=category,time=time,image_1=image_1,image_2=image_2,image_3=image_3,place=place)
+    #     return Response("Event Added...!")
 
 class EventModifyView(UpdateModelMixin,GenericAPIView,RetrieveModelMixin,DestroyModelMixin):
     queryset = Event.objects.all()
