@@ -1,9 +1,8 @@
-from django.shortcuts import render
-from gallery.serializers import Galleryserializers
+from gallery.serializers import Galleryserializers, AdminSerializer
 from gallery.models import Gallerytable
-from rest_framework.generics import GenericAPIView, RetrieveUpdateDestroyAPIView, ListCreateAPIView
+from rest_framework.generics import GenericAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
 from rest_framework.mixins import ListModelMixin
-from rest_framework.permissions import IsAdminUser
+from rest_framework.response import Response
 
 # get api for website without permissions
 class Galleryapi(GenericAPIView,ListModelMixin):
@@ -16,7 +15,6 @@ class Galleryapi(GenericAPIView,ListModelMixin):
 class Galleryapidetail(RetrieveUpdateDestroyAPIView):
     queryset =Gallerytable.objects.all()
     serializer_class = Galleryserializers
-    permission_classes = [IsAdminUser]
 
     def get(self,request,*args,**kwargs):
      return self.retrieve(request,*args,**kwargs)
@@ -25,10 +23,18 @@ class Galleryapidetail(RetrieveUpdateDestroyAPIView):
     def delete(self,request,*args,**kwargs):
         return self.destroy(request,*args,**kwargs)
 
-class GalleryAdmin(ListCreateAPIView):
+class GalleryAdmin(CreateAPIView):
     queryset =Gallerytable.objects.all()
-    serializer_class = Galleryserializers
-    permission_classes = [IsAdminUser]
+    serializer_class = AdminSerializer
 
     def post(self,request, *args, **kwargs):
-         return self.create(request, *args, **kwargs)
+        title = request.data['title']
+        admin = request.session.get('admin')
+        photo = request.data['photo']
+        date = request.data['date']
+        content = request.data['content']
+        category = request.data['category']
+
+        Gallerytable.objects.create(title=title, photo=photo,admin=admin, date=date, content=content, category=category)
+        return Response("Objects created!!")
+
