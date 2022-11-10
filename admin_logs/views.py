@@ -5,6 +5,7 @@ from .serializers import Adminloginserializer
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from account.models import SimmiUserDetails
+from simmibackend.settings import SUPER_USER_KEY
 # Create your views here.
 
 class admin_login(GenericAPIView):
@@ -14,6 +15,7 @@ class admin_login(GenericAPIView):
     def post(self,request,*args,**kwargs):
         username = request.data['email']
         password = request.data['password']
+        super_user_key = request.data['key']
         
         admin = authenticate(username=username,password=password)
         
@@ -26,7 +28,11 @@ class admin_login(GenericAPIView):
             if admin.is_staff == True:
                 request.session['admin'] = admin.username
                 if admin.is_superuser == True:
-                    return Response({"msg":"Login Successful...!","admin":admin.username,"profile":profile,"admin-type":"Super-admin"})
+                    if super_user_key == SUPER_USER_KEY:
+                        return Response({"msg":"Login Successful...!","admin":admin.username,"profile":profile,"admin-type":"Super-admin"})
+                    else:
+                        return Response("Invalid Key!!")
+                    
                 else:
                     return Response({"msg":"Login Successful...!","admin":admin.username,"profile":profile,"admin-type":"Normal-admin"})
             else:
@@ -44,4 +50,3 @@ class admin_logout(GenericAPIView):
         except KeyError:
             pass
         return Response({"msg":"Logout Successful...!"}) 
-                
