@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 
 class Speaker(models.Model):
@@ -6,7 +7,7 @@ class Speaker(models.Model):
     time = models.CharField(max_length=10)
     date = models.DateField()
     place = models.CharField(max_length=50)
-    speaker_profile = models.ImageField(upload_to='events/speaker_profile')
+    speaker_profile = models.ImageField(upload_to='events/speaker_profile', blank=True)
 
 
     def __str__(self):
