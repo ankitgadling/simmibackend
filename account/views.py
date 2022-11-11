@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.http import JsonResponse ,HttpResponse
 from .serializers import Registrationserializers,userdetails,logindetailserializers,accountserializer,userupdateserializer,userprofileupdateserializer
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
@@ -9,6 +10,8 @@ from rest_framework.decorators import api_view
 from django.views.decorators.csrf import csrf_exempt
 from account.models import SimmiUserDetails
 from rest_framework.views import APIView
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 class register_api(generics.GenericAPIView):
@@ -70,6 +73,7 @@ class Login_api(generics.GenericAPIView):
             }
             if obj['profile'] is None:
                  obj['profile'] = "https://cdn0.iconfinder.com/data/icons/user-pictures/100/unknown_1-2-512.png"
+            request.session['normal-user'] = user.username
             return Response({"msg": "Login Successfull...!","token":token,"user":accountserializer(user).data,"userdetals":obj })
         else:
             return Response({
@@ -77,15 +81,5 @@ class Login_api(generics.GenericAPIView):
             })
 
 
-
-# class LogoutView(APIView):
-#     authentication_classes = (TokenAuthentication,)
-#     permission_classes = (IsAuthenticated,)
-
-#     def post(self, request, format=None):
-#         request._auth.delete()
-#         user_logged_out.send(sender=request.user.__class__,
-#                              request=request, user=request.user)
-#         #user = User.objects.get()
-#         logout(request,user)
-#         return Response(None, status=status.HTTP_204_NO_CONTENT)
+def getv(request):
+    return HttpResponse(request.session['normal-user'])
