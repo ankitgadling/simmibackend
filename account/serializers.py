@@ -118,3 +118,9 @@ class userprofileupdateserializer(serializers.ModelSerializer):
         user.profile = profile
         user.save()
         return user
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(max_length=None)
+    new_password = serializers.CharField(max_length=None)
+    confirm_password = serializers.CharField(max_length=None)

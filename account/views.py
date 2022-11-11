@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate
 from django.http import JsonResponse ,HttpResponse
-from .serializers import Registrationserializers,userdetails,logindetailserializers,accountserializer,userupdateserializer,userprofileupdateserializer
+from .serializers import Registrationserializers,userdetails,logindetailserializers,accountserializer,userupdateserializer,userprofileupdateserializer,ChangePasswordSerializer
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
 from rest_framework import generics, permissions
@@ -12,6 +12,8 @@ from account.models import SimmiUserDetails
 from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.hashers import check_password
+
 # Create your views here.
 
 class register_api(generics.GenericAPIView):
@@ -79,7 +81,24 @@ class Login_api(generics.GenericAPIView):
             return Response({
                 "msg": "User Not Found...!"
             })
-
-
-def getv(request):
-    return HttpResponse(request.session['normal-user'])
+            
+class ChangePassword(generics.GenericAPIView):
+    queryset = User.objects.all()
+    serializer_class = ChangePasswordSerializer
+    
+    def post(self,request):
+        old_password = request.data['old_password']
+        new_password = request.data['new_password']
+        confirm_password = request.data['confirm_password']
+        user = request.session['normal-user']
+        if confirm_password == new_password:
+            user = User.objects.get(username=user)
+            if check_password(old_password , user.password):
+                user.set_password(new_password)
+                user.save()
+                return Response('Password Changed...')
+            else:
+                return Response('wrong old password..!',400)    
+        else:
+            return Response('invalide confirm password..!',400)
+        
