@@ -51,35 +51,33 @@ class EventCreateView(CreateModelMixin,GenericAPIView):
     # def post(self,request,*args,**kwargs):
     #     return self.create(request,*args,**kwargs)
     
-    def post(self,request):
-        print(request.data)
-        event_name = request.data['event_name']
-        try:
-            event = Event.objects.get(event_name=event_name)
-            return Response("Event is already exists with this name.. ",401)
-        except Event.DoesNotExist:
-            pass
-        speaker_name = request.data.get('speaker_name')
-        event_description = request.data['event_description']
-        Perk_of_attendig_event = request.data['perk of attending event']
-        category = request.data['category']
-        time = request.data['time']
-        image_1 = request.data['image_1']
-        place = request.data['place']
-        image_2 = request.data['image_2']
-        image_3 = request.data['image_3']
+    def post(self,request,*args,**kwargs):
+        return self.create(request,*args,**kwargs)
+        # event_name = request.data['event_name']
+        # try:
+        #     event = Event.objects.get(event_name=event_name)
+        #     return Response("Event is already exists with this name.. ",401)
+        # except Event.DoesNotExist:
+        #     pass
+        # speaker_name = request.data.get('speaker_name')
+        # event_description = request.data['event_description']
+        # Perk_of_attendig_event = request.data['perk of attending event']
+        # category = request.data['category']
+        # time = request.data['time']
+        # image_1 = request.data['image_1']
+        # place = request.data['place']
+        # image_2 = request.data['image_2']
+        # image_3 = request.data['image_3']
         
-        Event.objects.create(event_name=event_name,event_description=event_description,speaker_name=speaker_name,Perk_of_attendig_event=Perk_of_attendig_event
-                            ,category=category,time=time,image_1=image_1,image_2=image_2,image_3=image_3,place=place)
-        if speaker_name is not None:
-            try:
-                speaker = Speaker.objects.get(name=speaker_name)
-                speaker.event = event_name
-                speaker.save()
-            except Speaker.DoesNotExist:
-                pass        
-        return Response("Event Added...!")
-            
+        # Event.objects.create(event_name=event_name,event_description=event_description,speaker_name=speaker_name,Perk_of_attendig_event=Perk_of_attendig_event
+        #                     ,category=category,time=time,image_1=image_1,image_2=image_2,image_3=image_3,place=place)
+        # if speaker_name is not None:
+        #     try:
+        #         speaker = Speaker.objects.get(name=speaker_name)
+        #         speaker.event = event_name
+        #         speaker.save()
+        #     except Speaker.DoesNotExist:
+        #         pass            
 
 
 class EventModifyView(UpdateModelMixin,GenericAPIView,RetrieveModelMixin,DestroyModelMixin):
