@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'admin_details',
     'admin_logs',
     'speaker',
+    'get_involved',
 
 ]
 
