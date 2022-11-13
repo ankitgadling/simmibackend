@@ -2,6 +2,9 @@ from .models import *
 from .serializer import *
 from rest_framework import viewsets
 
+class IndividualSupporterView(viewsets.ModelViewSet):
+    queryset = IndividualSupporter.objects.all()
+    serializer_class = IndividualSupporterSerializer
 
 class PressMediaView(viewsets.ModelViewSet):
     queryset = PressMedia.objects.all()
