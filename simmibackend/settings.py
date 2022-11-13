@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'admin_logs',
     'speaker',
     'institutional_aliance',
+    'get_involved',
 
 ]
 
