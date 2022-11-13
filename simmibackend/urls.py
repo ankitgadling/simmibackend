@@ -42,6 +42,7 @@ urlpatterns = [
     path('api/admin_details/',include('admin_details.urls')),
     path('api/admin_logs/',include('admin_logs.urls')),
     path('api/', include('speaker.urls')),
+    path('api/inst_aliance/', include('institutional_aliance.urls')),
     path('api/', include('get_involved.urls')),
 ]
 
