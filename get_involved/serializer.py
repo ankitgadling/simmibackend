@@ -2,6 +2,10 @@ from rest_framework import serializers
 from drf_extra_fields.fields import HybridImageField
 from .models import *
 
+class IndividualSupporterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IndividualSupporter
+        fields = "__all__"
 
 class PressMediaSerializer(serializers.ModelSerializer):
     class Meta:
