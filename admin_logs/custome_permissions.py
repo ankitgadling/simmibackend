@@ -9,4 +9,7 @@ class SuperAdminPermission(BasePermission):
             admin = User.objects.get(username=admin)
         except User.DoesNotExist:
             return False
-        return admin.is_superuser()    
+        if admin.is_superuser():
+            return True
+        else:
+            return False
