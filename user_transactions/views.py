@@ -10,6 +10,6 @@ from rest_framework.permissions import IsAuthenticated
 class user_transactionsview(ListAPIView):
     queryset = user_transactions.objects.all()
     serializer_class = user_transactionserializer
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    # authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
         
