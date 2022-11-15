@@ -70,6 +70,8 @@ INSTALLED_APPS = [
     'admin_logs',
     'speaker',
     'Razorpay',
+    'institutional_aliance',
+    'get_involved',
 
 ]
 

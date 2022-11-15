@@ -31,12 +31,12 @@ class admin_login(GenericAPIView):
                 request.session['admin'] = admin.username
                 if admin.is_superuser == True:
                     if super_user_key == SUPER_USER_KEY:
-                        return Response({"msg":"Login Successful...!","admin":admin.username,"profile":profile,"admin-type":"Super-admin"})
+                        return Response({"msg":"Login Successful...!","admin":admin.username,"profile":profile,"adminType":"SuperAdmin"})
                     else:
                         return Response("Invalid Key!!")
                     
                 else:
-                    return Response({"msg":"Login Successful...!","admin":admin.username,"profile":profile,"admin-type":"Normal-admin"})
+                    return Response({"msg":"Login Successful...!","admin":admin.username,"profile":profile,"adminType":"NormalAdmin"})
             else:
                 return Response("This user is not an admin...!",404)
         else:
