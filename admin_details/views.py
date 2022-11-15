@@ -6,7 +6,8 @@ from rest_framework.response import Response
 from account.models import SimmiUserDetails
 #from knox.auth import TokenAuthentication
 from admin_logs.custome_auth import AdminIsInTheSession
-from rest_framework.permissions import IsAuthenticated,IsAdminUser
+from admin_logs.custome_permissions import SuperAdminPermission
+#from rest_framework.permissions import IsAuthenticated,IsAdminUser
 
 # Create your views here.
 
@@ -14,7 +15,7 @@ class AdmimDetailsView(GenericAPIView):
     queryset = User.objects.filter(is_staff=True)
     serializer_class = AdminSerializer
     authentication_classes = [AdminIsInTheSession]
-    permission_classes = [IsAdminUser]
+    permission_classes = [SuperAdminPermission]
     def get(self,request,*args,**kwargs):
         listadmins = []
         Admins = User.objects.filter(is_staff=True,is_superuser=False)    
