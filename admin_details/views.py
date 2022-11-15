@@ -14,8 +14,8 @@ from admin_logs.custome_permissions import SuperAdminPermission
 class AdmimDetailsView(GenericAPIView):
     queryset = User.objects.filter(is_staff=True)
     serializer_class = AdminSerializer
-    authentication_classes = [AdminIsInTheSession]
-    permission_classes = [SuperAdminPermission]
+    # authentication_classes = [AdminIsInTheSession]
+    # permission_classes = [SuperAdminPermission]
     def get(self,request,*args,**kwargs):
         listadmins = []
         Admins = User.objects.filter(is_staff=True,is_superuser=False)    
