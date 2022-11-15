@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os.path
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +27,7 @@ SUPER_USER_KEY = 'Backend!124'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','simmibackendtest.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'simmibackendtest.herokuapp.com']
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOWED_ORIGINS = [
@@ -68,6 +69,7 @@ INSTALLED_APPS = [
     'admin_details',
     'admin_logs',
     'speaker',
+    'Razorpay',
 
 ]
 
@@ -88,7 +90,7 @@ ROOT_URLCONF = 'simmibackend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR,'temps/'],
+        'DIRS': [BASE_DIR, 'temps/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -96,7 +98,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-               
+
             ],
         },
     },
@@ -111,10 +113,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'dcscb5vb3cmq4a',
-        'USER':'mmetycusmxofaa',
-        'HOST':'ec2-44-195-100-240.compute-1.amazonaws.com',
-        'PORT':'5432',
-        'PASSWORD':'12c0733ea3cef9207b9f91841690280c83cd7d0fc4bea154a7a15df88047a2b9'
+        'USER': 'mmetycusmxofaa',
+        'HOST': 'ec2-44-195-100-240.compute-1.amazonaws.com',
+        'PORT': '5432',
+        'PASSWORD': '12c0733ea3cef9207b9f91841690280c83cd7d0fc4bea154a7a15df88047a2b9'
     }
 }
 
@@ -155,7 +157,6 @@ USE_TZ = False
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-import os.path
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dcc8pmavm',
     'API_KEY': '448125162113113',
