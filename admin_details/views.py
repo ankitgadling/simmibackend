@@ -3,6 +3,7 @@ from rest_framework.generics import GenericAPIView,ListAPIView,RetrieveUpdateDes
 from .serializers import AdminSerializer
 from django.contrib.auth.models import User
 from rest_framework.response import Response
+from account.models import SimmiUserDetails
 # Create your views here.
 
 class AdmimDetailsView(GenericAPIView):
@@ -13,7 +14,14 @@ class AdmimDetailsView(GenericAPIView):
         listadmins = []
         Admins = User.objects.filter(is_staff=True,is_superuser=False)    
         for admin in Admins:
-            listadmins.append({"admin_id":admin.id,"name":str(admin.first_name)+" "+str(admin.last_name)})
+            try:
+                admindetails = SimmiUserDetails.objects.get(user=admin.username)
+                adminprofile = admindetails.profile.url
+                if adminprofile is None:
+                    adminprofile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
+            except SimmiUserDetails.DoesNotExist:
+                adminprofile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
+            listadmins.append({"admin_id":admin.id,"name":str(admin.first_name)+" "+str(admin.last_name),"adminprofile":adminprofile})
         return Response(listadmins)
     def post(self,request):
         usesname = request.data['email']

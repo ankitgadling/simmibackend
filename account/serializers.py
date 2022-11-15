@@ -8,7 +8,7 @@ import re
 class Registrationserializers(serializers.Serializer):
     first_name = serializers.CharField(max_length=50)
     last_name = serializers.CharField(max_length=50)
-    ph_no = serializers.CharField(max_length=50)
+    ph_no = serializers.CharField(max_length=10,min_length=10)
     email = serializers.EmailField(max_length=None, min_length=None, allow_blank=False)
     password = serializers.CharField(max_length=50)
     confirm_password = serializers.CharField(max_length=50)

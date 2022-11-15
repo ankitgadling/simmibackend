@@ -25,8 +25,10 @@ class admin_login(GenericAPIView):
             try:
                 profile3 = SimmiUserDetails.objects.get(user=admin)
                 profile = profile3.profile.url
+                if profile is None:
+                    profile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
             except SimmiUserDetails.DoesNotExist:
-                profile = "https://res.cloudinary.com/dcc8pmavm/image/upload/v1/media/user%20profiles/admin_gdm3wb.jpg"
+                profile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
             if admin.is_staff == True:
                 request.session['admin'] = admin.username
                 if admin.is_superuser == True:
