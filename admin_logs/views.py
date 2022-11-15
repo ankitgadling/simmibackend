@@ -35,7 +35,7 @@ class admin_login(GenericAPIView):
                     if super_user_key == SUPER_USER_KEY:
                         return Response({"msg":"Login Successful...!","admin":admin.username,"profile":profile,"adminType":"SuperAdmin"})
                     else:
-                        return Response("Invalid Key!!")
+                        return Response("Invalid Key!!",403)
                     
                 else:
                     return Response({"msg":"Login Successful...!","admin":admin.username,"profile":profile,"adminType":"NormalAdmin"})
