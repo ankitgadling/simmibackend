@@ -20,7 +20,7 @@ class AdmimDetailsView(GenericAPIView):
         Admins = User.objects.filter(is_staff=True,is_superuser=False)    
         for admin in Admins:
             try:
-                admindetails = SimmiUserDetails.objects.get(user=admin.username)
+                admindetails = SimmiUserDetails.objects.get(user=admin)
                 adminprofile = admindetails.profile.url
                 if adminprofile is None:
                     adminprofile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
