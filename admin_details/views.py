@@ -21,7 +21,10 @@ class AdmimDetailsView(GenericAPIView):
         for admin in Admins:
             try:
                 admindetails = SimmiUserDetails.objects.get(user=admin)
-                adminprofile = admindetails.profile.url
+                try:
+                    adminprofile = admindetails.profile.url
+                except ValueError:
+                    adminprofile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
                 if adminprofile is None:
                     adminprofile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
             except SimmiUserDetails.DoesNotExist:
