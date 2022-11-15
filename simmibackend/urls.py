@@ -27,7 +27,7 @@ urlpatterns = [
     path('', home),
     path('api/account/', include("account.urls")),
     path('api/simmi-admin/', admin.site.urls),
-    path('contact/', contact),
+    path('contact/', include("contact.urls")),
     path('api/donation/', include(router.urls)),
     path('api/carrers/', include("carrers.urls")),
     path('blogs/', include('blog.urls')),
