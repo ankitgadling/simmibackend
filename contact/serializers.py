@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import Contact
-
+from .models import Contact, Resp
+from drf_extra_fields.fields import HybridImageField
 
 class ContactSerializer(serializers.ModelSerializer):
 
@@ -15,3 +15,9 @@ class ContactSerializer(serializers.ModelSerializer):
     #             raise serializers.ValidationError("Length of phone-no can't be < 10")
         
     #     return validated_data
+
+class responseserializers(serializers.ModelSerializer):
+    img=HybridImageField()
+    class Meta:
+        model=Resp
+        fields="__all__"

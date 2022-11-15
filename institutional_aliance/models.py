@@ -7,4 +7,7 @@ class alliance(models.Model):
     img=models.ImageField(upload_to='institutial_alliance/')
     desc=models.TextField()
     
-    
+class Copatner(models.Model):
+    title=models.CharField(max_length=25)
+    img=models.ImageField(upload_to='Coparate_partnership/')
+    desc=models.TextField()
