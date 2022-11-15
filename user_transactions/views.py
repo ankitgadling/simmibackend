@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.generics import ListAPIView
 from .serializers import user_transactionserializer
 from .models import user_transactions
-from rest_framework.authentication import TokenAuthentication
+from knox.auth import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
