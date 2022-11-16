@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from .serializers import ContactSerializer,responseserializers
 from rest_framework.decorators import api_view
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import CreateModelMixin
+from rest_framework.mixins import CreateModelMixin,ListModelMixin
 
 
 
@@ -41,4 +41,5 @@ class responseapi(GenericAPIView,CreateModelMixin):
     queryset=Resp.objects.all()
     serializer_class=responseserializers    
     def post(self,request,*args,**kwargs):
-        return self.create(self,request,*args,**kwargs)
+        return self.create(request,*args,**kwargs)
+

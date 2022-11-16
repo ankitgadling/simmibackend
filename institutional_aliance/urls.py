@@ -4,5 +4,4 @@ urlpatterns = [
     path('coparate/',Copatnerapi.as_view()),
     path('',Alliance.as_view()),
     path('<pk>',DetailedAlliance.as_view()),
-
     ]
