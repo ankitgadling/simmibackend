@@ -79,8 +79,8 @@ class Login_api(generics.GenericAPIView):
             return Response({"msg": "Login Successfull...!","token":token,"user":accountserializer(user).data,"userdetals":obj })
         else:
             return Response({
-                "msg": "User Not Found...!",404
-            })
+                "msg": "User Not Found...!"
+            },404)
             
 class ChangePassword(generics.GenericAPIView):
     queryset = User.objects.all()
