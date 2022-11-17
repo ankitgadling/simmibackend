@@ -1,4 +1,4 @@
-from rest_framework.generics import ListCreateAPIView, GenericAPIView
+from rest_framework.generics import ListCreateAPIView, GenericAPIView, DestroyAPIView
 from rest_framework.response import Response
 import razorpay
 from decouple import config
@@ -72,3 +72,8 @@ class GetTransactionByUser(GenericAPIView):
         data = self.queryset.filter(user=user)
         serializer_obj = self.serializer_class(data, many=True)
         return Response(serializer_obj.data)
+
+
+class DeleteTransactions(DestroyAPIView):
+    queryset = Transactions.objects.all()
+    serializer_class = TransactionSerializer
