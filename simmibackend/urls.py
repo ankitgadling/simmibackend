@@ -45,6 +45,8 @@ urlpatterns = [
     path('transactions/', include('Razorpay.urls')),
     path('api/inst_aliance/', include('institutional_aliance.urls')),
     path('api/', include('get_involved.urls')),
+    path('api/tender',include('tender.urls')),
+    path('api/admin_tender/',include('admin_tender.urls')),
 ]
 
 if settings.DEBUG:

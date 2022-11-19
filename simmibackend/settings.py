@@ -72,6 +72,9 @@ INSTALLED_APPS = [
     'Razorpay',
     'institutional_aliance',
     'get_involved',
+    'tender',
+    'django_filters',
+    'admin_tender',
 
 ]
 
