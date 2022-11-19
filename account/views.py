@@ -5,6 +5,7 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
 from rest_framework import generics, permissions
 from knox.models import AuthToken
+from knox.views import LogoutView
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from django.views.decorators.csrf import csrf_exempt
@@ -12,6 +13,21 @@ from account.models import SimmiUserDetails
 from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.signals import user_logged_in, user_logged_out
+from django.utils import timezone
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.serializers import DateTimeField
+from rest_framework.settings import api_settings
+from rest_framework.views import APIView
+from knox.auth import TokenAuthentication
+from knox.models import AuthToken
+from knox.settings import knox_settings
+
+#import requests
+#import json
+
 from django.contrib.auth.hashers import check_password
 
 # Create your views here.
@@ -75,7 +91,8 @@ class Login_api(generics.GenericAPIView):
             }
             if obj['profile'] is None:
                  obj['profile'] = "https://cdn0.iconfinder.com/data/icons/user-pictures/100/unknown_1-2-512.png"
-            request.session['normal-user'] = user.username
+            request.session['current_user'] = user.id
+            print(request.session['current_user'])
             return Response({"msg": "Login Successfull...!","token":token,"user":accountserializer(user).data,"userdetals":obj })
         else:
             return Response({
@@ -90,9 +107,9 @@ class ChangePassword(generics.GenericAPIView):
         old_password = request.data['old_password']
         new_password = request.data['new_password']
         confirm_password = request.data['confirm_password']
-        user = request.session['normal-user']
+        user = request.session['current_user']
         if confirm_password == new_password:
-            user = User.objects.get(username=user)
+            user = User.objects.get(id=user)
             if check_password(old_password , user.password):
                 user.set_password(new_password)
                 user.save()
@@ -101,4 +118,23 @@ class ChangePassword(generics.GenericAPIView):
                 return Response('wrong old password..!',400)    
         else:
             return Response('invalide confirm password..!',400)
+        
+        
+        
+class LogoutUser(generics.GenericAPIView):
+    queryset = User.objects.all()
+    serializer_class =userdetails
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, format=None):
+        request._auth.delete()
+        user_logged_out.send(sender=request.user.__class__,
+                             request=request, user=request.user)
+        try:
+            del request.session['current_user']    
+        except KeyError:
+            pass
+        return Response("Logout Successful!",200)
+        
         

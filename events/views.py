@@ -18,15 +18,27 @@ class AllEvents(GenericAPIView,ListModelMixin):
         for event in events:
             status = "Upcoming"
             formatt = ('%d/%b/%Y')
+            formatt2 = ('%I:%M')
             current_time =datetime.now().date().strftime(formatt)
             event_time = event.time.date().strftime(formatt)
+            
+            current_time2 =datetime.now().time().strftime(formatt2)
+            event_time2 = event.time.time().strftime(formatt2)
+            
             c_c = datetime.strptime(current_time, formatt)
             e_c = datetime.strptime(event_time, formatt)
+            
+            c_c2 = datetime.strptime(current_time2, formatt2)
+            e_c2 = datetime.strptime(event_time2, formatt2)
+            
             if c_c > e_c:
                 status = "Ended"
             elif c_c == e_c:
-                status = "Ongoing"
-            
+                if c_c2 >= e_c2:
+                    print("cccccccccccccc",c_c2,e_c2)
+                    status = "Ongoing"
+                else:
+                    status = "Upcoming"
             ev = {
                 "id":event.id,
                 "name":event.event_name,
