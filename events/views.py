@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView,CreateAPIView
 from rest_framework.mixins import CreateModelMixin,DestroyModelMixin,UpdateModelMixin,RetrieveModelMixin,ListModelMixin
 from rest_framework.response import Response
 from .models import *
@@ -57,7 +57,7 @@ class AllEvents(GenericAPIView,ListModelMixin):
         return Response(event_list)
 #for admin
 
-class EventCreateView(CreateModelMixin,GenericAPIView):
+class EventCreateView(CreateAPIView,GenericAPIView):
     parser_classes = (MultiPartParser, FormParser)
     queryset = Event.objects.all()
     serializer_class = EventSerializer2
