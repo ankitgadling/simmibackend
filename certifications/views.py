@@ -44,7 +44,7 @@ class CurrentUserCertificates(generics.GenericAPIView):
     
     def get(self,request):
         user_id = request.session['current_user']
-        user = User.objects.get()
+        user = User.objects.get(id=user_id)
         crts = certfication.objects.filter(user=user)
         data = UserCertificateSerializer(crts).data
         return Response(data)
