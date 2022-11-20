@@ -6,6 +6,7 @@ from .models import *
 from datetime import date
 from .serializers import EventSerializer,EventSerializer2
 from speaker.models import Speaker
+from rest_framework.parsers import MultiPartParser, FormParser
 # Create your views here.
 
 
@@ -57,8 +58,10 @@ class AllEvents(GenericAPIView,ListModelMixin):
 #for admin
 
 class EventCreateView(CreateModelMixin,GenericAPIView):
+    parser_classes = (MultiPartParser, FormParser)
     queryset = Event.objects.all()
     serializer_class = EventSerializer2
+    
     
     # def post(self,request,*args,**kwargs):
     #     return self.create(request,*args,**kwargs)
