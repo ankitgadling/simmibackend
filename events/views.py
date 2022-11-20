@@ -66,8 +66,8 @@ class EventCreateView(CreateAPIView,GenericAPIView):
     # def post(self,request,*args,**kwargs):
     #     return self.create(request,*args,**kwargs)
     
-    def post(self,request,*args,**kwargs):
-        return self.create(request,*args,**kwargs)
+#     def post(self,request,*args,**kwargs):
+#         return self.create(request,*args,**kwargs)
         # event_name = request.data['event_name']
         # try:
         #     event = Event.objects.get(event_name=event_name)
