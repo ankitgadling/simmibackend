@@ -22,3 +22,9 @@ class EminentPersonalitySerializer(serializers.ModelSerializer):
     class Meta:
         model = EminentPersonality
         fields = '__all__'
+
+class PublicationSerializer(serializers.ModelSerializer):
+    image = HybridImageField()
+    class Meta:
+        model = Publication
+        fields = '__all__'
