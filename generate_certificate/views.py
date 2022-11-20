@@ -4,8 +4,8 @@ from certifications.models import certfication
 from .serializers import CertSerializer , Gen
 from events.models import Event
 from django.contrib.auth.models import User
-#import cv2
 from PIL import Image as Img
+from PIL import ImageDraw,ImageFont
 import io
 import os
 import sys
@@ -29,13 +29,16 @@ class Genarate(GenericAPIView):
         event_name = str(event.event_name).upper()
         date = event.time.date().strftime("%d/%b/%Y")
         file_name = username+"_"+event_name
-        cert = cv2.imread('generate_certificate\\certificate.jpg')
-        cv2.putText(cert,name,(770,750),cv2.FONT_HERSHEY_COMPLEX,2.0,(0,165,255),2,cv2.LINE_AA)
-        cv2.putText(cert,date,(375,1076),cv2.FONT_HERSHEY_COMPLEX,1.0,(0,0,0),1,cv2.LINE_AA)
-        cv2.putText(cert,event_name,(1187,863),cv2.FONT_HERSHEY_COMPLEX,1.0,(255,140,0),1,cv2.LINE_AA)
-        cv2.imwrite(f"generate_certificate\\new certificates\\{file_name}.jpg",cert)
         
-        image = Img.open(f"generate_certificate\\new certificates\\{file_name}.jpg")
+        img = Img.open("generate_certificate\\certificate.jpg")
+        font = ImageFont.truetype("generate_certificate\\Arial.ttf",70)
+        font2 = ImageFont.truetype("generate_certificate\\Arial.ttf",35)
+        draw = ImageDraw.Draw(img)
+        draw.text((740,700), name,(255,165,0),font=font)
+        draw.text((375,1046), date,(0,0,0),font=font2)
+        draw.text((1187,833), event_name,(0,140,0),font=font2)
+        
+        image = img
         output = io.BytesIO()
         image.save(output, format='JPEG', quality=85)
         output.seek(0)
@@ -43,7 +46,6 @@ class Genarate(GenericAPIView):
                                         file_name,
                                         'image/jpeg',
                                         sys.getsizeof(output), None)
-        
         #values for create object of certificate
         event_name2 = event.event_name
         mentor_name = event.speaker_name
@@ -61,7 +63,6 @@ class Genarate(GenericAPIView):
         except KeyError:
             pass
         request.session[str(username)] = crt.id
-        print(dict(request.session))
         return Response("Certificate Genarated..!",201)
     
         
