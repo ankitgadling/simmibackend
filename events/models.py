@@ -10,7 +10,7 @@ class Event(models.Model):
     Perk_of_attendig_event = models.TextField()
     category = models.CharField(max_length=50)
     time = models.DateTimeField()
-    image_1 = models.ImageField(upload_to='events')
+    image_1 = models.ImageField(upload_to='events',blank=True)
     image_2 = models.ImageField(upload_to='events',blank=True)
     image_3 = models.ImageField(upload_to='events',blank=True)
     attendence = models.IntegerField(default=0)
