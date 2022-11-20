@@ -19,3 +19,7 @@ class ElectronicMediaView(viewsets.ModelViewSet):
 class EminentPersonalityView(viewsets.ModelViewSet):
     queryset = EminentPersonality.objects.all()
     serializer_class = EminentPersonalitySerializer
+
+class PublicationView(viewsets.ModelViewSet):
+    queryset = Publication.objects.all()
+    serializer_class = PublicationSerializer

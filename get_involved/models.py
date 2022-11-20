@@ -39,3 +39,14 @@ class EminentPersonality(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Publication(models.Model):
+    name = models.CharField("News Paper",max_length=30)
+    topic = models.CharField(max_length=30)
+    description = models.TextField()
+    image = models.ImageField(upload_to = "publication", blank=True)
+    date = models.DateField()
+
+    def __str__(self):
+        return self.name
