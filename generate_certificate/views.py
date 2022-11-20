@@ -30,7 +30,7 @@ class Genarate(GenericAPIView):
         date = event.time.date().strftime("%d/%b/%Y")
         file_name = username+"_"+event_name
         
-        img = Img.open("generate_certificate\\certificate.jpg")
+        img = Img.open("certificate.jpg")
         font = ImageFont.truetype("generate_certificate\\Arial.ttf",70)
         font2 = ImageFont.truetype("generate_certificate\\Arial.ttf",35)
         draw = ImageDraw.Draw(img)
