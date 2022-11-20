@@ -19,6 +19,7 @@ from carrers.views import GetJobs
 from contact.views import contact
 from .views import home
 from .router import router
+from example.views import V
 from django.conf import settings
 from django.conf.urls.static import static
 #from userprofile import urls
@@ -47,6 +48,8 @@ urlpatterns = [
     path('api/', include('get_involved.urls')),
     path('api/tender',include('tender.urls')),
     path('api/admin_tender/',include('admin_tender.urls')),
+    path('a',V.as_view()),
+    
 ]
 
 if settings.DEBUG:
