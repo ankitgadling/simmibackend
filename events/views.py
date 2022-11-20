@@ -57,7 +57,7 @@ class AllEvents(GenericAPIView,ListModelMixin):
         return Response(event_list)
 #for admin
 
-class EventCreateView(CreateAPIView,GenericAPIView):
+class EventCreateView(CreateAPIView):
     parser_classes = (MultiPartParser, FormParser)
     queryset = Event.objects.all()
     serializer_class = EventSerializer2
