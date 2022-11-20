@@ -4,7 +4,7 @@ from certifications.models import certfication
 from .serializers import CertSerializer , Gen
 from events.models import Event
 from django.contrib.auth.models import User
-#import cv2
+import cv2
 from PIL import Image as Img
 import io
 import os
