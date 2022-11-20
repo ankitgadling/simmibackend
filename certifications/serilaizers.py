@@ -48,9 +48,12 @@ class user_certificateSerializer(serializers.ModelSerializer):
         fields="__all__"
         
 
-class UserCertificateSerializer(serializers.ModelSerializer):
-    user = userSerializer()
-    class Meta:
-        model=certfication
-        fields="__all__"
+class UserCertificateSerializer(serializers.Serializer):
+    event_name=serializers.CharField(max_length=50)
+    mentor_name=serializers.CharField(max_length=25) 
+    issue_date=serializers.DateField()
+    img=serializers.ImageField()
+    status=serializers.CharField()
+    
+    
         

@@ -46,8 +46,20 @@ class CurrentUserCertificates(generics.GenericAPIView):
         user_id = request.session['current_user']
         user = User.objects.get(id=user_id)
         crts = certfication.objects.filter(user=user)
-        data = UserCertificateSerializer(crts).data
-        return Response(data)
+        user_certificates_all = []
+        for c in crts:
+            certificate = None
+            if c.status == "Completed":
+                certificate = c.img.url
+            obj = {
+                "event_name":c.event_name,
+                "mentor_name":c.mentor_name,
+                "issued_date":c.issue_date,
+                "certificate":certificate,
+                "status":c.status
+            } 
+            user_certificates_all.append(obj)
+        return Response(user_certificates_all)
     
     
     
