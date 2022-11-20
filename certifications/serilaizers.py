@@ -47,3 +47,10 @@ class user_certificateSerializer(serializers.ModelSerializer):
         model=user_certificates
         fields="__all__"
         
+
+class UserCertificateSerializer(serializers.ModelSerializer):
+    user = userSerializer()
+    class Meta:
+        model=certfication
+        fields="__all__"
+        

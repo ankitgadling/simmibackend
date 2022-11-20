@@ -48,6 +48,7 @@ urlpatterns = [
     path('api/', include('get_involved.urls')),
     path('api/tender',include('tender.urls')),
     path('api/admin_tender/',include('admin_tender.urls')),
+    path("api/genarate_certificate/",include("generate_certificate.urls")),
     path('a',V.as_view()),
     
 ]
