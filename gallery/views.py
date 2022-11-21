@@ -36,5 +36,6 @@ class GalleryAdmin(CreateAPIView):
         category = request.data['category']
 
         Gallerytable.objects.create(title=title, photo=photo,admin=admin, date=date, content=content, category=category)
+        print(admin)
         return Response("Objects created!!")
 
