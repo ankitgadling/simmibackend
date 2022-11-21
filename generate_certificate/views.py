@@ -35,7 +35,6 @@ class Genarate(GenericAPIView):
         img = Img.open("certificate.jpg")
         urllib.request.urlretrieve('https://res.cloudinary.com/dcc8pmavm/raw/upload/v1669015852/media/static_files/Arial_wwaooe.ttf',"Arial.ttf")
         font = ImageFont.truetype("Arial.ttf",70)
-        #urllib.request.urlretrieve('https://res.cloudinary.com/dcc8pmavm/image/upload/v1669013499/media/static_files/Certificate_template_uz1pc1.jpg',"certificate.jpg")
         font2 = ImageFont.truetype("Arial.ttf",35)
         draw = ImageDraw.Draw(img)
         draw.text((740,700), name,(255,165,0),font=font)
@@ -58,10 +57,6 @@ class Genarate(GenericAPIView):
         crt = certfication.objects.create(
             event_name=event_name2,mentor_name=mentor_name,issue_date=date2,img=new_pic,status="Not Completed",user=user
         )
-        try:
-            os.remove(f"generate_certificate\\new certificates\\{file_name}.jpg")
-        except FileNotFoundError:
-            pass
         try:
             del request.session[str(username)]
         except KeyError:
