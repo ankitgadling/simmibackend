@@ -18,5 +18,5 @@ from gallery.views import GalleryAdmin, Galleryapi,Galleryapidetail
 urlpatterns = [
     path('',Galleryapi.as_view()),
     path('<pk>',Galleryapidetail.as_view()),
-    path('post', GalleryAdmin.as_view()),
+    path('post/', GalleryAdmin.as_view()),
 ]
