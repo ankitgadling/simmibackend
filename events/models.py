@@ -13,6 +13,7 @@ class Event(models.Model):
     image_1 = models.ImageField(upload_to='events',blank=True)
     image_2 = models.ImageField(upload_to='events',blank=True)
     image_3 = models.ImageField(upload_to='events',blank=True)
+    duration = models.IntegerField(default=0)
     attendence = models.IntegerField(default=0)
     place = models.CharField(max_length=50, blank=True)
 
