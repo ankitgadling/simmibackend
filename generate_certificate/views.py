@@ -33,12 +33,15 @@ class Genarate(GenericAPIView):
         
         urllib.request.urlretrieve('https://res.cloudinary.com/dcc8pmavm/image/upload/v1669013499/media/static_files/Certificate_template_uz1pc1.jpg',"certificate.jpg")
         img = Img.open("certificate.jpg")
-        font = ImageFont.truetype("generate_certificate\\Arial.ttf",70)
-        font2 = ImageFont.truetype("generate_certificate\\Arial.ttf",35)
+        urllib.request.urlretrieve('https://res.cloudinary.com/dcc8pmavm/raw/upload/v1669015852/media/static_files/Arial_wwaooe.ttf',"Arial.ttf")
+        font = ImageFont.truetype("Arial.ttf",70)
+        #urllib.request.urlretrieve('https://res.cloudinary.com/dcc8pmavm/image/upload/v1669013499/media/static_files/Certificate_template_uz1pc1.jpg',"certificate.jpg")
+        font2 = ImageFont.truetype("Arial.ttf",35)
         draw = ImageDraw.Draw(img)
         draw.text((740,700), name,(255,165,0),font=font)
         draw.text((375,1046), date,(0,0,0),font=font2)
         draw.text((1187,833), event_name,(0,140,0),font=font2)
+        img.save("gg.jpg")
         image = img
         output = io.BytesIO()
         image.save(output, format='JPEG', quality=85)
