@@ -9,6 +9,8 @@ class Event(models.Model):
     speaker_name = models.CharField(max_length=50)
     Perk_of_attendig_event = models.TextField()
     category = models.CharField(max_length=50)
+    venue = models.CharField(max_length=50,blank=True,default="Online")
+    online_link = models.CharField(max_length=300,blank=True,default="None")
     time = models.DateTimeField()
     image_1 = models.ImageField(upload_to='events',blank=True)
     image_2 = models.ImageField(upload_to='events',blank=True)

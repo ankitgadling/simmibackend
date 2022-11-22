@@ -13,3 +13,8 @@ class SuperAdminPermission(BasePermission):
             return True
         else:
             return False
+        
+class IsSuperAdminUser(BasePermission):
+    def has_permission(self, request, view):
+        print(request.user)
+        return bool(request.user and request.user.is_superuser)

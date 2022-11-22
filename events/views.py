@@ -40,20 +40,41 @@ class AllEvents(GenericAPIView,ListModelMixin):
                     status = "Ongoing"
                 else:
                     status = "Upcoming"
-            ev = {
-                "id":event.id,
-                "name":event.event_name,
-                "event_descriptn":event.event_description,
-                "speaker_name":event.speaker_name,
-                "Perk_of_attendig_event":event.Perk_of_attendig_event,
-                "category":event.category,
-                "time":event.time.strftime('%d-%b-%Y %I:%M %p'),
-                "duration":event.duration,
-                "status":status,
-                "image_1":event.image_1.url,
-                "image_2":event.image_2.url,
-                "image_3":event.image_3.url,
-            }
+            try:
+                ev = {
+                    "id":event.id,
+                    "name":event.event_name,
+                    "event_descriptn":event.event_description,
+                    "speaker_name":event.speaker_name,
+                    "Perk_of_attendig_event":event.Perk_of_attendig_event,
+                    "category":event.category,
+                    "time":event.time.strftime('%d-%b-%Y %I:%M %p'),
+                    "duration":event.duration,
+                    'venue':event.venue,
+                    'online_link':event.online_link,
+                    "status":status,
+                    "image_1":event.image_1.url,
+                    "image_2":event.image_2.url,
+                    "image_3":event.image_3.url,
+                }
+            except ValueError:
+                ev = {
+                    "id":event.id,
+                    "name":event.event_name,
+                    "event_descriptn":event.event_description,
+                    "speaker_name":event.speaker_name,
+                    "Perk_of_attendig_event":event.Perk_of_attendig_event,
+                    "category":event.category,
+                    "time":event.time.strftime('%d-%b-%Y %I:%M %p'),
+                    "duration":event.duration,
+                    'venue':event.venue,
+                    'online_link':event.online_link,
+                    "status":status,
+                    "image_1":None,
+                    "image_2":None,
+                    "image_3":None,
+                }
+            
             event_list.append(ev)
         return Response(event_list)
 #for admin
@@ -115,20 +136,40 @@ class EventModifyView(UpdateModelMixin,GenericAPIView,RetrieveModelMixin,Destroy
             status = "Ended"
         elif c_c == e_c:
             status = "Ongoing"
-            
-        ev = {
-                "id":event.id,
-                "name":event.event_name,
-                "event_descriptn":event.event_description,
-                "speaker_name":event.speaker_name,
-                "Perk_of_attendig_event":event.Perk_of_attendig_event,
-                "category":event.category,
-                "time":event.time.strftime('%d-%b-%Y %I:%M %p'),
-                "duration":event.duration,
-                "status":status,
-                "image_1":event.image_1.url,
-                "image_2":event.image_2.url,
-                "image_3":event.image_3.url,
+        
+        try:    
+            ev = {
+                    "id":event.id,
+                    "name":event.event_name,
+                    "event_descriptn":event.event_description,
+                    "speaker_name":event.speaker_name,
+                    "Perk_of_attendig_event":event.Perk_of_attendig_event,
+                    "category":event.category,
+                    "time":event.time.strftime('%d-%b-%Y %I:%M %p'),
+                    "duration":event.duration,
+                    "duration":event.duration,
+                    'venue':event.venue,
+                    "status":status,
+                    "image_1":event.image_1.url,
+                    "image_2":event.image_2.url,
+                    "image_3":event.image_3.url,
+                }
+        except:
+            ev = {
+                    "id":event.id,
+                    "name":event.event_name,
+                    "event_descriptn":event.event_description,
+                    "speaker_name":event.speaker_name,
+                    "Perk_of_attendig_event":event.Perk_of_attendig_event,
+                    "category":event.category,
+                    "time":event.time.strftime('%d-%b-%Y %I:%M %p'),
+                    "duration":event.duration,
+                    "duration":event.duration,
+                    'venue':event.venue,
+                    "status":status,
+                    "image_1":None,
+                    "image_2":None,
+                    "image_3":None,
             }
         return Response(ev)
         

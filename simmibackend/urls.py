@@ -22,6 +22,7 @@ from .router import router
 from example.views import V
 from django.conf import settings
 from django.conf.urls.static import static
+
 #from userprofile import urls
 
 urlpatterns = [
