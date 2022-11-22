@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from .serializers import ContactSerializer,responseserializers
 from rest_framework.decorators import api_view
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import CreateModelMixin,ListModelMixin
+from rest_framework.mixins import ListModelMixin,UpdateModelMixin,RetrieveModelMixin,DestroyModelMixin,CreateModelMixin
 
 
 
@@ -43,3 +43,17 @@ class responseapi(GenericAPIView,CreateModelMixin):
     def post(self,request,*args,**kwargs):
         return self.create(request,*args,**kwargs)
 
+
+class adminresponseapi(GenericAPIView,ListModelMixin,RetrieveModelMixin,DestroyModelMixin):
+    queryset=Resp.objects.all()
+    serializer_class=responseserializers    
+    def get(self,request,*args,**kwargs):
+        return self.list(request,*args,**kwargs)
+
+class admineditresponseapi(GenericAPIView,ListModelMixin,RetrieveModelMixin,DestroyModelMixin):
+    queryset=Resp.objects.all()
+    serializer_class=responseserializers    
+    def get(self,request,*args,**kwargs):
+        return self.retrieve(request,*args,**kwargs)
+    def delete(self,request,*args,**kwargs):
+        return self.destroy(request,*args,**kwargs)
