@@ -8,7 +8,8 @@ class Resp(models.Model):
     email = models.EmailField()
     address = models.CharField(max_length=50)
     message = models.TextField() 
-    img=models.ImageField(upload_to="about/response_and_concern/") 
+    img=models.ImageField(upload_to="about/response_and_concern/")
+    created_date=models.DateTimeField(auto_now_add=True) 
 
 class Contact(models.Model):
     first_name = models.CharField(max_length=50)
@@ -16,6 +17,7 @@ class Contact(models.Model):
     mail = models.EmailField()
     phone = models.CharField(max_length=15)
     message = models.TextField()
+    
 
     def __str__(self) -> str:
         return f'{self.first_name} {self.last_name}'
