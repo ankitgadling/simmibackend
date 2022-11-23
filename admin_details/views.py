@@ -82,7 +82,7 @@ class InviteAdminView(GenericAPIView):
         res =  email.send()
         if res:
             request.session[name+"_email"] = invite_email
-            request.session.set_expiry(300)
+            request.session.set_expiry(172800)
         else:
             return Response("Something went wrong..!",400)
         return Response({"data":"Invitation was sent to this email "+request.session[name+"_email"]})
@@ -129,6 +129,10 @@ class AddAdminView(GenericAPIView):
             email = EmailMessage("Invited..!",html,settings.EMAIL_HOST_USER,[email])
             email.content_subtype = "html"
             res =  email.send()
+            try:
+                del request.session[url_path+"_email"]
+            except KeyError:
+                pass
             return Response("Thanks for accepting our invitation, Now you are our admin. Your credentials was sent to your email, Thank you..!")
         except KeyError:
             return Response("I am sorry you are soo late...!",200)

@@ -10,4 +10,3 @@ class AdminSerializer(ModelSerializer):
 
 class AdminAddSerializer(Serializer):
     email = serializers.EmailField()
-# clear_expired()¶
