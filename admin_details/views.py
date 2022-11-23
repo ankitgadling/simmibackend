@@ -85,7 +85,7 @@ class InviteAdminView(GenericAPIView):
             request.session.set_expiry(172800)
         else:
             return Response("Something went wrong..!",400)
-        return Response({"data":"Invitation was sent to this email "+"'"+request.session[name+"_email"+"'"]})
+        return Response({"data":"Invitation was sent to this email "+"'"+request.session[name+"_email"]+"'"})
 
 
 class AddAdminView(GenericAPIView):
