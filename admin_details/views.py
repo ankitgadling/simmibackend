@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from datetime import datetime
 from rest_framework.generics import GenericAPIView,ListAPIView,RetrieveUpdateDestroyAPIView
-from .serializers import AdminSerializer,AdminAddSerializer
+from .serializers import AdminSerializer,AdminAddSerializer,EmailSendSerializer
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from account.models import SimmiUserDetails
@@ -67,9 +67,11 @@ class InviteAdminView(GenericAPIView):
         <center>
         <br><br>
         <a style="background-color: orange;
-            border: 2px inset black;
-            border-radius: 4px;
-            color: black;
+            box-shadow:3px 3px 2px 2px grey;
+            border-radius: 10px;
+            font-family:'arial';
+            text-decoration-line: none;
+            color: lightcyan;
             padding: 0.5%" href="https://simmibackendtest.herokuapp.com/api/admin_details/add_admin/{name}" class="mybtn">Accept Invitation</a>
         </center>
         <br><br>
@@ -155,6 +157,32 @@ class AdmimDetailsView2(GenericAPIView):
             return Response("Admin removed..!")
         except User.DoesNotExist:
             return Response({"msg":"Admin permission removed to this user..!"})
+        
+        
+class EmailSendView(GenericAPIView):
+    serializer_class = EmailSendSerializer
+    queryset = User.objects.all()
+    
+    def post(self,request):
+        email = request.data['email']
+        subject = request.data['subject']
+        message = request.data['message']
+        file_var = request.data['file']
+        html = f"<p style='text-align: center;color: gray;font-size: 20px'>{message}</p>"
+        email = EmailMessage(subject, html, settings.EMAIL_HOST_USER, [email])
+        email.content_subtype = "html"
+        email.attach(file_var.name, file_var.read(), file_var.content_type)
+        try:
+            res = email.send()
+        except:
+            return Response("That attached file size is soo big..!",401)
+        if res:
+            return Response("Email was sent successfully!",201)
+        else:
+            return Response("something wrong!",401)
+    
+    
+    
     
         
         

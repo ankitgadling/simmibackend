@@ -10,3 +10,11 @@ class AdminSerializer(ModelSerializer):
 
 class AdminAddSerializer(Serializer):
     email = serializers.EmailField()
+
+
+class EmailSendSerializer(Serializer):
+    email = serializers.EmailField()
+    subject = serializers.CharField()
+    message = serializers.CharField(style={'base_template': 'textarea.html'})
+    file = serializers.FileField()
+    
