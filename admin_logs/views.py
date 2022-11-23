@@ -40,10 +40,10 @@ class admin_login(GenericAPIView):
                 refresh = RefreshToken.for_user(admin)
                 if admin.is_superuser == True:
                     if super_user_key == SUPER_USER_KEY:
-                        #html = """<h2 style="color:orange;font-size:50px;text-align: center">Super Admin</h2><h3 class='text-center text-danger'>Login Successful!</h3>"""
-                        #email = EmailMessage("login",html,settings.EMAIL_HOST_USER,['bagammagarimadhu@gmail.com'])
-                        #email.content_subtype = "html"
-                        #res = email.send()
+                        # html = """<h2 style="color:orange;font-size:50px;text-align: center">Super Admin</h2><h3 class='text-center text-danger'>Login Successful!</h3>"""
+                        # email = EmailMessage("login",html,settings.EMAIL_HOST_USER,['bagammagarimadhu@gmail.com'])
+                        # email.content_subtype = "html"
+                        # res = email.send()
                         return Response({
                             "msg":"Login Successful...!",
                             "admin":admin.username,
