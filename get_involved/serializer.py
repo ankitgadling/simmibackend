@@ -8,6 +8,7 @@ class IndividualSupporterSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class PressMediaSerializer(serializers.ModelSerializer):
+    image = HybridImageField()
     class Meta:
         model = PressMedia
         fields = '__all__'
