@@ -20,8 +20,8 @@ class Genarate(GenericAPIView):
     def post(self,request,*args,**kwargs):
         event_id = request.data['event_id']
         event = Event.objects.get(id=event_id)
-        user_id = request.session['current_user']
-        user = User.objects.get(id=user_id)
+        user_email = request.data['user_email']
+        user = User.objects.get(username=user_email)
         first_name = user.first_name
         last_name = user.last_name
         username = user.username
@@ -40,7 +40,6 @@ class Genarate(GenericAPIView):
         draw.text((740,700), name,(255,165,0),font=font)
         draw.text((375,1046), date,(0,0,0),font=font2)
         draw.text((1187,833), event_name,(0,140,0),font=font2)
-        img.save("gg.jpg")
         image = img
         output = io.BytesIO()
         image.save(output, format='JPEG', quality=85)
@@ -62,9 +61,9 @@ class Genarate(GenericAPIView):
         except KeyError:
             pass
         request.session[str(username)] = crt.id
+        #request.session.session.set_expiry(10)
         return Response("Certificate Genarated..!",201)
-    
-        
+
 class Certify(GenericAPIView):
     queryset = certfication.objects.all()
     serializer_class = Gen
@@ -72,8 +71,8 @@ class Certify(GenericAPIView):
         
     def post(self,request):
         print(request.session)
-        user_id = request.session['current_user']
-        username = User.objects.get(id=user_id).username
+        user_email = request.data['user_email']
+        username = User.objects.get(username=user_email).username
         try:
             certificate_id = request.session[str(username)]    
         except KeyError:

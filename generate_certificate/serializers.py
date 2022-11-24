@@ -9,3 +9,4 @@ class CertSerializer(ModelSerializer):
         
 class Gen(serializers.Serializer):
     event_id = serializers.IntegerField()
+    user_email = serializers.EmailField()
