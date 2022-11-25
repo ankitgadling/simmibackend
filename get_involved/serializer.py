@@ -20,6 +20,7 @@ class ElectronicMediaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class EminentPersonalitySerializer(serializers.ModelSerializer):
+    image = HybridImageField()
     class Meta:
         model = EminentPersonality
         fields = '__all__'

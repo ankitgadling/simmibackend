@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 from institutional_aliance.serializers import Allianceserializers, ShortAlliance, copartnerserializers
 from .models import *
 from rest_framework.generics import GenericAPIView
@@ -31,8 +29,8 @@ class AdminAlliance(GenericAPIView,ListModelMixin,CreateModelMixin):
         return self.create(request,*args,**kwargs)
 
 class AdmineditAlliance(GenericAPIView,UpdateModelMixin,RetrieveModelMixin,DestroyModelMixin):
-    queryset=Copatner.objects.all()
-    serializer_class=copartnerserializers
+    queryset =alliance.objects.all()
+    serializer_class = Allianceserializers
     def get(self,request,*args,**kwargs):
         return self.retrieve(request,*args,**kwargs)
     def put(self,request,*args,**kwargs):
@@ -45,7 +43,6 @@ class Copatnerapi(GenericAPIView,ListModelMixin,CreateModelMixin):
     serializer_class=copartnerserializers
     def get(self,request,*args,**kwargs):
         return self.list(request,*args,**kwargs)
-
 
 
 class AdminCopatnerapi(GenericAPIView,ListModelMixin,CreateModelMixin):
