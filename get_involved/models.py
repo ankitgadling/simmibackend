@@ -1,3 +1,4 @@
+from datetime import date
 from django.db import models
 
 class IndividualSupporter(models.Model):
@@ -37,6 +38,9 @@ class EminentPersonality(models.Model):
     name = models.CharField(max_length=20)
     designation = models.CharField(max_length=20)
     description = models.TextField()
+    date = models.DateField(default=date.today())
+    image = models.ImageField(upload_to= 'eminent_personality', blank=True)
+    company_name = models.CharField(max_length=40, blank=True, null=True)
 
     def __str__(self):
         return self.name
