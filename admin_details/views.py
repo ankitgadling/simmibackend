@@ -34,7 +34,7 @@ class AdmimDetailsView(GenericAPIView):
                     adminprofile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
             except SimmiUserDetails.DoesNotExist:
                 adminprofile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
-            listadmins.append({"admin_id":admin.id,"name":str(admin.first_name)+" "+str(admin.last_name),"adminprofile":adminprofile})
+            listadmins.append({"admin_id":admin.id,"name":str(admin.first_name)+" "+str(admin.last_name),"email":admin.username})
         return Response(listadmins)
         
 class InviteAdminView(GenericAPIView):
