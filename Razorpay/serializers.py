@@ -15,6 +15,8 @@ class TransactionSerializer(serializers.ModelSerializer):
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
+    date = serializers.DateTimeField(format="%d/%b/%y", read_only=True)
+
     class Meta:
         model = Subscription
         fields = "__all__"
