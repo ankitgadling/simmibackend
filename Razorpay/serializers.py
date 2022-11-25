@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Transactions
+from .models import Transactions, Subscription
 
 
 class TransactionSerializer(serializers.ModelSerializer):
@@ -12,3 +12,9 @@ class TransactionSerializer(serializers.ModelSerializer):
 
     def get_status(self, obj):
         return "Success" if obj.is_paid else "Failed"
+
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscription
+        fields = "__all__"
