@@ -11,22 +11,23 @@ class TransactionAPIView(ListCreateAPIView):
     serializer_class = TransactionSerializer
 
     def get_queryset(self):
-        if self.request.data.get('subscription'):
+        if self.request.data.get('subscription') == 'true':
             return Subscription.objects.all()
 
         return self.queryset
 
     def get_serializer_class(self):
-        if self.request.data.get('subscription'):
+        if self.request.data.get('subscription') == 'true':
             return SubscriptionSerializer
 
         return self.serializer_class
 
     def post(self, request, *args, **kwargs):
         amount = request.data.get('amount')
-        subscription = request.data.get('subscription')
+        subscription = True if request.data.get(
+            'subscription') == 'true' else False
         period = request.data.get('period')
-
+        # print(subscription, type(subscription))
         if not amount:
             return Response(status=404)
         if subscription:

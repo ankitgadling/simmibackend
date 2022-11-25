@@ -23,9 +23,7 @@ class RazorpayClient:
     @classmethod
     def get_plan(cls, amount, period):
         plans = cls.client.plan.all()
-        print(amount, period)
         for plan in plans['items']:
-            print(plan)
             if plan['item']['amount'] == amount and plan['period'] == period:
                 return plan
         return cls.create_plan(amount, period)
