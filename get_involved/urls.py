@@ -8,5 +8,7 @@ router.register('electronic-media',ElectronicMediaView, basename='electronic-med
 router.register('eminent-personality',EminentPersonalityView, basename='eminent-personality')
 router.register('individual-supporter', IndividualSupporterView, basename='individual-supporter')
 router.register('publication', PublicationView, basename='publication')
+router.register('awards-recognition', AwardsRecognitionView, basename='awards-recognition')
+router.register('story-of-change', StoryOfChangeView, basename='story-of-change')
 
 urlpatterns = router.urls
