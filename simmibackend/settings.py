@@ -89,7 +89,8 @@ INSTALLED_APPS = [
     'admin_tender',
     'example',
     'generate_certificate',
-    'faq'
+    'faq',
+    'research'
 
 ]
 

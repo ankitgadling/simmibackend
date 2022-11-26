@@ -154,11 +154,11 @@ class AdmimDetailsView2(GenericAPIView):
     def delete(self,request,pk=None,*args,**kwargs):
         try:
             admin = User.objects.get(id=pk)
-            admin.is_staff = False
-            admin.save()    
+            if admin.is_staff:
+                admin.delete()    
             return Response("Admin removed..!")
         except User.DoesNotExist:
-            return Response({"msg":"Admin permission removed to this user..!"})
+            return Response({"msg":"Admin not found!"},404)
         
         
 class EmailSendView(GenericAPIView):
