@@ -20,7 +20,6 @@ idna==3.4
 mysql-client==0.0.1
 numpy==1.23.5
 Pillow==9.2.0
-psycopg2-binary==2.9.4
 pycodestyle==2.9.1
 pycparser==2.21
 PyMySQL==1.0.2
