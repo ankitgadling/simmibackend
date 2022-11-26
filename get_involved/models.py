@@ -1,6 +1,6 @@
 from datetime import date
 from django.db import models
-
+from django.utils import timezone
 class IndividualSupporter(models.Model):
     name = models.CharField(max_length=30)
     phone_no = models.CharField(max_length=15)
@@ -38,7 +38,7 @@ class EminentPersonality(models.Model):
     name = models.CharField(max_length=20)
     designation = models.CharField(max_length=20)
     description = models.TextField()
-    date = models.DateField(default=date.today())
+    date = models.DateField(default=timezone.now)
     image = models.ImageField(upload_to= 'eminent_personality', blank=True)
     company_name = models.CharField(max_length=40, blank=True, null=True)
 

@@ -10,7 +10,9 @@ from admin_logs.custome_auth import AdminIsInTheSession
 from admin_logs.custome_permissions import SuperAdminPermission
 from admin_logs.password_genarate import genarate_password,get_name_from_email
 from django.core.mail import EmailMessage
+from datetime import datetime,timedelta
 from django.conf import settings
+from generate_certificate.extras import create_session,get_session_by_key,delete_session_by_key
 #from rest_framework.permissions import IsAuthenticated,IsAdminUser
 
 # Create your views here.
@@ -82,12 +84,13 @@ class InviteAdminView(GenericAPIView):
         email = EmailMessage("Invitation",html,settings.EMAIL_HOST_USER,[invite_email])
         email.content_subtype = "html"
         res =  email.send()
+        key = name+"_email"
+        now = datetime.now()
         if res:
-            request.session[name+"_email"] = invite_email
-            request.session.set_expiry(172800)
+            session = create_session(key=key, value=invite_email, created_date=now, expiry_date=now+timedelta(days=2))    
         else:
             return Response("Something went wrong..!",400)
-        return Response({"data":"Invitation was sent to this email "+"'"+request.session[name+"_email"]+"'"})
+        return Response({"data":"Invitation was sent to this email "+"'"+invite_email+"'"})
 
 
 class AddAdminView(GenericAPIView):
@@ -95,12 +98,14 @@ class AddAdminView(GenericAPIView):
     queryset = User.objects.all()
     
     def get(self,request,url_path=None):
-        try:
-            email = request.session[url_path+"_email"]
-            password = genarate_password()
-            name = get_name_from_email(email=email)
+        email = get_session_by_key(key=url_path+"_email")
+        if email is None:
+            return Response("I am sorry you are soo late...!",200)
             
-            html = f"""
+        password = genarate_password()
+        name = get_name_from_email(email=email)
+            
+        html = f"""
                 <html>
     <head>
         <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css' integrity='sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi' crossorigin='anonymous'>
@@ -127,17 +132,14 @@ class AddAdminView(GenericAPIView):
     </body>
 </html>            
             """
-            admin = User.objects.create_user(username=email,password=password,is_staff=True)
-            email = EmailMessage("Invited..!",html,settings.EMAIL_HOST_USER,[email])
-            email.content_subtype = "html"
-            res =  email.send()
-            try:
-                del request.session[url_path+"_email"]
-            except KeyError:
-                pass
-            return Response("Thanks for accepting our invitation, Now you are our admin. Your credentials was sent to your email, Thank you..!")
-        except KeyError:
-            return Response("I am sorry you are soo late...!",200)
+        admin = User.objects.create_user(username=email,password=password,is_staff=True)
+        email = EmailMessage("Invited..!",html,settings.EMAIL_HOST_USER,[email])
+        email.content_subtype = "html"
+        res =  email.send()
+        delete_session_by_key(key=url_path+"_email")
+        return Response("Thanks for accepting our invitation, Now you are our admin. Your credentials was sent to your email, Thank you..!")
+            
+        
         
 class AdmimDetailsView2(GenericAPIView):
     queryset = User.objects.all()
