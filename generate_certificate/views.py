@@ -6,12 +6,14 @@ from events.models import Event
 from django.contrib.auth.models import User
 from PIL import Image as Img
 from PIL import ImageDraw,ImageFont
+from datetime import datetime,timedelta
 import io
 import os
 import sys
 import img2pdf
 import urllib.request
 from django.core.files import File
+from .extras import create_session,get_session_by_key,delete_session_by_key
 from django.core.files.uploadedfile import InMemoryUploadedFile
         
 
@@ -58,7 +60,7 @@ class Genarate(GenericAPIView):
         file.write(pdf_file)
         file.close()
         
-        pdf = File(open(f"{file_name}.pdf"))
+        pdf = File(open(f"{file_name}.pdf","rb"))
         # image = file
         # output = io.BytesIO()
         # image.save(output, format='pdf', quality=85)
@@ -71,19 +73,12 @@ class Genarate(GenericAPIView):
         event_name2 = event.event_name
         mentor_name = event.speaker_name
         date2 = event.time.date()
-        print(type(pdf))
-        print(pdf.name)
-        return Response("DOne")
         
         crt = certfication.objects.create(
             event_name=event_name2,mentor_name=mentor_name,issue_date=date2,img=pdf,status="Not Completed",user=user
         )
-        try:
-            del request.session[str(username)]
-        except KeyError:
-            pass
-        request.session[str(username)] = crt.id
-        #request.session.session.set_expiry(10)
+        delete_session_by_key(key=username)
+        create_session(key=str(username), value=str(crt.id),expiry_date=datetime.now()+ timedelta(minutes=240))
         return Response("Certificate Genarated..!",201)
 
 class Certify(GenericAPIView):
@@ -92,17 +87,15 @@ class Certify(GenericAPIView):
         
         
     def post(self,request):
-        print(request.session)
         user_email = request.data['user_email']
         username = User.objects.get(username=user_email).username
-        try:
-            certificate_id = request.session[str(username)]    
-        except KeyError:
+        certificate_id = get_session_by_key(key=username)    
+        if certificate_id is None:
             return Response("Certificate already Certifyed...!",200)    
         crt = certfication.objects.get(id=certificate_id)
         crt.status="Completed"
         crt.save()
-        del request.session[str(username)]
+        delete_session_by_key(key=username)
         return Response("Certificate Certifyed...!",200)
         
         
