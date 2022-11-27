@@ -37,7 +37,7 @@ SUPER_USER_KEY = 'Backend!124'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'simmibackendtest.herokuapp.com','.vercel.app', '.now.sh']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'simmibackendtest.herokuapp.com','.vercel.app', '.now.sh','simmibackend.pythonanywhere.com']
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOWED_ORIGINS = [
