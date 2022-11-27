@@ -54,7 +54,7 @@ class Genarate(GenericAPIView):
         draw.text((950,730), "Completed On "+date,(0,0,0),font=font2)
         #draw.text((1187,833), event_name,(0,140,0),font=font2)
         img.save(f"{file_name}.jpg")
-        image = Img.open("certificate.jpg")
+        image = Img.open(f"{file_name}.jpg")
         pdf_file = img2pdf.convert(image.filename)
         file = open(f"{file_name}.pdf","wb")
         file.write(pdf_file)
@@ -79,6 +79,8 @@ class Genarate(GenericAPIView):
         )
         delete_session_by_key(key=username)
         create_session(key=str(username), value=str(crt.id),expiry_date=datetime.now()+ timedelta(minutes=240))
+        os.remove(f"{file_name}.jpg")
+        os.remove(f"{file_name}.pdf")
         return Response("Certificate Genarated..!",201)
 
 class Certify(GenericAPIView):
