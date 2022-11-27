@@ -4,10 +4,10 @@
     {
       "src": "simmibackend/wsgi.py",
       "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python-3.10.5" }
+      "config": { "maxLambdaSize": "15mb", "runtime": "python-3.10" }
     },
     {
-      "src": "build_files.sh",
+      "src": "build.sh",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "staticfiles"
