@@ -12,6 +12,7 @@ django-cors-headers==3.13.0
 django-heroku==0.3.1
 django-rest-knox==4.2.0
 djangorestframework==3.14.0
+img2pdf==0.4.4
 djangorestframework-simplejwt==5.2.2
 django-filter==22.1
 drf-extra-fields==3.4.1
