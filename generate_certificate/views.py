@@ -17,7 +17,7 @@ from django.contrib.auth.models import User
 from .extras import create_session,get_session_by_key,delete_session_by_key,indian_currency_format
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from Razorpay.models import Transactions,Subscription
-from .models import DonationCetificates
+from .models import DonationCetificates,SubscriptionCetificates
         
 
 class Genarate(GenericAPIView):
@@ -202,7 +202,7 @@ class Genarate_Subscription_Certificate(GenericAPIView):
         for obj in self.get_queryset().filter(user=user):
             trance_id = obj.id
             try:
-                trance =SubscriptionCetificates.objects.get(transactions_id=trance_id)
+                trance =SubscriptionCetificates.objects.get(subscription_id=trance_id)
                 pass
             except SubscriptionCetificates.DoesNotExist:
                 transaction = Subscription.objects.get(id=trance_id)
@@ -241,7 +241,7 @@ class Genarate_Subscription_Certificate(GenericAPIView):
                 image.close()
                 pdf = File(open(f"{file_name}.pdf","rb"))
                 img.close()
-                trance = DonationCetificates.objects.create(transactions_id=trance_id,user=transaction.user,certificate=pdf)
+                trance = SubscriptionCetificates.objects.create(subscription_id=trance_id,user=transaction.user,certificate=pdf)
                 pdf.close()
                 os.remove(f"{file_name}.jpg")
                 os.remove(f"{file_name}.pdf")
@@ -252,10 +252,10 @@ class Genarate_Subscription_Certificate(GenericAPIView):
             return Response(None,200) 
         objs = []
         for donation in data:
-            current_transaction = Subscription.objects.get(id=donation.transactions_id)
+            current_transaction = Subscription.objects.get(id=donation.subscription_id)
             amt = indian_currency_format(int(current_transaction.amount))
             certificate = None
-            if current_transaction.status == "Completed":
+            if current_transaction.status == "completed":
                 certificate = donation.certificate.url
             obj = {
                 "date" : current_transaction.date,
