@@ -1,1 +1,1 @@
-web: gunicorn simmibackend.wsgi
+web: gunicorn simmibackend.wsgi --log-file -

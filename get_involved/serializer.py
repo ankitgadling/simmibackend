@@ -30,3 +30,16 @@ class PublicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publication
         fields = '__all__'
+
+
+class AwardsRecognitionSerializer(serializers.ModelSerializer):
+    image = HybridImageField()
+    class Meta:
+        model = AwardsRecognition
+        fields = '__all__'
+
+class StoryOfChangeSerializer(serializers.ModelSerializer):
+    image = HybridImageField()
+    class Meta:
+        model = StoryOfChange
+        fields = '__all__'

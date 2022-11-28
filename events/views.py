@@ -113,7 +113,6 @@ class EventModifyView(UpdateModelMixin,GenericAPIView,RetrieveModelMixin,Destroy
                     "category":event.category,
                     "time":event.time.strftime('%d-%b-%Y %I:%M %p'),
                     "duration":event.duration,
-                    "duration":event.duration,
                     'venue':event.venue,
                     "status":status,
                     "image_1":event.image_1.url,
@@ -130,7 +129,6 @@ class EventModifyView(UpdateModelMixin,GenericAPIView,RetrieveModelMixin,Destroy
                     "category":event.category,
                     "time":event.time.strftime('%d-%b-%Y %I:%M %p'),
                     "duration":event.duration,
-                    "duration":event.duration,
                     'venue':event.venue,
                     "status":status,
                     "image_1":None,
@@ -138,9 +136,6 @@ class EventModifyView(UpdateModelMixin,GenericAPIView,RetrieveModelMixin,Destroy
                     "image_3":None,
             }
         return Response(ev)
-        
-        
-        
     def put(self,request,*args,**kwargs):
         return self.update(request,*args,**kwargs)
 

@@ -37,7 +37,7 @@ SUPER_USER_KEY = 'Backend!124'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'simmibackendtest.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'simmibackendtest.herokuapp.com','.vercel.app', '.now.sh','simmibackend.pythonanywhere.com']
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOWED_ORIGINS = [
@@ -186,6 +186,7 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+STATICFILES_DIRS = [BASE_DIR/'static',]
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 

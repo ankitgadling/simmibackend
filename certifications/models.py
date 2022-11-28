@@ -9,7 +9,7 @@ class certfication(models.Model):
     event_name=models.CharField(max_length=50)
     mentor_name=models.CharField(max_length=25) 
     issue_date=models.DateField()
-    img=models.ImageField(upload_to = "certificate")
+    img=models.FileField(upload_to = "certificate")
     status=models.CharField(max_length=15,choices=option)
     user = models.ForeignKey(User, on_delete=models.CASCADE) 
 class user_certificates(models.Model):
