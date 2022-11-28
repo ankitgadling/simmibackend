@@ -16,7 +16,7 @@ from django.core.files import File
 from django.contrib.auth.models import User
 from .extras import create_session,get_session_by_key,delete_session_by_key,indian_currency_format
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from Razorpay.models import Transactions
+from Razorpay.models import Transactions,Subscription
 from .models import DonationCetificates
         
 
@@ -120,7 +120,6 @@ class Genarate_Donation_Certificate(GenericAPIView):
     def post(self,request):
         email = request.data['email']
         user = User.objects.get(username=email)
-        print(user.username)
         for obj in self.get_queryset().filter(user=user):
             trance_id = obj.id
             try:
@@ -189,6 +188,84 @@ class Genarate_Donation_Certificate(GenericAPIView):
                 "action":action,
                 "pdf_file":certificate
             }       
+            objs.append(obj)
+        return Response(objs)
+            
+            
+class Genarate_Subscription_Certificate(GenericAPIView):
+    queryset = Subscription.objects.all()
+    serializer_class = GenarateDonationSerializer
+    
+    def post(self,request):
+        email = request.data['email']
+        user = User.objects.get(username=email)
+        for obj in self.get_queryset().filter(user=user):
+            trance_id = obj.id
+            try:
+                trance =SubscriptionCetificates.objects.get(transactions_id=trance_id)
+                pass
+            except SubscriptionCetificates.DoesNotExist:
+                transaction = Subscription.objects.get(id=trance_id)
+                date = transaction.date
+                donar_name = transaction.user.first_name+transaction.user.last_name
+                donar_name = str(donar_name).upper()
+                donar_cause = transaction.cause
+                cuases = ["Education","Livlihood","HealthCare","Women Empowerment"]
+                if donar_cause not in cuases:
+                    donar_cause = "To Simmifoundation"
+                donar_ammount = indian_currency_format(int(transaction.amount))+" INR"
+                file_name = transaction.user.username+str(trance_id)+"Subscription"
+                l2 ="genarate certification for event of simmifoundation simmifoundation sample text forgenarate certification for event " 
+                l3 ="certification for event of simmifoundation sample text for genarate simmifoundation " 
+                
+                urllib.request.urlretrieve("https://res.cloudinary.com/dcc8pmavm/image/upload/v1669456371/media/static_files/Picsart_22-11-26_15-13-08-069_mlhepv.jpg","donation.jpg")
+                img = Img.open("donation.jpg")
+                #urllib.request.urlretrieve('https://res.cloudinary.com/dcc8pmavm/raw/upload/v1669015852/media/static_files/Arial_wwaooe.ttf',"Arial.ttf")
+                font = ImageFont.truetype("Arial.ttf",27)
+                font2 = ImageFont.truetype("Arial.ttf",25)
+                draw = ImageDraw.Draw(img)
+                draw.text((237,418), l2,(105,105,105),font=font2)
+                draw.text((200,450), l3,(105,105,105),font=font2)
+                draw.text((1418,168), str(trance_id)[7:len(str(trance_id))],(80,80,80),font=font2)
+                draw.text((1460,547), date.strftime("%d-%b-%Y"),(80,80,80),font=font)
+                draw.text((174,700), donar_name,(80,80,80),font=font)
+                draw.text((174,825), donar_cause,(80,80,80),font=font)
+                draw.text((174,960), donar_ammount,(80,80,80),font=font)
+                img.save(f"{file_name}.jpg")
+                
+                image = Img.open(f"{file_name}.jpg")
+                pdf_file = img2pdf.convert(image.filename)
+                file = open(f"{file_name}.pdf","wb")
+                file.write(pdf_file)
+                file.close()
+                image.close()
+                pdf = File(open(f"{file_name}.pdf","rb"))
+                img.close()
+                trance = DonationCetificates.objects.create(transactions_id=trance_id,user=transaction.user,certificate=pdf)
+                pdf.close()
+                os.remove(f"{file_name}.jpg")
+                os.remove(f"{file_name}.pdf")
+                
+        
+        data = SubscriptionCetificates.objects.filter(user=user)
+        if data is None:
+            return Response(None,200) 
+        objs = []
+        for donation in data:
+            current_transaction = Subscription.objects.get(id=donation.transactions_id)
+            amt = indian_currency_format(int(current_transaction.amount))
+            certificate = None
+            if current_transaction.status == "Completed":
+                certificate = donation.certificate.url
+            obj = {
+                "date" : current_transaction.date,
+                "cause" : current_transaction.cause,
+                "donation_id":current_transaction.id,
+                "ammount": amt,
+                "period" : current_transaction.period,
+                "status":current_transaction.status,
+                "pdf_file":certificate
+            }
             objs.append(obj)
         return Response(objs)
             

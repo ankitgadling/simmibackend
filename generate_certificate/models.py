@@ -17,3 +17,8 @@ class DonationCetificates(models.Model):
     certificate = models.FileField(upload_to="donation/certificates")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     
+class SubscriptionCetificates(models.Model):
+    subscription_id = models.CharField(max_length=30)
+    certificate = models.FileField(upload_to="donation/subscription/certificates")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
