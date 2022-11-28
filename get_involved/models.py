@@ -1,6 +1,6 @@
 from datetime import date
 from django.db import models
-
+from django.utils import timezone
 
 class IndividualSupporter(models.Model):
     name = models.CharField(max_length=30)
@@ -39,7 +39,7 @@ class EminentPersonality(models.Model):
     name = models.CharField(max_length=20)
     designation = models.CharField(max_length=20)
     description = models.TextField()
-    date = models.DateField(default=date.today())
+    date = models.DateField(default=timezone.now)
     image = models.ImageField(upload_to= 'eminent_personality', blank=True)
     company_name = models.CharField(max_length=40, blank=True, null=True)
 
@@ -62,7 +62,7 @@ class AwardsRecognition(models.Model):
     recognition_from = models.CharField(max_length=100)
     recognition_by = models.CharField(max_length=100)
     description = models.TextField()
-    issue_on = models.DateField(default=date.today())
+    issue_on = models.DateField(default=timezone.now)
     image = models.ImageField(upload_to = 'awards and recognition', blank=True)
 
     def __str__(self):
@@ -74,7 +74,7 @@ class StoryOfChange(models.Model):
     category = models.CharField(max_length=50)
     syndrome = models.CharField(max_length=255)
     how_we_helped = models.TextField()
-    year = models.DateField(default=date.today())
+    year = models.DateField(default=timezone.now)
     image = models.ImageField(upload_to = 'story of change', blank=True)
 
     def __str__(self):
