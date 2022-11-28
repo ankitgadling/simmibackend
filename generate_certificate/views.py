@@ -59,7 +59,7 @@ class Genarate(GenericAPIView):
         file = open(f"{file_name}.pdf","wb")
         file.write(pdf_file)
         file.close()
-        
+        image.close()
         pdf = File(open(f"{file_name}.pdf","rb"))
         # image = file
         # output = io.BytesIO()
@@ -77,8 +77,10 @@ class Genarate(GenericAPIView):
         crt = certfication.objects.create(
             event_name=event_name2,mentor_name=mentor_name,issue_date=date2,img=pdf,status="Not Completed",user=user
         )
+        pdf.close()
         delete_session_by_key(key=username)
         create_session(key=str(username), value=str(crt.id),expiry_date=datetime.now()+ timedelta(minutes=240))
+        create_session(key=str(username+"currentevent"), value=str(event_id),expiry_date=datetime.now()+ timedelta(minutes=240))
         os.remove(f"{file_name}.jpg")
         os.remove(f"{file_name}.pdf")
         return Response("Certificate Genarated..!",201)
@@ -90,14 +92,20 @@ class Certify(GenericAPIView):
         
     def post(self,request):
         user_email = request.data['user_email']
-        username = User.objects.get(username=user_email).username
+        user = User.objects.get(username=user_email)
+        username = user.username
         certificate_id = get_session_by_key(key=username)    
+        event_id = get_session_by_key(key=username+"currentevent")    
         if certificate_id is None:
             return Response("Certificate already Certifyed...!",200)    
         crt = certfication.objects.get(id=certificate_id)
         crt.status="Completed"
         crt.save()
         delete_session_by_key(key=username)
+        event = Event.objects.get(id=event_id)
+        event.attendence += 1
+        event.save()
+        delete_session_by_key(key=username+"currentevent")
         return Response("Certificate Certifyed...!",200)
         
         
