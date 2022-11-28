@@ -1,4 +1,8 @@
+import email
+from pyexpat import model
+from re import T
 from django.db import models
+from django.core.validators import MaxLengthValidator,MinLengthValidator
 
 # Create your models here.
 
@@ -18,3 +22,19 @@ class Jobs(models.Model):
     def __str__(self):
         return self.title
     
+class jobappliedbyuser(models.Model):
+    how_you_heared_us=models.TextField()
+    jobid=models.IntegerField()
+    country=models.CharField(max_length=40)
+    first_name=models.CharField(max_length=40)
+    last_name=models.CharField(max_length=40)
+    adhar_no=models.CharField(max_length=16,validators=[MinLengthValidator(16),MaxLengthValidator(16)],null=False)
+    applied_on=models.DateField(auto_now_add=True)
+    address_lane=models.TextField()
+    city=models.CharField(max_length=30)
+    postal_code=models.CharField(max_length=30)
+    email=models.EmailField()
+    country_code=models.CharField(max_length=5)
+    mobile_number=models.CharField(max_length=16,null=False)
+    # resume=models.FileField(upload_to='Jobs/Resume/')
+    # job = models.ForeignKey(Jobs., on_delete=models.CASCADE) 
