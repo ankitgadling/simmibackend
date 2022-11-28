@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -10,4 +10,10 @@ class CustomSessions(models.Model):
     created_date = models.DateTimeField()
     expiry_date = models.DateTimeField()
     
+    
+
+class DonationCetificates(models.Model):
+    transactions_id = models.CharField(max_length=30,default="-")
+    certificate = models.FileField(upload_to="donation/certificates")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     

@@ -25,7 +25,7 @@ class Transactions(models.Model):
     is_paid = models.BooleanField(default=False)
     cause = models.CharField(max_length=50, default='Simmi Foundation')
     date = models.DateTimeField(auto_now=True)
-
+    
 
 class Subscription(models.Model):
     id = models.CharField(max_length=255, primary_key=True)

@@ -30,3 +30,35 @@ def delete_session_by_key(key):
         session.delete()
     except CustomSessions.DoesNotExist:
         pass
+    
+    
+    
+def indian_currency_format(ruppes):
+    final_ruppes = ""
+    count = 0
+    if ruppes < 1000:
+        return str(ruppes)
+    elif ruppes > 999 and ruppes < 9999:
+        for i in str(ruppes):
+            if count == 1:
+                final_ruppes+=","+i
+            else:
+                final_ruppes+=i
+            count += 1
+        return final_ruppes
+    elif ruppes > 9999 and ruppes < 99999:
+        for i in str(ruppes):
+            if count == 2:
+                final_ruppes+=","+i
+            else:
+                final_ruppes+=i
+            count += 1
+        return final_ruppes
+    else:
+        for i in str(ruppes):
+            if count == 1 or count == 3:
+                final_ruppes+=","+i
+            else:
+                final_ruppes+=i
+            count += 1
+        return final_ruppes    
