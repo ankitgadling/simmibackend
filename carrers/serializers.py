@@ -6,15 +6,18 @@ class Jobserializer(ModelSerializer):
         model = Jobs
         fields = "__all__"
 
-class Jobapplyserializer(ModelSerializer):
-    class Meta:
-        model=jobappliedbyuser
-        fields="__all__"
+
 class Job(ModelSerializer):
     class Meta:
         model = Jobs
         fields = ["department"]
         
+class Jobapplyserializer(ModelSerializer):
+    job = Job()
+    class Meta:
+        model=jobappliedbyuser
+        fields="__all__"
+
 class ShortJobapplyserializer(ModelSerializer):
     job=Job()
     

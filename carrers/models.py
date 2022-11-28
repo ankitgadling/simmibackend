@@ -37,4 +37,4 @@ class jobappliedbyuser(models.Model):
     country_code=models.CharField(max_length=5)
     mobile_number=models.CharField(max_length=16,null=False)
     # resume=models.FileField(upload_to='Jobs/Resume/')
-    # job = models.ForeignKey(Jobs., on_delete=models.CASCADE) 
+    job = models.ForeignKey(Jobs, on_delete=models.CASCADE) 
