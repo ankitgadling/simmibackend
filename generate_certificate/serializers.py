@@ -16,9 +16,7 @@ class Gen(serializers.Serializer):
 
 
 class GenarateDonationSerializer(serializers.Serializer):
-    transaction_id = serializers.CharField()
     email = serializers.EmailField()
-    
     
 class UserSerializer(ModelSerializer):
     class Meta:

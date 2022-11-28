@@ -119,7 +119,9 @@ class Genarate_Donation_Certificate(GenericAPIView):
     
     def post(self,request):
         email = request.data['email']
-        for obj in self.get_queryset():
+        user = User.objects.get(username=email)
+        print(user.username)
+        for obj in self.get_queryset().filter(user=user):
             trance_id = obj.id
             try:
                 trance =DonationCetificates.objects.get(transactions_id=trance_id)
@@ -160,15 +162,35 @@ class Genarate_Donation_Certificate(GenericAPIView):
                 file.close()
                 image.close()
                 pdf = File(open(f"{file_name}.pdf","rb"))
-                
+                img.close()
                 trance = DonationCetificates.objects.create(transactions_id=trance_id,user=transaction.user,certificate=pdf)
                 pdf.close()
                 os.remove(f"{file_name}.jpg")
                 os.remove(f"{file_name}.pdf")
-        user = User.objects.get(username=email)
+                
+        
         data = DonationCetificates.objects.filter(user=user)
         if data is None:
-            return Response(None,200)        
+            return Response(None,200) 
+        objs = []
+        for donation in data:
+            current_transaction = Transactions.objects.get(id=donation.transactions_id)
+            amt = indian_currency_format(int(current_transaction.amount))
+            action = "Failed"
+            certificate = None
+            if current_transaction.is_paid:
+                action = "Success"
+                certificate = donation.certificate.url
+            obj = {
+                "date" : current_transaction.date,
+                "cause" : current_transaction.cause,
+                "donation_id":current_transaction.id,
+                "ammount": amt,
+                "action":action,
+                "pdf_file":certificate
+            }       
+            objs.append(obj)
+        return Response(objs)
             
             
         
