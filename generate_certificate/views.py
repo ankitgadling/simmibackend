@@ -179,7 +179,7 @@ class Genarate_Donation_Certificate(GenericAPIView):
             certificate = None
             if current_transaction.is_paid:
                 action = "Success"
-                certificate = donation.certificate.url
+                certificate = donation.certificate
             obj = {
                 "date" : current_transaction.date,
                 "cause" : current_transaction.cause,
@@ -256,7 +256,7 @@ class Genarate_Subscription_Certificate(GenericAPIView):
             amt = indian_currency_format(int(current_transaction.amount))
             certificate = None
             if current_transaction.status == "completed":
-                certificate = donation.certificate.url
+                certificate = donation.certificate.name
             obj = {
                 "date" : current_transaction.date,
                 "cause" : current_transaction.cause,

@@ -47,9 +47,8 @@ class userdetailsupdateview(generics.GenericAPIView):
     queryset = SimmiUserDetails.objects.all()
     serializer_class = userupdateserializer
 
-    def put(self,request,pk=None,*args,**kwargs):
-        context = {"pk":pk}
-        serializer = self.get_serializer(data=request.data,context=context)
+    def put(self,request,*args,**kwargs):
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         return Response({"msg": "Update Successfull...!"})
@@ -58,9 +57,8 @@ class userprofileupdateview(generics.GenericAPIView):
     queryset = SimmiUserDetails.objects.all()
     serializer_class = userprofileupdateserializer
 
-    def put(self,request,pk=None,*args,**kwargs):
-        context = {"pk":pk}
-        serializer = self.get_serializer(data=request.data,context=context)
+    def put(self,request,*args,**kwargs):
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         return Response({"msg": "Profile updated...!"})
@@ -107,9 +105,9 @@ class ChangePassword(generics.GenericAPIView):
         old_password = request.data['old_password']
         new_password = request.data['new_password']
         confirm_password = request.data['confirm_password']
-        user = request.session['current_user']
+        email = request.data['email']
         if confirm_password == new_password:
-            user = User.objects.get(id=user)
+            user = User.objects.get(username=email)
             if check_password(old_password , user.password):
                 user.set_password(new_password)
                 user.save()

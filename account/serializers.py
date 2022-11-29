@@ -76,6 +76,7 @@ class accountserializer(serializers.ModelSerializer):
 
 
 class userupdateserializer(serializers.ModelSerializer):
+    email = serializers.EmailField()
     class Meta:
         model = SimmiUserDetails
         exclude = ['user','profile']
@@ -84,7 +85,7 @@ class userupdateserializer(serializers.ModelSerializer):
         first_name = attrs['first_name']
         last_name = attrs['last_name']
         ph_no = attrs['ph_no']
-        
+        email = attrs['email']
         # names validations
         if not str(first_name+last_name).isalpha():
             raise serializers.ValidationError("Please use alphabets only for firstname and lastname...!")
@@ -97,24 +98,30 @@ class userupdateserializer(serializers.ModelSerializer):
         first_name = validated_data['first_name']
         last_name = validated_data['last_name']
         ph_no = validated_data['ph_no']
-        pk = self.context.get('pk')
-        userdetails = SimmiUserDetails.objects.get(id = pk)
+        email = validated_data['email']
+        user = User.objects.get(username=email)
+        userdetails = SimmiUserDetails.objects.get(user= user)
         userdetails.first_name = first_name
         userdetails.last_name = last_name
         userdetails.ph_no = ph_no
         userdetails.save()
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
         return userdetails        
         
 class userprofileupdateserializer(serializers.ModelSerializer):
+    email = serializers.EmailField()
     class Meta:
         model = SimmiUserDetails
-        fields = ['profile']
+        fields = ['profile','email']
     
     def create(self, validated_data):
         profile = validated_data['profile']
+        email = validated_data['email']
+        user = User.objects.get(username=email)
         pk = self.context.get('pk')
-        
-        user = SimmiUserDetails.objects.get(id=pk)
+        user = SimmiUserDetails.objects.get(user=user)
         user.profile = profile
         user.save()
         return user
