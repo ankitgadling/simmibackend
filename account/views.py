@@ -75,7 +75,7 @@ class Login_api(generics.GenericAPIView):
         username = request.data['email']
         password = request.data['password']
         user = authenticate(username = username , password = password)
-        if user is not None:
+        if user is not None and not user.is_staff:
             try:
                 obj = SimmiUserDetails.objects.get(user=user)
             except SimmiUserDetails.DoesNotExist:
