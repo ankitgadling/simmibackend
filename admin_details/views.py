@@ -87,7 +87,7 @@ class InviteAdminView(GenericAPIView):
         key = name+"_email"
         now = datetime.now()
         if res:
-            session = create_session(key=key, value=invite_email, created_date=now, expiry_date=now+timedelta(days=2))    
+            session = create_session(key=key, value=invite_email, expiry_date=now+timedelta(days=2))   
         else:
             return Response("Something went wrong..!",400)
         return Response({"data":"Invitation was sent to this email "+"'"+invite_email+"'"})
