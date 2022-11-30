@@ -21,7 +21,6 @@ from .extras import create_session,get_session_by_key,delete_session_by_key,indi
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from Razorpay.models import Transactions,Subscription
 from .models import DonationCetificates,SubscriptionCetificates
-from drf_pdf.response import PDFFileResponse
 from rest_framework.renderers import BaseRenderer
 from rest_framework.parsers import BaseParser
 
