@@ -24,7 +24,7 @@ class ShortJobapplyserializer(ModelSerializer):
     
     class Meta:
         model=jobappliedbyuse
-        fields=["first_name","applied_on","job"]
+        fields=["id","first_name","applied_on","job"]
 
 class newjobapplyserializer(serializers.Serializer):
     how_you_heared_us=serializers.CharField() 
