@@ -32,7 +32,7 @@ urlpatterns = [
     path('contact/', include("contact.urls")),
     path('api/donation/', include(router.urls)),
     path('api/carrers/', include("carrers.urls")),
-    path('blogs/', include('blog.urls')),
+    path('welfare/', include('welfare.urls')),
     path('api/gallery/', include("gallery.urls")),
     path('latestnews/', include('latestnews.urls')),
     path('api/events/', include('events.urls')),

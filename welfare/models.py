@@ -1,7 +1,5 @@
-from distutils.command.upload import upload
-from http.client import UnimplementedFileMode
+from datetime import date
 from django.db import models
-import PIL
 
 class Category(models.Model):
     category = models.CharField(max_length=20)
@@ -15,8 +13,8 @@ class Blog(models.Model):
     title = models.CharField(max_length=50)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     content = models.TextField()
-    image = models.ImageField(upload_to='blogs')
-    date_posted = models.DateField(auto_now_add=True)
+    image = models.ImageField(upload_to='welfare/blogs')
+    date_posted = models.DateField(default=date.today())
 
     def __str__(self) -> str:
         return self.title

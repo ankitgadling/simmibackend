@@ -69,7 +69,7 @@ INSTALLED_APPS = [
     'volunteer',
     'carrers',
     'knox',
-    'blog',
+    'welfare',
     'events',
     'gallery',
     'latestnews',
