@@ -1,12 +1,15 @@
 from rest_framework.response import Response
+from django.http import HttpResponse
 from rest_framework.generics import GenericAPIView
+from rest_framework.decorators import action
 from certifications.models import certfication
-from .serializers import CertSerializer , Gen,GenarateDonationSerializer,DonationDataSerializer
+from .serializers import CertSerializer , Gen,GenarateDonationSerializer,DonationDataSerializer,DonationDownloadSerializer,SubscriptionDownloadSerializer
 from events.models import Event
 from django.contrib.auth.models import User
 from PIL import Image as Img
 from PIL import ImageDraw,ImageFont
 from datetime import datetime,timedelta
+from wsgiref.util import FileWrapper
 import io
 import os
 import sys
@@ -18,7 +21,9 @@ from .extras import create_session,get_session_by_key,delete_session_by_key,indi
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from Razorpay.models import Transactions,Subscription
 from .models import DonationCetificates,SubscriptionCetificates
-        
+from drf_pdf.response import PDFFileResponse
+from rest_framework.renderers import BaseRenderer
+from rest_framework.parsers import BaseParser
 
 class Genarate(GenericAPIView):
     queryset = certfication.objects.all()
@@ -269,6 +274,50 @@ class Genarate_Subscription_Certificate(GenericAPIView):
             objs.append(obj)
         return Response(objs)
             
-            
-        
-        
+from django.http import FileResponse
+from rest_framework import viewsets, renderers
+from rest_framework.decorators import action
+
+class PassthroughRenderer(renderers.BaseRenderer):
+    """
+        Return data as-is. View should supply a Response.
+    """
+    media_type = ''
+    format = ''
+    charset = "utf-8"
+    def render(self, data, accepted_media_type=None, renderer_context=None):
+        return data
+
+class donation_certificate_download(GenericAPIView):
+    queryset = DonationCetificates.objects.all()
+    serializer_class = DonationDownloadSerializer
+    def post(self,request):
+        id = request.data['id']
+        user = User.objects.get(username=request.data['email'])
+        donation = DonationCetificates.objects.get(transactions_id=id,user=user)
+        path = donation.certificate.url
+        file_name = user.username+"Donation"+id+".pdf"
+        urllib.request.urlretrieve(path+".pdf",file_name)
+        file_handle = open(file_name,"rb")
+        response = HttpResponse(FileWrapper(file_handle), content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename={file_name}'
+        return response
+    
+
+
+class subscription_certificate_download(GenericAPIView):
+    queryset = SubscriptionCetificates.objects.all()
+    serializer_class = SubscriptionDownloadSerializer
+    def post(self,request):
+        id = request.data['id']
+        user = User.objects.get(username=request.data['email'])
+        donation = SubscriptionCetificates.objects.get(subscription_id=id,user=user)
+        path = donation.certificate.url
+        file_name = user.username+"Subscription"+id+".pdf"
+        urllib.request.urlretrieve(path+".pdf",file_name)
+        file_handle = open(file_name,"rb")
+        response = HttpResponse(FileWrapper(file_handle), content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename={file_name}'
+        return response
+
+

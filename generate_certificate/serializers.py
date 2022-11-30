@@ -30,3 +30,11 @@ class DonationDataSerializer(ModelSerializer):
         model = DonationCetificates
         fields = "__all__"
         
+
+class DonationDownloadSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    id = serializers.CharField()
+    
+class SubscriptionDownloadSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    id = serializers.CharField()
