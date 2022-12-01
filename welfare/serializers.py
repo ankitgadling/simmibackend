@@ -1,4 +1,3 @@
-from unicodedata import category
 from rest_framework import serializers
 from .models import *
 from drf_extra_fields.fields import HybridImageField
@@ -20,3 +19,16 @@ class BlogSerializer(serializers.ModelSerializer):
         category_name = super().to_representation(instance)
         category_name['category'] = CategorySerializer(instance.category).data
         return category_name
+
+class QuoteSerializer(serializers.ModelSerializer):
+    image = HybridImageField()
+    class Meta:
+        model = Quote
+        fields = '__all__'
+
+class TimelineSerializer(serializers.ModelSerializer):
+    date = serializers.DateField(format='%m/%Y',input_formats=None)
+
+    class Meta:
+        model = Timeline
+        fields = '__all__'
