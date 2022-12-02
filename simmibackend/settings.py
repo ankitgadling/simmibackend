@@ -24,8 +24,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.getenv('Email')
-EMAIL_HOST_PASSWORD = os.getenv('Password')
+EMAIL_HOST_USER = "SimmiFoundationSite@gmail.com"#os.getenv('Email')
+EMAIL_HOST_PASSWORD = "ydmocmkjmfmxfuyi"#os.getenv('Password')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -132,12 +132,12 @@ WSGI_APPLICATION = 'simmibackend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dcscb5vb3cmq4a',
-        'USER': 'mmetycusmxofaa',
-        'HOST': 'ec2-44-195-100-240.compute-1.amazonaws.com',
-        'PORT': '5432',
-        'PASSWORD': '12c0733ea3cef9207b9f91841690280c83cd7d0fc4bea154a7a15df88047a2b9'
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'simmibackend$default',
+        'USER': 'simmibackend',
+        'HOST': 'simmibackend.mysql.pythonanywhere-services.com',
+        'PORT': '3306',
+        'PASSWORD': 'python@1234'
     }
 }
 
