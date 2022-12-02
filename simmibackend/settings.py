@@ -16,6 +16,7 @@ from datetime import timedelta
 import os
 from dotenv import load_dotenv
 load_dotenv()
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,16 +25,16 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER =os.getenv('Email')
-EMAIL_HOST_PASSWORD = os.getenv('Password')
+EMAIL_HOST_USER =config('Email')
+EMAIL_HOST_PASSWORD = config('Password')
 #"SimmiFoundationSite@gmail.com"
 #"ydmocmkjmfmxfuyi"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@kayr08p*4q4inc5@adel6$h)bz#fywn0bh7tcxvdf3x4c8!@*'
-SUPER_USER_KEY = 'Backend!124'
+SECRET_KEY = config('SECRET_KEY')
+SUPER_USER_KEY = config('SUPER_USER_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = True
@@ -134,11 +135,11 @@ WSGI_APPLICATION = 'simmibackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'simmibackend',
-        'USER': 'simmipostgres',
-        'HOST': 'simmifoundation.ckidsajoxitc.ap-south-1.rds.amazonaws.com',
-        'PORT': '5432',
-        'PASSWORD': 'appleAWS-$507'
+        'NAME': config('DBNAME'),
+        'USER': config('DBUSER'),
+        'HOST': config('DBHOST'),
+        'PORT': config('DBPORT',cast=int),
+        'PASSWORD': config('DBPASS')
     }
 }
 
@@ -192,9 +193,9 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dcc8pmavm',
-    'API_KEY': '448125162113113',
-    'API_SECRET': 'jew1tg0KW9WRWDbA_0npQlMXqhg'
+    'CLOUD_NAME': config('CLOUD_NAME'),
+    'API_KEY': config('API_KEY'),
+    'API_SECRET': config('API_SECRET')
 }
 
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
