@@ -24,9 +24,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "SimmiFoundationSite@gmail.com"#os.getenv('Email')
-EMAIL_HOST_PASSWORD = "ydmocmkjmfmxfuyi"#os.getenv('Password')
-
+EMAIL_HOST_USER =os.getenv('Email')
+EMAIL_HOST_PASSWORD = os.getenv('Password')
+#"SimmiFoundationSite@gmail.com"
+#"ydmocmkjmfmxfuyi"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
