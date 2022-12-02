@@ -9,7 +9,6 @@ dj-database-url==1.0.0
 Django==4.1.2
 django-cloudinary-storage==0.3.0
 django-cors-headers==3.13.0
-django-heroku==0.3.1
 django-rest-knox==4.2.0
 djangorestframework==3.14.0
 img2pdf==0.4.4
