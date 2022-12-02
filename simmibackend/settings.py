@@ -37,7 +37,7 @@ SUPER_USER_KEY = 'Backend!124'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'simmibackendtest.herokuapp.com','.vercel.app', '.now.sh','simmibackend.pythonanywhere.com']
+ALLOWED_HOSTS = ['*']
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOWED_ORIGINS = [
@@ -132,12 +132,12 @@ WSGI_APPLICATION = 'simmibackend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'simmibackend$default',
-        'USER': 'simmibackend',
-        'HOST': 'simmibackend.mysql.pythonanywhere-services.com',
-        'PORT': '3306',
-        'PASSWORD': 'python@1234'
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'simmibackend',
+        'USER': 'simmipostgres',
+        'HOST': 'simmifoundation.ckidsajoxitc.ap-south-1.rds.amazonaws.com',
+        'PORT': '5432',
+        'PASSWORD': 'appleAWS-$507'
     }
 }
 
