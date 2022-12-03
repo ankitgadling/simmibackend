@@ -27,8 +27,7 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER =config('Email')
 EMAIL_HOST_PASSWORD = config('Password')
-#"SimmiFoundationSite@gmail.com"
-#"ydmocmkjmfmxfuyi"
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
