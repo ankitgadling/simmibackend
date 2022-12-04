@@ -20,3 +20,8 @@ class QuoteViewSet(viewsets.ModelViewSet):
 class TimelineViewSet(viewsets.ModelViewSet):
     queryset = Timeline.objects.all()
     serializer_class = TimelineSerializer
+
+
+class StoryViewSet(viewsets.ModelViewSet):
+    queryset = Story.objects.all()
+    serializer_class = StorySerializer

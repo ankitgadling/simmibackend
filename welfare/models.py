@@ -34,3 +34,23 @@ class Timeline(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Story(models.Model):
+    choices = [
+        ('Education', 'EDUCATION'),
+        ('HealthCare', 'HEALTHCARE'),
+        ('Livelihood', 'LIVELIHOOD'),
+        ('Women Empowerment', 'WOMEN EMPOWERMENT'),
+        ('Others', 'OTHERS')
+    ]
+
+    title = models.CharField(max_length=30)
+    link = models.URLField(max_length=200, blank=True, null=True)
+    issue_on = models.DateField(default=date.today())
+    description = models.TextField()
+    image = models.ImageField(upload_to='welfare/story-of-change', blank=True)
+    category = models.CharField(max_length=20, choices=choices, default='Education')
+
+    def __str__(self):
+        return self.title
