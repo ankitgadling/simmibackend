@@ -8,6 +8,6 @@ router.register('category', CategoryViewSet, basename='category')
 router.register('blog', BlogViewSet, basename='blog')
 router.register('quote', QuoteViewSet, basename='quote')
 router.register('timeline', TimelineViewSet, basename='timeline')
-
+router.register('story', StoryViewSet, basename='story')
 
 urlpatterns = router.urls
