@@ -88,7 +88,6 @@ INSTALLED_APPS = [
     'tender',
     'django_filters',
     'admin_tender',
-    'example',
     'generate_certificate',
     'faq',
     'research'
