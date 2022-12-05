@@ -19,7 +19,6 @@ from carrers.views import GetJobs
 from contact.views import contact
 from .views import home
 from .router import router
-from example.views import V
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -52,8 +51,6 @@ urlpatterns = [
     path("api/genarate_certificate/",include("generate_certificate.urls")),
     path("api/faq/",include("faq.urls")),
     path("api/research/",include("research.urls")),
-    path('a',V.as_view()),
-    
 ]
 
 if settings.DEBUG:
