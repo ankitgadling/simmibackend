@@ -52,9 +52,12 @@ class AllEvents(GenericAPIView,ListModelMixin):
                     'venue':event.venue,
                     'online_link':event.online_link,
                     "status":status,
-                    "image_1":event.image_1.url,
-                    "image_2":event.image_2.url,
-                    "image_3":event.image_3.url,
+                    # "image_1":event.image_1.url,
+                    # "image_2":event.image_2.url,
+                    # "image_3":event.image_3.url,
+                    "image_1":"https://simmibackend.pythonanywhere.com"+event.image_1.url,
+                    "image_2":"https://simmibackend.pythonanywhere.com"+event.image_2.url,
+                    "image_3":"https://simmibackend.pythonanywhere.com"+event.image_3.url,
                 }
             except ValueError:
                 ev = {
@@ -115,9 +118,12 @@ class EventModifyView(UpdateModelMixin,GenericAPIView,RetrieveModelMixin,Destroy
                     "duration":event.duration,
                     'venue':event.venue,
                     "status":status,
-                    "image_1":event.image_1.url,
-                    "image_2":event.image_2.url,
-                    "image_3":event.image_3.url,
+                    # "image_1":event.image_1.url,
+                    # "image_2":event.image_2.url,
+                    # "image_3":event.image_3.url,
+                    "image_1":"https://simmibackend.pythonanywhere.com"+event.image_1.url,
+                    "image_2":"https://simmibackend.pythonanywhere.com"+event.image_2.url,
+                    "image_3":"https://simmibackend.pythonanywhere.com"+event.image_3.url,
                 }
         except:
             ev = {
