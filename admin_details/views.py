@@ -74,7 +74,7 @@ class InviteAdminView(GenericAPIView):
             font-family:'arial';
             text-decoration-line: none;
             color: lightcyan;
-            padding: 0.5%" href="https://simmibackendtest.herokuapp.com/api/admin_details/add_admin/{name}" class="mybtn">Accept Invitation</a>
+            padding: 0.5%" href="https://simmibackend.pythonanywhere.com/api/admin_details/add_admin/{name}" class="mybtn">Accept Invitation</a>
         </center>
         <br><br>
     </body>
