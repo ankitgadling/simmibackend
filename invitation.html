@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Invitation</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .head{
+        background-color: black;
+        width: 100%;
+        height: 10%;
+        margin: 0;
+    }
+    body{
+        background-color:antiquewhite
+        }
+    .out{
+        color:orange;
+        font-family: serif;
+        text-align: center;
+        margin-top: 5%;
+        }
+</style>
+<body>
+    <div class="head">
+        <center>
+            <img src="{% static 'logo.jpg' %}" width="23%" height="100px">
+        </center>
+    </div>
+    <center>
+        <br>
+        {% if res %}
+        <h1 class="out">
+            <img src="{% static 'checked.png' %}" width="130px" height="130px" >
+        <br>
+            {{msg}}</h1>
+        {% else %}
+        <h1 class="out" >
+            <img src="{% static 'cancel.png' %}" width="130px" height="130px" >
+        <br>
+            {{msg}}</h1>
+        {% endif %}
+    </center>
+</body>
+</html>
