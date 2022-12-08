@@ -100,8 +100,8 @@ class AddAdminView(GenericAPIView):
     def get(self,request,url_path=None):
         email = get_session_by_key(key=url_path+"_email")
         if email is None:
-            return Response("I am sorry you are soo late...!",200)
-            
+            return render(request, "invitation.html",context={"res":False,"msg":"I am sorry you are soo late...!"})
+        
         password = genarate_password()
         name = get_name_from_email(email=email)
             
@@ -137,7 +137,7 @@ class AddAdminView(GenericAPIView):
         email.content_subtype = "html"
         res =  email.send()
         delete_session_by_key(key=url_path+"_email")
-        return Response("Thanks for accepting our invitation, Now you are our admin. Your credentials was sent to your email, Thank you..!")
+        return render(request, "invitation.html",context={"res":True,"msg":"Thanks for accepting our invitation, Now you are our admin. Your credentials was sent to your email, Thank you..!"})
             
         
         
