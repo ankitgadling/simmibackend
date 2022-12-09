@@ -14,10 +14,7 @@ class PaymentFormSerializers(serializers.ModelSerializer):
         model=payment_method
         fields="__all__"
 
-class PaymentDetailSerializers(serializers.ModelSerializer):
-    class Meta:
-        model=payment_details
-        fields="__all__"
+
 
 class Give_help_serializers(serializers.ModelSerializer):
     class Meta:
@@ -27,4 +24,13 @@ class Give_help_serializers(serializers.ModelSerializer):
 class Upitranserializers(serializers.ModelSerializer):
     class Meta:
         model=upi_tran
+        fields="__all__"
+
+class PaymentShortserializer(serializers.ModelSerializer):
+    class Meta:
+        model=payment_details
+        fields=['desc','amount']
+class PaymentDetailSerializers(serializers.ModelSerializer):
+    class Meta:
+        model=payment_details
         fields="__all__"

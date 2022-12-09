@@ -51,6 +51,7 @@ urlpatterns = [
     path("api/genarate_certificate/",include("generate_certificate.urls")),
     path("api/faq/",include("faq.urls")),
     path("api/research/",include("research.urls")),
+    path("api/donate/",include('donate.urls'))
 ]
 
 if settings.DEBUG:
