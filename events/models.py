@@ -4,7 +4,7 @@ from datetime import datetime
 # Create your models here.
 
 class Event(models.Model):
-    event_name = models.CharField(max_length=50,unique=True)
+    event_name = models.CharField(max_length=50)
     event_description = models.TextField()
     speaker_name = models.CharField(max_length=50)
     Perk_of_attendig_event = models.TextField()
