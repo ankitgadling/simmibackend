@@ -19,11 +19,7 @@ class payment_method(models.Model):
     pay_using=models.IntegerField(choices=STATUS,default=0)
 
 
-class payment_details(models.Model):
 
-    card_no=models.IntegerField(validators=[MinLengthValidator(16),MaxLengthValidator(16)],null=False)
-    ccv=models.IntegerField(validators=[MinLengthValidator(3),MaxLengthValidator(3)])
-    exp_date=models.DateField(null=False)
 
 
 class Give_Your_Help(models.Model):
@@ -36,3 +32,19 @@ class upi_tran(models.Model):
 
 
 
+class payment_details(models.Model):
+    cause=(("Education","Education"),
+        ("Medical camps","Medical camps"),
+        ("Livelihood","Livelihood"),
+        ("Women empowerment","Women empowerment"),
+        ("Healthcare","Healthcare") )
+    subscription_plan=models.CharField(max_length=100)
+    cause_for_donation=models.CharField(choices=cause,max_length=100)
+    amount_type=models.CharField(max_length=100)
+    amount=models.CharField(max_length=9999999)
+    fname=models.CharField(max_length=25)
+    email=models.EmailField()
+    country_code=models.CharField(max_length=10)
+    num=models.CharField(max_length=18)
+    country=models.CharField(max_length=25)
+    desc=models.TextField()
