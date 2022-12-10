@@ -53,9 +53,9 @@ def PaymentPiechartViewset(request):
         for donation in models.payment_details.objects.all():
             if getattr(donation,"cause_for_donation") == "Education":
                 total_education_cause_objs += 1
-            elif getattr(donation,"cause_for_donation")== "Women Empowerment":
+            elif getattr(donation,"cause_for_donation")== "Women empowerment":
                 total_women_empowerment_cause_objs += 1
-            elif getattr(donation,"cause_for_donation") == "Livelyhood":
+            elif getattr(donation,"cause_for_donation") == "Livelihood":
                 total_livelyhood_cause_objs += 1
             elif getattr(donation,"cause_for_donation") == "Medical camps":
                 total_medical_cause_objs += 1
@@ -74,3 +74,5 @@ class PaymentShortViews(GenericAPIView,ListModelMixin):
     serializer_class=serializers.PaymentShortserializer
     def get(self,request,*args,**kwargs):
         return self.list(request,*args,**kwargs)
+
+

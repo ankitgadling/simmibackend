@@ -17,7 +17,6 @@ class GetJobs(GenericAPIView,ListModelMixin,CreateModelMixin):
     serializer_class = Jobserializer
     def get(self,request,*args,**kwargs):
         return self.list(request,*args,**kwargs) 
-    
     def post(self,request,*args,**kwargs):
         return self.create(request,*args,**kwargs) 
         
