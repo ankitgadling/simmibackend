@@ -57,10 +57,10 @@ def PaymentPiechartViewset(request):
                 total_women_empowerment_cause_objs += 1
             elif getattr(donation,"cause_for_donation") == "Livelyhood":
                 total_livelyhood_cause_objs += 1
-            elif getattr(donation,"cause_for_donation")== "Healthcare":
-                total_Health_cause_objs += 1
             elif getattr(donation,"cause_for_donation") == "Medical camps":
                 total_medical_cause_objs += 1
+        if total_objs==0:
+            return Response({"Education": 0,"Woment Empowerment": 0,"Livelihood": 0,"Medcial camps": 0})
         education_cause_percentage = (total_education_cause_objs/total_objs)*100 
         women_empowerment_cause_percentage = (total_women_empowerment_cause_objs/total_objs)*100
         Health_cause_percentage = (total_Health_cause_objs/total_objs)*100
