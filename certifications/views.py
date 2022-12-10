@@ -62,4 +62,3 @@ class CurrentUserCertificates(generics.GenericAPIView):
         return Response(user_certificates_all)
     
     
-    

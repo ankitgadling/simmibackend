@@ -33,12 +33,8 @@ class upi_tran(models.Model):
 
 
 class payment_details(models.Model):
-    cause=(("Education","Education"),
-        ("Medical camps","Medical camps"),
-        ("Livelihood","Livelihood"),
-        ("Women empowerment","Women empowerment") )
     subscription_plan=models.CharField(max_length=100)
-    cause_for_donation=models.CharField(choices=cause,max_length=100)
+    cause_for_donation=models.CharField(max_length=100)
     amount_type=models.CharField(max_length=100)
     amount=models.CharField(max_length=9999999)
     fname=models.CharField(max_length=25)
@@ -47,3 +43,4 @@ class payment_details(models.Model):
     num=models.CharField(max_length=18)
     country=models.CharField(max_length=25)
     desc=models.TextField()
+
