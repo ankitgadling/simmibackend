@@ -6,7 +6,7 @@ class CategorySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Category
-        fields = ['category']
+        fields = '__all__'
 
     
 class BlogSerializer(serializers.ModelSerializer):
