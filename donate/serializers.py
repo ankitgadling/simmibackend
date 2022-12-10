@@ -29,7 +29,7 @@ class Upitranserializers(serializers.ModelSerializer):
 class PaymentShortserializer(serializers.ModelSerializer):
     class Meta:
         model=payment_details
-        fields=['desc','amount']
+        fields=['desc',"amount_type",'amount']
 class PaymentDetailSerializers(serializers.ModelSerializer):
     class Meta:
         model=payment_details
