@@ -36,8 +36,7 @@ class payment_details(models.Model):
     cause=(("Education","Education"),
         ("Medical camps","Medical camps"),
         ("Livelihood","Livelihood"),
-        ("Women empowerment","Women empowerment"),
-        ("Healthcare","Healthcare") )
+        ("Women empowerment","Women empowerment") )
     subscription_plan=models.CharField(max_length=100)
     cause_for_donation=models.CharField(choices=cause,max_length=100)
     amount_type=models.CharField(max_length=100)
