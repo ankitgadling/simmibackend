@@ -55,11 +55,14 @@ class Campaignapi(GenericAPIView,ListModelMixin,CreateModelMixin):
     def get(self,request,*args,**kwargs):
         return self.list(request,*args,**kwargs)
 
-class Createaboutapi(GenericAPIView,CreateModelMixin):
+class Createviewaboutapi(GenericAPIView,CreateModelMixin,ListModelMixin):
     queryset=commonAboutTable.objects.all()
     serializer_class=commonaboutserializer
     def post(self,request,*args,**kwargs):
         return self.create(request,*args,**kwargs)
+    def get(self,request,*args,**kwargs):
+        return self.list(request,*args,**kwargs)
+
 class Updateaboutapi(GenericAPIView,RetrieveModelMixin,DestroyModelMixin,UpdateModelMixin):
     queryset=commonAboutTable.objects.all()
     serializer_class=commonaboutserializer
@@ -70,10 +73,3 @@ class Updateaboutapi(GenericAPIView,RetrieveModelMixin,DestroyModelMixin,UpdateM
     def delete(self,request,*args,**kwargs):
         return self.destroy(request,*args,**kwargs)
 
-class Viewaboutapi(GenericAPIView,ListModelMixin):
-    queryset=commonAboutTable.objects.all()
-    serializer_class=commonaboutserializer
-    filter_backends=[DjangoFilterBackend]
-    filterset_fields=['position']
-    def get(self,request,*args,**kwargs):
-        return self.list(request,*args,**kwargs)

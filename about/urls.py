@@ -9,5 +9,6 @@ urlpatterns = [
     # path('team/',Teamapi.as_view()),
     path('intiatives/',Intiativeapi.as_view()),
     path('campaign/',Campaignapi.as_view()),
-    path('view/',Viewaboutapi.as_view()),
+    path('create/',Createviewaboutapi.as_view()),
+    path('create/<pk>',Updateaboutapi.as_view()),
     ]
