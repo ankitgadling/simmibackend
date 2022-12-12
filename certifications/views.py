@@ -1,3 +1,5 @@
+from asyncio.windows_events import NULL
+import email
 from urllib import request
 from django.shortcuts import render
 from rest_framework import generics
@@ -6,11 +8,11 @@ from rest_framework.decorators import api_view
 from .models import user_certificates,certfication
 # from django.views.decorators import csrf_exempt
 from rest_framework.response import Response
-from .serilaizers import certificationSerializer, user_certificateSerializer,UserCertificateSerializer
+from .serilaizers import certificationSerializer, user_certificateSerializer,UserCertificateSerializer, userSerializer
 #from accounts.models import registration
 from rest_framework import status
 from rest_framework.mixins import DestroyModelMixin,CreateModelMixin,UpdateModelMixin,RetrieveModelMixin,ListModelMixin
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView,ListAPIView
 from django.contrib.auth.models import User
 from .serilaizers import user_certificateSerializer,certificationSerializer
 
@@ -23,9 +25,42 @@ class userview(GenericAPIView,ListModelMixin,CreateModelMixin):
     queryset = user_certificates.objects.all()
     serializer_class = user_certificateSerializer
     def get(self,request,*args,**kwargs):
-        return self.list(request,*args,**kwargs) 
+        return self.list(request,*args,**kwargs)
+    # def post(self,request,*args,**kwargs):
+    #     email=request.data['email']
+    #     user=User.objects.get(username=email)
+    #     user_certs=certfication.objects.filter(user=user)
+    #     for cert in user_certs:
+    #         if getattr(cert,"status")=="Completed":
+    #             return Response({cert})
 
+class newviewapi(GenericAPIView,ListModelMixin,CreateModelMixin):
+    queryset = certfication.objects.all()
+    serializer_class = certificationSerializer
+    def get(self,request,*args,**kwargs):
+        return self.list(request,*args,**kwargs)
 
+class newuserviewapi(ListAPIView):
+    queryset = certfication.objects.all()
+    serializer_class = certificationSerializer
+    def get(self,request,*args,**kwargs):
+        email="admin@gmail.com"
+        try:
+            user=User.objects.get(email=email)
+        except:
+            return Response({"You are not a registered user"})
+        
+        user_certs=certfication.objects.filter(user=user)
+        certs=[]
+        for cert in user_certs:
+
+            if getattr(cert,"status")=="Not Completed":
+                cert.img=None
+            obj={"event_name":cert.event_name,"mentor_name":cert.mentor_name,"issue_date":cert.issue_date,"img":cert.img,"status":cert.status,"user":cert.user}
+            certs.append(obj) 
+            fcerts =certificationSerializer(certs)
+
+        return Response({certs})
 
 
 
@@ -60,5 +95,4 @@ class CurrentUserCertificates(generics.GenericAPIView):
             } 
             user_certificates_all.append(obj)
         return Response(user_certificates_all)
-    
     

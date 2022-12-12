@@ -84,9 +84,10 @@ class Our_campaigns(models.Model):
 
 
 class commonAboutTable(models.Model):
-    name=models.CharField(max_length=25) 
-    position=models.CharField(max_length=100) 
-    insta_id=models.URLField()
-    meta_id=models.URLField()
-    tweet_id=models.URLField()
-    img=models.ImageField() 
+    name = models.CharField(max_length=50)
+    position = models.CharField(max_length=80)
+    img = models.ImageField(upload_to = "about/")
+    desc = models.TextField(null=True)
+    instaid=models.URLField(null=True)
+    tweetid=models.URLField(null=True)
+    fbid=models.URLField(null=True)

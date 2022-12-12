@@ -29,8 +29,8 @@ from django.contrib.auth.models import User
 class userSerializer(serializers.ModelSerializer):
     class Meta:
         model= User
-        fields=['username']
-        
+        fields="__all__"
+  
 
 
 class certificationSerializer(serializers.ModelSerializer):
