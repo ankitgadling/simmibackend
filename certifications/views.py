@@ -74,12 +74,12 @@ class uview(generics.GenericAPIView,ListModelMixin,CreateModelMixin):
       
       
 class CurrentUserCertificates(generics.GenericAPIView):
-    serializer_class = UserCertificateSerializer
+    serializer_class = certificationSerializer2
     queryset = certfication.objects.all()
     
     def get(self,request):
-        user_id = request.session['current_user']
-        user = User.objects.get(id=user_id)
+        email = request.data['email']
+        user = User.objects.get(username=email)
         crts = certfication.objects.filter(user=user)
         user_certificates_all = []
         for c in crts:
