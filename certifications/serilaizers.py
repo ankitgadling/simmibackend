@@ -37,6 +37,8 @@ class certificationSerializer(serializers.ModelSerializer):
     class Meta:
         model=certfication
         fields="__all__"
+class certificationSerializer2(serializers.Serializer):
+    email = serializers.EmailField()
 
 
 
