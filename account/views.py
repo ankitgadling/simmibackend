@@ -82,6 +82,7 @@ class Login_api(generics.GenericAPIView):
             obj = userdetails(obj)
             obj ={
                 'id':obj.data['id'],
+                'email':user.username,
                 'first_name':obj.data['first_name'],
                 'last_name':obj.data['last_name'],
                 'ph_no':obj.data['ph_no'],
