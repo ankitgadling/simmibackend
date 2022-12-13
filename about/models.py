@@ -84,8 +84,16 @@ class Our_campaigns(models.Model):
 
 
 class commonAboutTable(models.Model):
+    options = (
+        ("Founder","Founder"),
+        ("Co-Founder","Co-Founder"),
+        ("Advisory Board Committee","Advisory Board Committee"),
+        ("Senior Management Committe","Senior Management Committe"),
+        ("Senior Technical Committee","Senior Technical Committee") ,
+        ("Executive Team","Executive Team")
+   )  
     name = models.CharField(max_length=50)
-    position = models.CharField(max_length=80)
+    position = models.CharField(choices = options, max_length=80)
     img = models.ImageField(upload_to = "about/")
     desc = models.TextField(null=True)
     instaid=models.URLField(null=True)
