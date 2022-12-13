@@ -8,7 +8,7 @@ import re
 class Registrationserializers(serializers.Serializer):
     first_name = serializers.CharField(max_length=50)
     last_name = serializers.CharField(max_length=50)
-    ph_no = serializers.CharField(max_length=10,min_length=10)
+    ph_no = serializers.CharField(max_length=5,min_length=16)
     email = serializers.EmailField(max_length=None, min_length=None, allow_blank=False)
     password = serializers.CharField(max_length=50)
     confirm_password = serializers.CharField(max_length=50)
@@ -35,9 +35,9 @@ class Registrationserializers(serializers.Serializer):
         if re.search('[A-Z]',password) is None: 
             raise serializers.ValidationError("Make sure your password has a capital letter in it")
         # names validations
-        if not str(first_name+last_name).isalpha():
-            raise serializers.ValidationError("Please use alphabets only for firstnname and lastname...!")
-        # phone number validation
+#         if not str(first_name+last_name).isalpha():
+#             raise serializers.ValidationError("Please use alphabets only for firstnname and lastname...!")
+#         # phone number validation
         if not str(ph_no).isnumeric():
             raise serializers.ValidationError("Please Enter valide Phone Number...!")
         try:
