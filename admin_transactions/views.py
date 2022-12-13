@@ -38,7 +38,7 @@ class Donwnload_Donations(GenericAPIView):
             action_list.append(action)
         text_file_name = "Donation List_"+datetime.now().strftime("%d-%b-%y %I:%M")
         file_name = str(text_file_name)
-        text = open("admin_transactions/donation.txt","w+")
+        text = open("donation.txt","w+")
         text.write(f"Date                              Cause                       Donation_ID                          ammount             action\n")
         d = "_-"*65
         d2 = "-"*130
@@ -47,7 +47,7 @@ class Donwnload_Donations(GenericAPIView):
             text.write(f"{date_list[i].strftime('%d-%b-%y %I:%M')}               {cause_list[i].center(17)}               {donation_id_list[i]}               {ammount_list[i].center(7)}               {action_list[i].center(10)}\n")
             text.write(d2+"\n")
         text.close()
-        d_file = open("admin_transactions/doantion.txt","rb")    
+        d_file = open("donation.txt","rb")    
         # pdf = FPDF()
         # pdf.add_page()
         # pdf.set_font("Arial", size = 10)
@@ -79,7 +79,7 @@ class Donwnload_Subscriptions(GenericAPIView):
             status_list.append(i.status)
         text_file_name = "Subscription List_"+datetime.now().strftime("%d-%b-%y %I:%M")
         file_name = str(text_file_name)
-        text = open("admin_transactions/subscription.txt","w+")
+        text = open("subscription.txt","w+")
         text.write(f"Date                              Cause                       Donation_ID                        ammount              period                  status\n")
         d = "_-"*75
         d2 = "-"*150
@@ -88,7 +88,7 @@ class Donwnload_Subscriptions(GenericAPIView):
             text.write(f"{date_list[i].strftime('%d-%b-%y %I:%M')}               {cause_list[i].center(17)}               {donation_id_list[i]}               {ammount_list[i].center(7)}               {period_list[i].center(10)}               {status_list[i]}\n")
             text.write(d2+"\n")
         text.close()
-        d_file = open("admin_transactions/subscription.txt","rb")    
+        d_file = open("subscription.txt","rb")    
         # pdf = FPDF()
         # pdf.add_page()
         # pdf.set_font("Arial", size = 10)
