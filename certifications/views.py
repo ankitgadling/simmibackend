@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 import email
 from urllib import request
 from django.shortcuts import render
