@@ -48,7 +48,6 @@ def PaymentPiechartViewset(request):
         total_women_empowerment_cause_objs = 0
         total_Health_cause_objs = 0
         total_livelyhood_cause_objs = 0 
-        total_medical_cause_objs = 0
         total_other_cause_objs = 0
 
         for donation in models.payment_details.objects.all():
@@ -59,20 +58,19 @@ def PaymentPiechartViewset(request):
             elif getattr(donation,"cause_for_donation") == "Livlihood":
                 total_livelyhood_cause_objs += 1
             elif getattr(donation,"cause_for_donation") == "HealthCare":
-                total_medical_cause_objs += 1
+                total_Health_cause_objs+= 1
             elif getattr(donation,"cause_for_donation") == "Other":
                 total_other_cause_objs += 1
         if total_objs==0:
-            return Response({"Education": 0,"Woment Empowerment": 0,"Livelihood": 0,"Medcial camps": 0,"Other":0})
+            return Response({"Education": 0,"HealthCare":0,"Woment Empowerment": 0,"Livlihood": 0,"Other":0})
         education_cause_percentage = (total_education_cause_objs/total_objs)*100 
         women_empowerment_cause_percentage = (total_women_empowerment_cause_objs/total_objs)*100
         Health_cause_percentage = (total_Health_cause_objs/total_objs)*100
         livelyhood_cause_percentage = (total_livelyhood_cause_objs/total_objs)*100
-        medical_cause_percentage = (total_medical_cause_objs/total_objs)*100
         other_cause_percentage = (total_other_cause_objs/total_objs)*100
-        return Response({"Education": education_cause_percentage ,"Healthcare": Health_cause_percentage,"Woment Empowerment": women_empowerment_cause_percentage,"Livelihood": livelyhood_cause_percentage,"Medcial camps": medical_cause_percentage,"Other":other_cause_percentage})
+        return Response({"Education": education_cause_percentage ,"HealthCare": Health_cause_percentage,"Woment Empowerment": women_empowerment_cause_percentage,"Livlihood": livelyhood_cause_percentage,"Other":other_cause_percentage})
                 
-class PaymentShortViews(GenericAPIView,ListModelMixin):
+class PaymentShortViews(GenericAPIView,ListModelMixin): 
     
     queryset=models.payment_details.objects.all()
     serializer_class=serializers.PaymentShortserializer
@@ -80,3 +78,4 @@ class PaymentShortViews(GenericAPIView,ListModelMixin):
         return self.list(request,*args,**kwargs)
 
 
+        
