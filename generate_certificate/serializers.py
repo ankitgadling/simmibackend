@@ -38,3 +38,12 @@ class DonationDownloadSerializer(serializers.Serializer):
 class SubscriptionDownloadSerializer(serializers.Serializer):
     email = serializers.EmailField()
     id = serializers.CharField()
+    
+    
+class Donation_Download_Seralizer(serializers.Serializer):
+    date = serializers.CharField()
+    cause = serializers.CharField()
+    donation_id = serializers.CharField()
+    ammount = serializers.CharField()
+    action = serializers.CharField()
+    pdf_file = serializers.CharField()

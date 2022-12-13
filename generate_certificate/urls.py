@@ -8,4 +8,5 @@ urlpatterns = [
     path("subscription_genarate",Genarate_Subscription_Certificate.as_view()),
     path("donation_download",donation_certificate_download.as_view()),
     path("subscription_download",subscription_certificate_download.as_view()),
+    path("event_download/<pk>",event_certificate_download.as_view()),
     ]

@@ -14,7 +14,7 @@ from rest_framework import status
 from rest_framework.mixins import DestroyModelMixin,CreateModelMixin,UpdateModelMixin,RetrieveModelMixin,ListModelMixin
 from rest_framework.generics import GenericAPIView,ListAPIView
 from django.contrib.auth.models import User
-from .serilaizers import user_certificateSerializer,certificationSerializer
+from .serilaizers import user_certificateSerializer,certificationSerializer,certificationSerializer2
 
 class genview(generics.ListCreateAPIView):
     queryset=certfication.objects.all()

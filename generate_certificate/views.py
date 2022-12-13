@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from rest_framework.generics import GenericAPIView
 from rest_framework.decorators import action
 from certifications.models import certfication
-from .serializers import CertSerializer , Gen,GenarateDonationSerializer,DonationDataSerializer,DonationDownloadSerializer,SubscriptionDownloadSerializer
+from .serializers import CertSerializer , Gen,GenarateDonationSerializer,Donation_Download_Seralizer,DonationDataSerializer,DonationDownloadSerializer,SubscriptionDownloadSerializer
 from events.models import Event
 from django.contrib.auth.models import User
 from PIL import Image as Img
@@ -145,9 +145,8 @@ class Genarate_Donation_Certificate(GenericAPIView):
                 
                 urllib.request.urlretrieve("https://res.cloudinary.com/dcc8pmavm/image/upload/v1669456371/media/static_files/Picsart_22-11-26_15-13-08-069_mlhepv.jpg","donation.jpg")
                 img = Img.open("donation.jpg")
-                #urllib.request.urlretrieve('https://res.cloudinary.com/dcc8pmavm/raw/upload/v1669015852/media/static_files/Arial_wwaooe.ttf',"Arial.ttf")
-                font = ImageFont.truetype("Arial.ttf",27)
-                font2 = ImageFont.truetype("Arial.ttf",25)
+                font = ImageFont.truetype("generate_certificate/Arial.ttf",27)
+                font2 = ImageFont.truetype("generate_certificate/Arial.ttf",25)
                 draw = ImageDraw.Draw(img)
                 draw.text((237,418), l2,(105,105,105),font=font2)
                 draw.text((200,450), l3,(105,105,105),font=font2)
@@ -173,6 +172,7 @@ class Genarate_Donation_Certificate(GenericAPIView):
                 
         
         data = DonationCetificates.objects.filter(user=user)
+        
         if data is None:
             return Response(None,200) 
         objs = []
@@ -193,8 +193,10 @@ class Genarate_Donation_Certificate(GenericAPIView):
                 "pdf_file":certificate
             }       
             objs.append(obj)
-        return Response(objs)
-            
+        objs = Donation_Download_Seralizer(objs,many=True)
+        print("gggggggggggggggggggggggggggggggggggggg",objs)
+        return Response(objs.data)
+        return Response(None,200)    
             
 class Genarate_Subscription_Certificate(GenericAPIView):
     queryset = Subscription.objects.all()
@@ -224,9 +226,8 @@ class Genarate_Subscription_Certificate(GenericAPIView):
                 
                 urllib.request.urlretrieve("https://res.cloudinary.com/dcc8pmavm/image/upload/v1669456371/media/static_files/Picsart_22-11-26_15-13-08-069_mlhepv.jpg","donation.jpg")
                 img = Img.open("donation.jpg")
-                #urllib.request.urlretrieve('https://res.cloudinary.com/dcc8pmavm/raw/upload/v1669015852/media/static_files/Arial_wwaooe.ttf',"Arial.ttf")
-                font = ImageFont.truetype("Arial.ttf",27)
-                font2 = ImageFont.truetype("Arial.ttf",25)
+                font = ImageFont.truetype("generate_certificate/Arial.ttf",27)
+                font2 = ImageFont.truetype("generate_certificate/Arial.ttf",25)
                 draw = ImageDraw.Draw(img)
                 draw.text((237,418), l2,(105,105,105),font=font2)
                 draw.text((200,450), l3,(105,105,105),font=font2)
@@ -294,9 +295,11 @@ class donation_certificate_download(GenericAPIView):
         id = request.data['id']
         user = User.objects.get(username=request.data['email'])
         donation = DonationCetificates.objects.get(transactions_id=id,user=user)
-        path = donation.certificate.url
+        #path = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
+        path = "http://127.0.0.1:8000"+donation.certificate.url
         file_name = user.username+"Donation"+id+".pdf"
-        urllib.request.urlretrieve(path+".pdf",file_name)
+        # urllib.request.urlretrieve(path+".pdf",file_name)
+        urllib.request.urlretrieve(path,file_name)
         file_handle = open(file_name,"rb")
         response = HttpResponse(FileWrapper(file_handle), content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename={file_name}'
@@ -311,12 +314,28 @@ class subscription_certificate_download(GenericAPIView):
         id = request.data['id']
         user = User.objects.get(username=request.data['email'])
         donation = SubscriptionCetificates.objects.get(subscription_id=id,user=user)
-        path = donation.certificate.url
+        path = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
+        #path = "http://127.0.0.1:8000"+donation.certificate.url
         file_name = user.username+"Subscription"+id+".pdf"
-        urllib.request.urlretrieve(path+".pdf",file_name)
+        #urllib.request.urlretrieve(path+".pdf",file_name)
+        urllib.request.urlretrieve(path,file_name)
         file_handle = open(file_name,"rb")
         response = HttpResponse(FileWrapper(file_handle), content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename={file_name}'
         return response
 
 
+class event_certificate_download(GenericAPIView):
+    queryset = certfication.objects.all()
+    serializer_class = SubscriptionDownloadSerializer
+    def get(self,request,pk=None):
+        #id = request.data['id']
+        crt = certfication.objects.get(id=pk)
+        path = "https://simmibackend.pythonanywhere.com"+crt.img.url
+        #path = "http://127.0.0.1:8000"+crt.img.url
+        file_name = "event_certification"+str(pk)+".pdf"
+        urllib.request.urlretrieve(path,file_name)
+        file_handle = open(file_name,"rb")
+        response = HttpResponse(FileWrapper(file_handle), content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename={file_name}'
+        return response
