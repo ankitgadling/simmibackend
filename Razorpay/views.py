@@ -32,7 +32,7 @@ class TransactionAPIView(ListCreateAPIView):
         if not amount:
             return Response(status=404)
         if subscription:
-            sub = RazorpayClient.create_subscription(amount, period)
+            sub = RazorpayClient.create_subscription(amount, period,currency)
             print(amount, sub)
             request.data['id'] = sub['id']
             request.data['plan_id'] = sub['plan_id']

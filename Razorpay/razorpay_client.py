@@ -22,12 +22,12 @@ class RazorpayClient:
         return cls.client.utility.verify_payment_signature(params_dict)
 
     @classmethod
-    def get_plan(cls, amount, period):
+    def get_plan(cls, amount, period,currency):
         plans = cls.client.plan.all()
         for plan in plans['items']:
             if plan['item']['amount'] == amount and plan['period'] == period:
                 return plan
-        return cls.create_plan(amount, period)
+        return cls.create_plan(amount, period,currency)
 
     @classmethod
     def create_plan(cls, amount, period,currency):
@@ -47,8 +47,8 @@ class RazorpayClient:
         return plan
 
     @classmethod
-    def create_subscription(cls, amount, period):
-        plan = cls.get_plan(int(amount)*100, period)
+    def create_subscription(cls, amount, period,currency):
+        plan = cls.get_plan(int(amount)*100, period,currency)
         count = 50
         data = {
             "plan_id": plan['id'],
