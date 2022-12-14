@@ -94,6 +94,7 @@ class commonAboutTable(models.Model):
    )  
     name = models.CharField(max_length=50)
     position = models.CharField(choices = options, max_length=80)
+    team_name=models.CharField(max_length=50,null=True)
     img = models.ImageField(upload_to = "about/")
     desc = models.TextField(null=True)
     instaid=models.URLField(null=True)
