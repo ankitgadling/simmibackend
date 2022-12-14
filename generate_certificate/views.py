@@ -121,8 +121,7 @@ class Genarate_Donation_Certificate(GenericAPIView):
     queryset = Transactions.objects.all()
     serializer_class = GenarateDonationSerializer
     
-    def post(self,request):
-        email = request.data['email']
+    def get(self,request,email=None):
         user = User.objects.get(username=email)
         for obj in self.get_queryset().filter(user=user):
             trance_id = obj.id
@@ -194,7 +193,6 @@ class Genarate_Donation_Certificate(GenericAPIView):
             }       
             objs.append(obj)
         objs = Donation_Download_Seralizer(objs,many=True)
-        print("gggggggggggggggggggggggggggggggggggggg",objs)
         return Response(objs.data)
         return Response(None,200)    
             
@@ -202,8 +200,7 @@ class Genarate_Subscription_Certificate(GenericAPIView):
     queryset = Subscription.objects.all()
     serializer_class = GenarateDonationSerializer
     
-    def post(self,request):
-        email = request.data['email']
+    def get(self,request,email=None):
         user = User.objects.get(username=email)
         for obj in self.get_queryset().filter(user=user):
             trance_id = obj.id
