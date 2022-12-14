@@ -144,8 +144,8 @@ class Genarate_Donation_Certificate(GenericAPIView):
                 
                 urllib.request.urlretrieve("https://res.cloudinary.com/dcc8pmavm/image/upload/v1669456371/media/static_files/Picsart_22-11-26_15-13-08-069_mlhepv.jpg","donation.jpg")
                 img = Img.open("donation.jpg")
-                font = ImageFont.truetype("generate_certificate/Arial.ttf",27)
-                font2 = ImageFont.truetype("generate_certificate/Arial.ttf",25)
+                font = ImageFont.truetype("Arial.ttf",27)
+                font2 = ImageFont.truetype("Arial.ttf",25)
                 draw = ImageDraw.Draw(img)
                 draw.text((237,418), l2,(105,105,105),font=font2)
                 draw.text((200,450), l3,(105,105,105),font=font2)
@@ -223,8 +223,8 @@ class Genarate_Subscription_Certificate(GenericAPIView):
                 
                 urllib.request.urlretrieve("https://res.cloudinary.com/dcc8pmavm/image/upload/v1669456371/media/static_files/Picsart_22-11-26_15-13-08-069_mlhepv.jpg","donation.jpg")
                 img = Img.open("donation.jpg")
-                font = ImageFont.truetype("generate_certificate/Arial.ttf",27)
-                font2 = ImageFont.truetype("generate_certificate/Arial.ttf",25)
+                font = ImageFont.truetype("Arial.ttf",27)
+                font2 = ImageFont.truetype("Arial.ttf",25)
                 draw = ImageDraw.Draw(img)
                 draw.text((237,418), l2,(105,105,105),font=font2)
                 draw.text((200,450), l3,(105,105,105),font=font2)
@@ -292,8 +292,8 @@ class donation_certificate_download(GenericAPIView):
         id = request.data['id']
         user = User.objects.get(username=request.data['email'])
         donation = DonationCetificates.objects.get(transactions_id=id,user=user)
-        #path = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
-        path = "http://127.0.0.1:8000"+donation.certificate.url
+        path = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
+        #path = "http://127.0.0.1:8000"+donation.certificate.url
         file_name = user.username+"Donation"+id+".pdf"
         # urllib.request.urlretrieve(path+".pdf",file_name)
         urllib.request.urlretrieve(path,file_name)
