@@ -24,6 +24,7 @@ class TransactionAPIView(ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         amount = request.data.get('amount')
+        currency = request.data.get('currency','INR')
         subscription = True if request.data.get(
             'subscription') == 'true' else False
         period = request.data.get('period')
@@ -39,7 +40,8 @@ class TransactionAPIView(ListCreateAPIView):
             response.data['subscription'] = sub
             return response
         else:
-            payment = RazorpayClient.create_order(amount)
+            payment = RazorpayClient.create_order(amount,currency)
+            payment = RazorpayClient.create_order(amount,currency)
             print(amount, payment)
             request.data['id'] = payment['id']
             response = super().post(request, *args, **kwargs)

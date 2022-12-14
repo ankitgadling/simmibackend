@@ -1,16 +1,17 @@
 import razorpay
 from decouple import config
 
+cur = 'INR'
 
 class RazorpayClient:
     client = razorpay.Client(
         auth=(config('RAZORPAY_KEY'), config('RAZORPAY_SECRET')))
 
     @classmethod
-    def create_order(cls, amount):
+    def create_order(cls, amount,currency):
         data = {
             'amount': int(amount)*100,
-            'currency': 'INR',
+            'currency': currency,
             'payment_capture': 1,
 
         }
@@ -29,7 +30,7 @@ class RazorpayClient:
         return cls.create_plan(amount, period)
 
     @classmethod
-    def create_plan(cls, amount, period):
+    def create_plan(cls, amount, period,currency):
         amount_text = str(amount)
 
         data = {
@@ -38,7 +39,7 @@ class RazorpayClient:
             "item": {
                 "name": f"Simmi Foundation {period} plan of {amount_text} rupees",
                 "amount": amount,
-                "currency": "INR",
+                "currency": currency,
                 "description": f"This plan takes {amount_text} {period}"
             },
         }
