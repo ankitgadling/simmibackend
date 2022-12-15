@@ -81,7 +81,7 @@ class Login_api(generics.GenericAPIView):
             token = AuthToken.objects.create(user)[1]
             obj = userdetails(obj)
             obj ={
-                'id':obj.data['id'],
+                'id':user.id,
                 'email':user.username,
                 'first_name':obj.data['first_name'],
                 'last_name':obj.data['last_name'],
