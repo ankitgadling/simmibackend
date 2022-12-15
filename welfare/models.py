@@ -1,6 +1,14 @@
 from datetime import date
 from django.db import models
 
+
+choices = [
+        ('Education', 'EDUCATION'),
+        ('HealthCare', 'HEALTHCARE'),
+        ('Livelihood', 'LIVELIHOOD'),
+        ('Women Empowerment', 'WOMEN EMPOWERMENT'),
+        ('Others', 'OTHERS')
+    ]
 class Category(models.Model):
     category = models.CharField(max_length=20)
 
@@ -23,6 +31,7 @@ class Quote(models.Model):
     name = models.CharField(max_length=30)
     description = models.TextField()
     image = models.ImageField(upload_to='welfare/quotes', blank=True)
+    category = models.CharField(max_length=20, choices=choices, default='Education')
 
     def __str__(self):
         return self.name
@@ -31,19 +40,13 @@ class Timeline(models.Model):
     title = models.CharField(max_length=30)
     description = models.TextField(blank=True)
     date = models.DateField(default=date.today())
+    category = models.CharField(max_length=20, choices=choices, default='Education')
 
     def __str__(self):
         return self.title
 
 
 class Story(models.Model):
-    choices = [
-        ('Education', 'EDUCATION'),
-        ('HealthCare', 'HEALTHCARE'),
-        ('Livelihood', 'LIVELIHOOD'),
-        ('Women Empowerment', 'WOMEN EMPOWERMENT'),
-        ('Others', 'OTHERS')
-    ]
 
     title = models.CharField(max_length=30)
     link = models.URLField(max_length=200, blank=True, null=True)
@@ -51,6 +54,24 @@ class Story(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='welfare/story-of-change', blank=True)
     category = models.CharField(max_length=20, choices=choices, default='Education')
+
+    def __str__(self):
+        return self.title
+
+
+class OtherCause(models.Model):
+    choices2 = [
+        ('Drug Rehabilitation', 'Drug Rehabilitation'),
+        ('Elder Healthcare', 'Elder Healthcare'),
+        ('Environment Protection', 'Environment Protection'),
+        ('Disaster Management', 'Disaster Management')
+    ]
+    title = models.CharField(max_length=30)
+    description = models.TextField(blank=True)
+    link = models.URLField(max_length=200, blank=True, null=True)
+    image = models.ImageField(upload_to='welfare/other-causes', blank=True)
+    date = models.DateField(default=date.today())
+    category = models.CharField(max_length=50, choices=choices2, default='Drug Rehabilitation')
 
     def __str__(self):
         return self.title

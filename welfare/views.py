@@ -25,3 +25,8 @@ class TimelineViewSet(viewsets.ModelViewSet):
 class StoryViewSet(viewsets.ModelViewSet):
     queryset = Story.objects.all()
     serializer_class = StorySerializer
+
+
+class OtherCauseViewSet(viewsets.ModelViewSet):
+    queryset = OtherCause.objects.all()
+    serializer_class = OtherCauseSerializer
