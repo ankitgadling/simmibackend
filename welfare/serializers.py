@@ -41,3 +41,10 @@ class StorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Story
         fields = '__all__'
+    
+
+class OtherCauseSerializer(serializers.ModelSerializer):
+    image = HybridImageField()
+    class Meta:
+        model = OtherCause
+        fields = '__all__'
