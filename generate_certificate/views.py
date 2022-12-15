@@ -27,7 +27,7 @@ from rest_framework.parsers import BaseParser
 class Genarate(GenericAPIView):
     queryset = certfication.objects.all()
     serializer_class = Gen
-    
+
     def post(self,request,*args,**kwargs):
         event_id = request.data['event_id']
         event = Event.objects.get(id=event_id)
@@ -43,9 +43,9 @@ class Genarate(GenericAPIView):
         event_name = str(event.event_name).upper()
         date = event.time.date().strftime("%d-%b-%Y")
         file_name = username+"_"+event_name
-        l1 ="simmifoundation sample text for genarate certification for event of simmifoundation" 
-        l2 ="genarate certification for event of simmifoundation simmifoundation sample text for " 
-        l3 ="certification for event of simmifoundation sample text for genarate " 
+        l1 ="simmifoundation sample text for genarate certification for event of simmifoundation"
+        l2 ="genarate certification for event of simmifoundation simmifoundation sample text for "
+        l3 ="certification for event of simmifoundation sample text for genarate "
         urllib.request.urlretrieve('https://res.cloudinary.com/dcc8pmavm/image/upload/v1669456349/media/static_files/Picsart_22-11-26_15-18-01-572_gvdunr.jpg',"certificate.jpg")
         img = Img.open("certificate.jpg")
         urllib.request.urlretrieve('https://res.cloudinary.com/dcc8pmavm/raw/upload/v1669015852/media/static_files/Arial_wwaooe.ttf',"Arial.ttf")
@@ -80,7 +80,7 @@ class Genarate(GenericAPIView):
         event_name2 = event.event_name
         mentor_name = event.speaker_name
         date2 = event.time.date()
-        
+
         crt = certfication.objects.create(
             event_name=event_name2,mentor_name=mentor_name,issue_date=date2,img=pdf,status="Not Completed",user=user
         )
@@ -95,16 +95,16 @@ class Genarate(GenericAPIView):
 class Certify(GenericAPIView):
     queryset = certfication.objects.all()
     serializer_class = Gen
-        
-        
+
+
     def post(self,request):
         user_email = request.data['user_email']
         user = User.objects.get(username=user_email)
         username = user.username
-        certificate_id = get_session_by_key(key=username)    
-        event_id = get_session_by_key(key=username+"currentevent")    
+        certificate_id = get_session_by_key(key=username)
+        event_id = get_session_by_key(key=username+"currentevent")
         if certificate_id is None:
-            return Response("Certificate already Certifyed...!",200)    
+            return Response("Certificate already Certifyed...!",200)
         crt = certfication.objects.get(id=certificate_id)
         crt.status="Completed"
         crt.save()
@@ -114,13 +114,13 @@ class Certify(GenericAPIView):
         event.save()
         delete_session_by_key(key=username+"currentevent")
         return Response("Certificate Certifyed...!",200)
-    
-    
-    
+
+
+
 class Genarate_Donation_Certificate(GenericAPIView):
     queryset = Transactions.objects.all()
     serializer_class = GenarateDonationSerializer
-    
+
     def get(self,request,email=None):
         user = User.objects.get(username=email)
         for obj in self.get_queryset().filter(user=user):
@@ -139,9 +139,9 @@ class Genarate_Donation_Certificate(GenericAPIView):
                     donar_cause = "To Simmifoundation"
                 donar_ammount = indian_currency_format(int(transaction.amount))+" INR"
                 file_name = transaction.user.username+str(trance_id)
-                l2 ="genarate certification for event of simmifoundation simmifoundation sample text forgenarate certification for event " 
-                l3 ="certification for event of simmifoundation sample text for genarate simmifoundation " 
-                
+                l2 ="genarate certification for event of simmifoundation simmifoundation sample text forgenarate certification for event "
+                l3 ="certification for event of simmifoundation sample text for genarate simmifoundation "
+
                 urllib.request.urlretrieve("https://res.cloudinary.com/dcc8pmavm/image/upload/v1669456371/media/static_files/Picsart_22-11-26_15-13-08-069_mlhepv.jpg","donation.jpg")
                 img = Img.open("donation.jpg")
                 font = ImageFont.truetype("Arial.ttf",27)
@@ -155,7 +155,7 @@ class Genarate_Donation_Certificate(GenericAPIView):
                 draw.text((174,825), donar_cause,(80,80,80),font=font)
                 draw.text((174,960), donar_ammount,(80,80,80),font=font)
                 img.save(f"{file_name}.jpg")
-                
+
                 image = Img.open(f"{file_name}.jpg")
                 pdf_file = img2pdf.convert(image.filename)
                 file = open(f"{file_name}.pdf","wb")
@@ -168,12 +168,12 @@ class Genarate_Donation_Certificate(GenericAPIView):
                 pdf.close()
                 os.remove(f"{file_name}.jpg")
                 os.remove(f"{file_name}.pdf")
-                
-        
+
+
         data = DonationCetificates.objects.filter(user=user)
-        
+
         if data is None:
-            return Response(None,200) 
+            return Response(None,200)
         objs = []
         for donation in data:
             current_transaction = Transactions.objects.get(id=donation.transactions_id)
@@ -182,7 +182,7 @@ class Genarate_Donation_Certificate(GenericAPIView):
             certificate = None
             if current_transaction.is_paid:
                 action = "Success"
-                certificate = donation.certificate
+                certificate = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
             obj = {
                 "date" : current_transaction.date,
                 "cause" : current_transaction.cause,
@@ -190,16 +190,16 @@ class Genarate_Donation_Certificate(GenericAPIView):
                 "ammount": amt,
                 "action":action,
                 "pdf_file":certificate
-            }       
+            }
             objs.append(obj)
         objs = Donation_Download_Seralizer(objs,many=True)
         return Response(objs.data)
-        return Response(None,200)    
-            
+        return Response(None,200)
+
 class Genarate_Subscription_Certificate(GenericAPIView):
     queryset = Subscription.objects.all()
     serializer_class = GenarateDonationSerializer
-    
+
     def get(self,request,email=None):
         user = User.objects.get(username=email)
         for obj in self.get_queryset().filter(user=user):
@@ -218,9 +218,9 @@ class Genarate_Subscription_Certificate(GenericAPIView):
                     donar_cause = "To Simmifoundation"
                 donar_ammount = indian_currency_format(int(transaction.amount))+" INR"
                 file_name = transaction.user.username+str(trance_id)+"Subscription"
-                l2 ="genarate certification for event of simmifoundation simmifoundation sample text forgenarate certification for event " 
-                l3 ="certification for event of simmifoundation sample text for genarate simmifoundation " 
-                
+                l2 ="genarate certification for event of simmifoundation simmifoundation sample text forgenarate certification for event "
+                l3 ="certification for event of simmifoundation sample text for genarate simmifoundation "
+
                 urllib.request.urlretrieve("https://res.cloudinary.com/dcc8pmavm/image/upload/v1669456371/media/static_files/Picsart_22-11-26_15-13-08-069_mlhepv.jpg","donation.jpg")
                 img = Img.open("donation.jpg")
                 font = ImageFont.truetype("Arial.ttf",27)
@@ -234,7 +234,7 @@ class Genarate_Subscription_Certificate(GenericAPIView):
                 draw.text((174,825), donar_cause,(80,80,80),font=font)
                 draw.text((174,960), donar_ammount,(80,80,80),font=font)
                 img.save(f"{file_name}.jpg")
-                
+
                 image = Img.open(f"{file_name}.jpg")
                 pdf_file = img2pdf.convert(image.filename)
                 file = open(f"{file_name}.pdf","wb")
@@ -247,18 +247,18 @@ class Genarate_Subscription_Certificate(GenericAPIView):
                 pdf.close()
                 os.remove(f"{file_name}.jpg")
                 os.remove(f"{file_name}.pdf")
-                
-        
+
+
         data = SubscriptionCetificates.objects.filter(user=user)
         if data is None:
-            return Response(None,200) 
+            return Response(None,200)
         objs = []
         for donation in data:
             current_transaction = Subscription.objects.get(id=donation.subscription_id)
             amt = indian_currency_format(int(current_transaction.amount))
             certificate = None
             if current_transaction.status == "completed":
-                certificate = donation.certificate.name
+                certificate = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
             obj = {
                 "date" : current_transaction.date,
                 "cause" : current_transaction.cause,
@@ -270,7 +270,7 @@ class Genarate_Subscription_Certificate(GenericAPIView):
             }
             objs.append(obj)
         return Response(objs)
-            
+
 from django.http import FileResponse
 from rest_framework import viewsets, renderers
 from rest_framework.decorators import action
@@ -294,14 +294,15 @@ class donation_certificate_download(GenericAPIView):
         donation = DonationCetificates.objects.get(transactions_id=id,user=user)
         path = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
         #path = "http://127.0.0.1:8000"+donation.certificate.url
-        file_name = user.username+"Donation"+id+".pdf"
+        #file_name = user.username+"Donation"+id+".pdf"
         # urllib.request.urlretrieve(path+".pdf",file_name)
-        urllib.request.urlretrieve(path,file_name)
-        file_handle = open(file_name,"rb")
-        response = HttpResponse(FileWrapper(file_handle), content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename={file_name}'
-        return response
-    
+        #urllib.request.urlretrieve(path,file_name)
+        # f1.write("after rq")
+        # file_handle = open(file_name,"rb")
+        # response = HttpResponse(FileWrapper(file_handle), content_type='application/pdf')
+        # response['Content-Disposition'] = f'attachment; filename={file_name}'
+        return Response(path,200)
+
 
 
 class subscription_certificate_download(GenericAPIView):
@@ -312,14 +313,14 @@ class subscription_certificate_download(GenericAPIView):
         user = User.objects.get(username=request.data['email'])
         donation = SubscriptionCetificates.objects.get(subscription_id=id,user=user)
         path = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
-        #path = "http://127.0.0.1:8000"+donation.certificate.url
-        file_name = user.username+"Subscription"+id+".pdf"
-        #urllib.request.urlretrieve(path+".pdf",file_name)
-        urllib.request.urlretrieve(path,file_name)
-        file_handle = open(file_name,"rb")
-        response = HttpResponse(FileWrapper(file_handle), content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename={file_name}'
-        return response
+        # #path = "http://127.0.0.1:8000"+donation.certificate.url
+        # file_name = user.username+"Subscription"+id+".pdf"
+        # #urllib.request.urlretrieve(path+".pdf",file_name)
+        # urllib.request.urlretrieve(path,file_name)
+        # file_handle = open(file_name,"rb")
+        # response = HttpResponse(FileWrapper(file_handle), content_type='application/pdf')
+        # response['Content-Disposition'] = f'attachment; filename={file_name}'
+        return Response(path,200)
 
 
 class event_certificate_download(GenericAPIView):
@@ -329,10 +330,10 @@ class event_certificate_download(GenericAPIView):
         #id = request.data['id']
         crt = certfication.objects.get(id=pk)
         path = "https://simmibackend.pythonanywhere.com"+crt.img.url
-        #path = "http://127.0.0.1:8000"+crt.img.url
-        file_name = "event_certification"+str(pk)+".pdf"
-        urllib.request.urlretrieve(path,file_name)
-        file_handle = open(file_name,"rb")
-        response = HttpResponse(FileWrapper(file_handle), content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename={file_name}'
-        return response
+        # #path = "http://127.0.0.1:8000"+crt.img.url
+        # file_name = "event_certification"+str(pk)+".pdf"
+        # urllib.request.urlretrieve(path,file_name)
+        # file_handle = open(file_name,"rb")
+        # response = HttpResponse(FileWrapper(file_handle), content_type='application/pdf')
+        # response['Content-Disposition'] = f'attachment; filename={file_name}'
+        return Response(path,200)
