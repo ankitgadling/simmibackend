@@ -54,7 +54,7 @@ class CurrentUserCertificates(generics.GenericAPIView):
     def post(self,request):
         email = request.data["email"]
         try:
-            user = User.objects.get(email=email)
+            user = User.objects.get(username=email)
         except:
             return Response({"You are not participated in any events"})
         
