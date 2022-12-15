@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Transactions, Subscription
-
-
+from account.models import SimmiUserDetails
+from django.contrib.auth.models import User
 class TransactionSerializer(serializers.ModelSerializer):
     date = serializers.DateTimeField(format="%d/%b/%y", read_only=True)
     status = serializers.SerializerMethodField()

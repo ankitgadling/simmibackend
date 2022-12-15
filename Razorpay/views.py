@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from .serializers import Transactions, TransactionSerializer, Subscription, SubscriptionSerializer
 import json
 from .razorpay_client import RazorpayClient
+from .views2 import TransactionsView,SubscriptionView
 # Create your views here.
 
 
@@ -36,7 +37,9 @@ class TransactionAPIView(ListCreateAPIView):
             print(amount, sub)
             request.data['id'] = sub['id']
             request.data['plan_id'] = sub['plan_id']
-            response = super().post(request, *args, **kwargs)
+            #response = super().post(request, *args, **kwargs)
+            response = SubscriptionView.post(request, *args, **kwargs)
+            
             response.data['subscription'] = sub
             return response
         else:
@@ -44,7 +47,8 @@ class TransactionAPIView(ListCreateAPIView):
             payment = RazorpayClient.create_order(amount,currency)
             print(amount, payment)
             request.data['id'] = payment['id']
-            response = super().post(request, *args, **kwargs)
+            # response = super().post(request, *args, **kwargs)
+            response = TransactionsView.post(request, *args, **kwargs)
             response.data['payment'] = payment
             return response
 
