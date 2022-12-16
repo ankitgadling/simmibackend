@@ -61,15 +61,20 @@ def PaymentPiechartViewset(request):
                 total_Health_cause_objs+= 1
             elif getattr(donation,"cause_for_donation") == "Other":
                 total_other_cause_objs += 1
-        if total_objs==0:
-            return Response({"Education": 0,"HealthCare":0,"Woment Empowerment": 0,"Livlihood": 0,"Other":0})
-        education_cause_percentage = (total_education_cause_objs/total_objs)*100 
-        women_empowerment_cause_percentage = (total_women_empowerment_cause_objs/total_objs)*100
-        Health_cause_percentage = (total_Health_cause_objs/total_objs)*100
-        livelyhood_cause_percentage = (total_livelyhood_cause_objs/total_objs)*100
-        other_cause_percentage = (total_other_cause_objs/total_objs)*100
-        return Response({"Education": education_cause_percentage ,"HealthCare": Health_cause_percentage,"Woment Empowerment": women_empowerment_cause_percentage,"Livlihood": livelyhood_cause_percentage,"Other":other_cause_percentage})
-                
+        # if total_objs==0:
+        #     return Response({"Education": 0,"HealthCare":0,"Woment Empowerment": 0,"Livlihood": 0,"Other":0})
+        # education_cause_percentage = (total_education_cause_objs/total_objs)*100 
+        # women_empowerment_cause_percentage = (total_women_empowerment_cause_objs/total_objs)*100
+        # Health_cause_percentage = (total_Health_cause_objs/total_objs)*100
+        # livelyhood_cause_percentage = (total_livelyhood_cause_objs/total_objs)*100
+        # other_cause_percentage = (total_other_cause_objs/total_objs)*100
+        # return Response({"Education": education_cause_percentage ,"HealthCare": Health_cause_percentage,"Woment Empowerment": women_empowerment_cause_percentage,"Livlihood": livelyhood_cause_percentage,"Other":other_cause_percentage})
+        return Response ([{"Content":{"Title":"Education","Value":total_education_cause_objs,"color":"#FFFF00"}},
+                        {"Content":{"Title":"HealthCare","Value":total_women_empowerment_cause_objs,"color":"#FF0000"}},
+                        {"Content":{"Title":"Livlihood","Value":total_livelyhood_cause_objs,"color":"#f5f5f5"}},
+                        {"Content":{"Title":"Women Empowerment","Value":total_women_empowerment_cause_objs,"color":"#00FFFF"}} ,
+                        {"Content":{"Title":"Other","Value":total_other_cause_objs,"color":"#641975"}} 
+        ])
 class PaymentShortViews(GenericAPIView,ListModelMixin): 
     
     queryset=models.payment_details.objects.all()
