@@ -44,7 +44,6 @@ class TransactionAPIView(ListCreateAPIView):
             return response
         else:
             payment = RazorpayClient.create_order(amount,currency)
-            payment = RazorpayClient.create_order(amount,currency)
             print(amount, payment)
             request.data['id'] = payment['id']
             response = super().post(request, *args, **kwargs)
