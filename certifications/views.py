@@ -51,8 +51,7 @@ class CurrentUserCertificates(generics.GenericAPIView):
     serializer_class = certificationSerializer2
 
     
-    def post(self,request):
-        email = request.data["email"]
+    def get(self,request,email):
         try:
             user = User.objects.get(username=email)
         except:
@@ -63,7 +62,7 @@ class CurrentUserCertificates(generics.GenericAPIView):
         for c in crts:
             certificate = None
             if c.status == "Completed":
-                certificate = c.img.url
+                certificate = "https://simmibackend.pythonanywhere.com"+c.img.url
             obj = {
                 "event_name":c.event_name,
                 "mentor_name":c.mentor_name,
