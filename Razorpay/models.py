@@ -24,6 +24,7 @@ class Transactions(models.Model):
     amount = models.CharField(max_length=25)
     is_paid = models.BooleanField(default=False)
     cause = models.CharField(max_length=50, default='Simmi Foundation')
+    currency = models.CharField(max_length=3,default="INR")
     date = models.DateTimeField(auto_now=True)
     
 
@@ -35,6 +36,7 @@ class Subscription(models.Model):
     amount = models.CharField(max_length=25)
     cause = models.CharField(max_length=50, default='Simmi Foundation')
     period = models.CharField(max_length=10, choices=PeriodChoice.choices)
+    currency = models.CharField(max_length=3,default="INR")
     date = models.DateTimeField(auto_now=True)
     status = models.CharField(
         max_length=20, choices=StatusChoice.choices, default=StatusChoice.CREATED)

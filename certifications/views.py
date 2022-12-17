@@ -12,7 +12,7 @@ from .serilaizers import certificationSerializer, user_certificateSerializer,Use
 #from accounts.models import registration
 from rest_framework import status
 from rest_framework.mixins import DestroyModelMixin,CreateModelMixin,UpdateModelMixin,RetrieveModelMixin,ListModelMixin
-from rest_framework.generics import GenericAPIView,ListAPIView
+from rest_framework.generics import GenericAPIView,ListAPIView,RetrieveAPIView
 from django.contrib.auth.models import User
 from .serilaizers import user_certificateSerializer,certificationSerializer,certificationSerializer2
 
@@ -64,6 +64,7 @@ class CurrentUserCertificates(generics.GenericAPIView):
             if c.status == "Completed":
                 certificate = "https://simmibackend.pythonanywhere.com"+c.img.url
             obj = {
+                'id':c.id,
                 "event_name":c.event_name,
                 "mentor_name":c.mentor_name,
                 "issued_date":c.issue_date,
@@ -74,3 +75,6 @@ class CurrentUserCertificates(generics.GenericAPIView):
         return Response(user_certificates_all)
     
     
+class certificate_base_id(RetrieveAPIView):
+    serializer_class = certificationSerializer
+    queryset = certfication.objects.all()

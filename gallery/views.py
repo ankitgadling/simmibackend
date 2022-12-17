@@ -3,7 +3,7 @@ from gallery.models import Gallerytable
 from rest_framework.generics import GenericAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
 from rest_framework.mixins import ListModelMixin
 from rest_framework.response import Response
-
+from django.contrib.auth.models import User
 # get api for website without permissions
 class Galleryapi(GenericAPIView,ListModelMixin):
     queryset =Gallerytable.objects.all()
@@ -29,12 +29,13 @@ class GalleryAdmin(CreateAPIView):
 
     def post(self,request, *args, **kwargs):
         title = request.data['title']
-        admin = request.session.get('admin')
+        admin = "admin@gmail.com"
         photo = request.data['photo']
         date = request.data['date']
         content = request.data['content']
         category = request.data['category']
-
+        user = User.objects.get(username=admin)
+        admin = user.first_name
         Gallerytable.objects.create(title=title, photo=photo,admin=admin, date=date, content=content, category=category)
         print(admin)
         return Response("Objects created!!")
