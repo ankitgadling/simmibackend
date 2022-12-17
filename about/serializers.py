@@ -3,10 +3,10 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from .models import *
 from drf_extra_fields.fields import HybridImageField
-# class Aboutserializers(ModelSerializer):
-#     class Meta:
-#         model = About
-#         fields = "__all__"        
+class Aboutserializers(ModelSerializer):
+    class Meta:
+        model = About
+        fields = "__all__"        
 
 
 # class Founderserializers(ModelSerializer):
