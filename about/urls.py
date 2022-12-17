@@ -1,7 +1,8 @@
 from django.urls import path
 from about.views import *
 urlpatterns = [
-    # path('',Aboutapi.as_view()),
+    path('',Aboutapi.as_view()),
+    path('<pk>',Aboutdetail.as_view()),
     # path('founder/',Foundersapi.as_view()),
     # path('founder/<pk>/',Founderupdatedetail.as_view()),
     # path('advisor/',Advisorapi.as_view()),
