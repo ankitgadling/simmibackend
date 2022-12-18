@@ -31,6 +31,8 @@ class GalleryAdmin(CreateAPIView):
         title = request.data['title']
         admin = "admin@gmail.com"
         photo = request.data['photo']
+        photo2 = request.data['photo2']
+        photo3 = request.data['photo3']
         date = request.data['date']
         content = request.data['content']
         category = request.data['category']
