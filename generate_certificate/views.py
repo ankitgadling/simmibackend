@@ -131,13 +131,14 @@ class Genarate_Donation_Certificate(GenericAPIView):
             except DonationCetificates.DoesNotExist:
                 transaction = Transactions.objects.get(id=trance_id)
                 date = transaction.date
+                currency = transaction.currency
                 donar_name = transaction.user.first_name+transaction.user.last_name
                 donar_name = str(donar_name).upper()
                 donar_cause = transaction.cause
                 cuases = ["Education","Livlihood","HealthCare","Women Empowerment"]
                 if donar_cause not in cuases:
                     donar_cause = "To Simmifoundation"
-                donar_ammount = indian_currency_format(int(transaction.amount))+" INR"
+                donar_ammount = indian_currency_format(int(transaction.amount))+" "+currency
                 file_name = transaction.user.username+str(trance_id)
                 l2 ="genarate certification for event of simmifoundation simmifoundation sample text forgenarate certification for event "
                 l3 ="certification for event of simmifoundation sample text for genarate simmifoundation "
@@ -178,13 +179,14 @@ class Genarate_Donation_Certificate(GenericAPIView):
         for donation in data:
             current_transaction = Transactions.objects.get(id=donation.transactions_id)
             amt = indian_currency_format(int(current_transaction.amount))
+            amt = str(amt)+" "+current_transaction.currency
             action = "Failed"
             certificate = None
             if current_transaction.is_paid:
                 action = "Success"
                 certificate = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
             obj = {
-                "date" : current_transaction.date,
+                "date" : current_transaction.date.strftime("%d-%b-%Y"),
                 "cause" : current_transaction.cause,
                 "donation_id":current_transaction.id,
                 "ammount": amt,
