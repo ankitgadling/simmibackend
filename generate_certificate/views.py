@@ -259,7 +259,7 @@ class Genarate_Subscription_Certificate(GenericAPIView):
             current_transaction = Subscription.objects.get(id=donation.subscription_id)
             amt = indian_currency_format(int(current_transaction.amount))
             certificate = None
-            if current_transaction.status == "completed":
+            if current_transaction.status == "completed" or not current_transaction.status == "created" :
                 certificate = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
             obj = {
                 "date" : current_transaction.date,
