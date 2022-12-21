@@ -56,9 +56,7 @@ class AllEvents(GenericAPIView,ListModelMixin):
                     # "image_2":event.image_2.url,
                     # "image_3":event.image_3.url,
                     "image_1":"https://simmibackend.pythonanywhere.com"+event.image_1.url,
-                    "image_2":"https://simmibackend.pythonanywhere.com"+event.image_2.url,
-                    "image_3":"https://simmibackend.pythonanywhere.com"+event.image_3.url,
-                }
+                    }
             except ValueError:
                 ev = {
                     "id":event.id,
@@ -73,8 +71,8 @@ class AllEvents(GenericAPIView,ListModelMixin):
                     'online_link':event.online_link,
                     "status":status,
                     "image_1":None,
-                    "image_2":None,
-                    "image_3":None,
+                    # "image_2":None,
+                    # "image_3":None,
                 }
             
             event_list.append(ev)
@@ -122,8 +120,8 @@ class EventModifyView(UpdateModelMixin,GenericAPIView,RetrieveModelMixin,Destroy
                     # "image_2":event.image_2.url,
                     # "image_3":event.image_3.url,
                     "image_1":"https://simmibackend.pythonanywhere.com"+event.image_1.url,
-                    "image_2":"https://simmibackend.pythonanywhere.com"+event.image_2.url,
-                    "image_3":"https://simmibackend.pythonanywhere.com"+event.image_3.url,
+                    # "image_2":"https://simmibackend.pythonanywhere.com"+event.image_2.url,
+                    # "image_3":"https://simmibackend.pythonanywhere.com"+event.image_3.url,
                 }
         except:
             ev = {
@@ -138,8 +136,8 @@ class EventModifyView(UpdateModelMixin,GenericAPIView,RetrieveModelMixin,Destroy
                     'venue':event.venue,
                     "status":status,
                     "image_1":None,
-                    "image_2":None,
-                    "image_3":None,
+                    # "image_2":None,
+                    # "image_3":None,
             }
         return Response(ev)
     def put(self,request,*args,**kwargs):
