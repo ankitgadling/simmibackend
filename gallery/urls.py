@@ -14,9 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from gallery.views import GalleryAdmin, Galleryapi,Galleryapidetail
+from gallery.views import *
 urlpatterns = [
     path('',Galleryapi.as_view()),
     path('<pk>',Galleryapidetail.as_view()),
-    path('post/', GalleryAdmin.as_view()),
+    path('post/', GalleryView.as_view()),
+    path('post/<pk>', GalleryDetailView.as_view()),
+    
 ]
