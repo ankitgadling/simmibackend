@@ -92,6 +92,29 @@ class GalleryDetailView(GenericAPIView):
     queryset =Gallerytable.objects.all()
     serializer_class = Galleryserializers
 
+
+    def get(self, request, pk):
+        try:
+            gallery_obj = Gallerytable.objects.get(id=pk)
+            gallery_images = GalleryImages.objects.filter(gallery_id=gallery_obj.id)
+            images=[]
+            for img in gallery_images:
+                images.append("https://simmibackend.pythonanywhere.com"+img.image.url)
+            print(gallery_images)
+            print(images)
+            data = {
+                "id": gallery_obj.id,
+                "title": gallery_obj.title,
+                "admin": gallery_obj.admin,
+                "date": gallery_obj.date.strftime('%d-%b-%Y'),
+                "content": gallery_obj.content,
+                "category": gallery_obj.category,
+                "images": images
+                }
+            return Response(data)
+        except Exception as e:
+            return Response({"error": "Detail Not Found!"})
+
     def put(self, request, pk=None):
         gallery_obj = Gallerytable.objects.get(id=pk)
         images_obj = request.data.getlist('images')
