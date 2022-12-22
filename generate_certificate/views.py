@@ -256,22 +256,25 @@ class Genarate_Subscription_Certificate(GenericAPIView):
             return Response(None,200)
         objs = []
         for donation in data:
-            current_transaction = Subscription.objects.get(id=donation.subscription_id)
-            amt = indian_currency_format(int(current_transaction.amount))
-            amt = str(amt)+" "+current_transaction.currency
-            certificate = None
-            if current_transaction.status == "completed" or not current_transaction.status == "created" :
-                certificate = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
-            obj = {
-                "date" : current_transaction.date.strftime("%d-%b-%Y"),
-                "cause" : current_transaction.cause,
-                "donation_id":current_transaction.id,
-                "ammount": amt,
-                "period" : current_transaction.period,
-                "status":current_transaction.status,
-                "pdf_file":certificate
-            }
-            objs.append(obj)
+            try:
+                current_transaction = Subscription.objects.get(id=donation.subscription_id)
+                amt = indian_currency_format(int(current_transaction.amount))
+                amt = str(amt)+" "+current_transaction.currency
+                certificate = None
+                if current_transaction.status == "completed" or not current_transaction.status == "created" :
+                    certificate = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
+                obj = {
+                    "date" : current_transaction.date.strftime("%d-%b-%Y"),
+                    "cause" : current_transaction.cause,
+                    "donation_id":current_transaction.id,
+                    "ammount": amt,
+                    "period" : current_transaction.period,
+                    "status":current_transaction.status,
+                    "pdf_file":certificate
+                }
+                objs.append(obj)
+            except Subscription.DoesNotExist:
+                pass
         return Response(objs)
 
 from django.http import FileResponse
