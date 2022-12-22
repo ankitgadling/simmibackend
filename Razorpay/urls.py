@@ -11,4 +11,5 @@ urlpatterns = [
     path('subscription-success/', HandleSubscriptionPaymentSuccess.as_view()),
     path('get-user-subscriptions/<int:user>/', GetSubscriptionByUser.as_view()),
     path('delete-subscriptions/<str:pk>/', DeleteSubscription.as_view()),
+    path('cancel-subscription', HandleSubscriptionCancel.as_view()),
 ]
