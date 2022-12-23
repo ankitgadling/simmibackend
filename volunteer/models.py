@@ -7,7 +7,7 @@ class Volunteer(models.Model):
     email=models.EmailField(null=False)
     phone=models.CharField(max_length=12,validators=[MinLengthValidator(10)],null=False)
     address=models.TextField(null=False)
-    aadhar_no=models.CharField(max_length=16,validators=[MinLengthValidator(16)],null=False)
+    aadhar_no=models.CharField(max_length=12,validators=[MinLengthValidator(12)],null=False)
     dob=models.DateField(null=False)
     blood_group=models.CharField(max_length=10,null=False)
 
