@@ -124,8 +124,11 @@ class excel_file_for_job_respones(GenericAPIView):
                     email = item.email
                     country = item.country
                     city = item.city
-                    applied_on = item.applied_on
-                    no = item.mobile_number
+                    applied_on = item.applied_on.strftime('%d-%b-%Y')
+                    try:
+                        no = int(item.mobile_number)
+                    except:
+                        no = "None"
                     #link = "http://localhost:8000"+item.resume.url
                     link = "https://simmibackend.pythonanywhere.com"+item.resume.url
                     

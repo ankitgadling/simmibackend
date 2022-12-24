@@ -118,16 +118,19 @@ class HandleSubscriptionPaymentSuccess(GenericAPIView):
 
 
 class HandleSubscriptionCancel(GenericAPIView):
+    queryset = Subscription.objects.all()
+    serializer_class = SubscriptionSerializer
+
     def post(self, request):
         subscription_id = request.data.get('subscription_id')
         try:
             res = RazorpayClient.cancel_subscription(subscription_id)
-            subscription = self.queryset.get(id=subscription_id)
+            subscription = Subscription.objects.get(id=subscription_id)
             subscription.delete()
             return Response(res)
         except:
             res = {"error":"Subscription is not cancellable in cancelled status or Something wrong..!."}
-            return Response(res,401)
+            return Response(res,400)
 
 
 class GetTransactionByUser(GenericAPIView):

@@ -32,7 +32,7 @@ class Donwnload_Donations(GenericAPIView):
 
         sheet_1.set_column('A:A', 15)
         sheet_1.set_column('B:B', 20)
-        sheet_1.set_column('C:C', 18)
+        sheet_1.set_column('C:C', 19)
         sheet_1.set_column('D:D', 20)
         sheet_1.set_column('E:E', 10)
         sheet_1.set_column('F:F', 10)
@@ -88,7 +88,7 @@ class Donwnload_Subscriptions(GenericAPIView):
 
         sheet_1.set_column('A:A', 15)
         sheet_1.set_column('B:B', 20)
-        sheet_1.set_column('C:C', 18)
+        sheet_1.set_column('C:C', 19)
         sheet_1.set_column('D:D', 20)
         sheet_1.set_column('E:E', 10)
         sheet_1.set_column('F:F', 10)
