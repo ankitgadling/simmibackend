@@ -7,6 +7,7 @@ from wsgiref.util import FileWrapper
 from fpdf import FPDF
 from django.http import HttpResponse
 from datetime import datetime
+import xlsxwriter , os
 class admin_transactions_view(ListAPIView):
     queryset = Transactions.objects.all()
     serializer_class = TransactionSerializer
@@ -21,41 +22,54 @@ class Donwnload_Donations(GenericAPIView):
     queryset = Transactions.objects.all()
     
     def get(self,request):
-        date_list = []
-        cause_list = []
-        donation_id_list = []
-        ammount_list = []
-        action_list = []
-        for i in self.get_queryset():
-            if i.is_paid:
-                action = "Donated"
-            else:
-                action = "Not Donated"
-            date_list.append(i.date)
-            cause_list.append(i.cause)
-            donation_id_list.append(i.id)
-            ammount_list.append(i.amount)
-            action_list.append(action)
-        text_file_name = "Donation List_"+datetime.now().strftime("%d-%b-%y %I:%M")
-        file_name = str(text_file_name)
-        text = open("donation.txt","w+")
-        text.write(f"Date                              Cause                       Donation_ID                          ammount             action\n")
-        d = "_-"*65
-        d2 = "-"*130
-        text.write(d+"\n")
-        for i in range(len(ammount_list)):
-            text.write(f"{date_list[i].strftime('%d-%b-%y %I:%M')}               {cause_list[i].center(17)}               {donation_id_list[i]}               {ammount_list[i].center(7)}               {action_list[i].center(10)}\n")
-            text.write(d2+"\n")
-        text.close()
-        d_file = open("donation.txt","rb")    
-        # pdf = FPDF()
-        # pdf.add_page()
-        # pdf.set_font("Arial", size = 10)
-        # for x in text:
-        #     pdf.cell(200, 10, txt = x, ln = 1, align = 'C')
-        # pdf.output("mygfg.pdf")        
-        response = HttpResponse(FileWrapper(d_file), content_type='application/text')
-        response['Content-Disposition'] = f'attachment; filename={file_name+".txt"}'
+        file_name = 'Donation_history_'+datetime.now().strftime('%b-%d-%Y')
+        data = Transactions.objects.all()
+        excel_file = xlsxwriter.Workbook(file_name+".xlsx")
+
+        sheet_1 = excel_file.add_worksheet('Donation')
+
+        bold = excel_file.add_format({'bold': True})
+
+        sheet_1.set_column('A:A', 15)
+        sheet_1.set_column('B:B', 20)
+        sheet_1.set_column('C:C', 18)
+        sheet_1.set_column('D:D', 20)
+        sheet_1.set_column('E:E', 10)
+        sheet_1.set_column('F:F', 10)
+
+        sheet_1.write("A1",'DATE',bold)
+        sheet_1.write('B1','NAME',bold)
+        sheet_1.write('C1','CAUSE',bold)
+        sheet_1.write('D1','TRANSACTION ID',bold)
+        sheet_1.write('E1','AMOUNT',bold)
+        sheet_1.write('F1','STATUS',bold)
+
+        for index , item in enumerate(data):
+            name = item.user.first_name+" "+item.user.last_name
+            date = item.date.strftime('%d-%b-%Y')
+            cause = item.cause
+            id = item.id
+            amt = item.amount+" "+item.currency
+            sts = "Failed"
+            if item.is_paid:
+                sts = 'Success'
+            
+            sheet_1.write('A'+str(index+2),date)
+            sheet_1.write('B'+str(index+2),name)
+            sheet_1.write('C'+str(index+2),cause)
+            sheet_1.write('D'+str(index+2),id)
+            sheet_1.write('E'+str(index+2),amt)
+            sheet_1.write('F'+str(index+2),sts)
+        excel_file.close()
+        res = open(file_name+".xlsx",'rb')
+        
+        response = HttpResponse(FileWrapper(res), content_type='application/xlsx')
+        response['Content-Disposition'] = f'attachment; filename={file_name+".xlsx"}'
+        res.close()
+        try:
+            os.remove(file_name+".xlsx")
+        except:
+            pass
         return response
 
         
@@ -64,37 +78,49 @@ class Donwnload_Subscriptions(GenericAPIView):
     queryset = Subscription.objects.all()
     
     def get(self,request):
-        date_list = []
-        cause_list = []
-        donation_id_list = []
-        ammount_list = []
-        period_list = []
-        status_list = []
-        for i in self.get_queryset():
-            date_list.append(i.date)
-            cause_list.append(i.cause)
-            donation_id_list.append(i.id)
-            ammount_list.append(i.amount)
-            period_list.append(i.period)
-            status_list.append(i.status)
-        text_file_name = "Subscription List_"+datetime.now().strftime("%d-%b-%y %I:%M")
-        file_name = str(text_file_name)
-        text = open("subscription.txt","w+")
-        text.write(f"Date                              Cause                       Donation_ID                        ammount              period                  status\n")
-        d = "_-"*75
-        d2 = "-"*150
-        text.write(d+"\n")
-        for i in range(len(ammount_list)):
-            text.write(f"{date_list[i].strftime('%d-%b-%y %I:%M')}               {cause_list[i].center(17)}               {donation_id_list[i]}               {ammount_list[i].center(7)}               {period_list[i].center(10)}               {status_list[i]}\n")
-            text.write(d2+"\n")
-        text.close()
-        d_file = open("subscription.txt","rb")    
-        # pdf = FPDF()
-        # pdf.add_page()
-        # pdf.set_font("Arial", size = 10)
-        # for x in text:
-        #     pdf.cell(200, 10, txt = x, ln = 1, align = 'C')
-        # pdf.output("mygfg.pdf")        
-        response = HttpResponse(FileWrapper(d_file), content_type='application/text')
-        response['Content-Disposition'] = f'attachment; filename={file_name+".txt"}'
+        file_name = 'Subscription_history_'+datetime.now().strftime('%b-%d-%Y')
+        data = Subscription.objects.all()
+        excel_file = xlsxwriter.Workbook(file_name+".xlsx")
+
+        sheet_1 = excel_file.add_worksheet('Subscription')
+
+        bold = excel_file.add_format({'bold': True})
+
+        sheet_1.set_column('A:A', 15)
+        sheet_1.set_column('B:B', 20)
+        sheet_1.set_column('C:C', 18)
+        sheet_1.set_column('D:D', 20)
+        sheet_1.set_column('E:E', 10)
+        sheet_1.set_column('F:F', 10)
+
+        sheet_1.write("A1",'DATE',bold)
+        sheet_1.write('B1','NAME',bold)
+        sheet_1.write('C1','CAUSE',bold)
+        sheet_1.write('D1','TRANSACTION ID',bold)
+        sheet_1.write('E1','AMOUNT',bold)
+        sheet_1.write('F1','STATUS',bold)
+
+        for index , item in enumerate(data):
+            name = item.user.first_name+" "+item.user.last_name
+            date = item.date.strftime('%d-%b-%Y')
+            cause = item.cause
+            id = item.id
+            amt = item.amount+" "+item.currency
+            sts = item.status
+            sheet_1.write('A'+str(index+2),date)
+            sheet_1.write('B'+str(index+2),name)
+            sheet_1.write('C'+str(index+2),cause)
+            sheet_1.write('D'+str(index+2),id)
+            sheet_1.write('E'+str(index+2),amt)
+            sheet_1.write('F'+str(index+2),sts)
+        excel_file.close()
+        res = open(file_name+".xlsx",'rb')
+        
+        response = HttpResponse(FileWrapper(res), content_type='application/xlsx')
+        response['Content-Disposition'] = f'attachment; filename={file_name+".xlsx"}'
+        res.close()
+        try:
+            os.remove(file_name+".xlsx")
+        except:
+            pass
         return response

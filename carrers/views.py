@@ -8,6 +8,10 @@ from django.views.decorators.csrf import csrf_exempt
 from carrers.models import *
 from .serializers import Job, Jobserializer,Jobapplyserializer,ShortJobapplyserializer,newjobapplyserializer
 from rest_framework.response import Response
+import xlsxwriter
+from wsgiref.util import FileWrapper
+from datetime import datetime
+import os
 # Create your views here. 
 
 
@@ -76,3 +80,72 @@ class Jobapplyviewapi(GenericAPIView,DestroyModelMixin,RetrieveModelMixin,Update
         return self.retrieve(request,*args,**kwargs) 
     def delete(self,request,*args,**kwargs):
         return self.destroy(request,*args,**kwargs)
+
+
+
+#new api
+class excel_file_for_job_respones(GenericAPIView):
+    queryset = jobappliedbyuse.objects.all()
+    serializer_class = Jobapplyserializer
+    
+    def get(self,request):
+        file_name = 'Jobsapplieds_'+datetime.now().strftime('%b-%d-%Y')
+        jobs = Jobs.objects.all()
+        excel_file = xlsxwriter.Workbook(file_name+".xlsx")
+        for job in jobs: #main loop
+            sheet_name = job.title+"_"+str(job.id)
+            bold = excel_file.add_format({'bold': True})
+            applies = jobappliedbyuse.objects.filter(job=job)
+            if len(applies) > 0 :
+                data = applies
+                sheet_1 = excel_file.add_worksheet(sheet_name)
+
+                sheet_1.set_column('A:A', 15)
+                sheet_1.set_column('B:B', 15)
+                sheet_1.set_column('C:C', 30)
+                sheet_1.set_column('D:D', 15)
+                sheet_1.set_column('E:E', 15)
+                sheet_1.set_column('F:F', 15)
+                sheet_1.set_column('G:G', 15)
+                sheet_1.set_column('H:H', 80)
+
+                sheet_1.write("A1",'FIRST NAME',bold)
+                sheet_1.write('B1','LAST NAME',bold)
+                sheet_1.write('C1','EMAIL',bold)
+                sheet_1.write('D1','COUNTRY',bold)
+                sheet_1.write('E1','CITY',bold)
+                sheet_1.write('F1','APPLIED ON',bold)
+                sheet_1.write('G1','MOBILE NO',bold)
+                sheet_1.write('H1','RESUME LINK',bold)
+
+                for index , item in enumerate(data):
+                    fn = item.first_name
+                    ln = item.last_name
+                    email = item.email
+                    country = item.country
+                    city = item.city
+                    applied_on = item.applied_on
+                    no = item.mobile_number
+                    #link = "http://localhost:8000"+item.resume.url
+                    link = "https://simmibackend.pythonanywhere.com"+item.resume.url
+                    
+                    sheet_1.write('A'+str(index+2),fn)
+                    sheet_1.write('B'+str(index+2),ln)
+                    sheet_1.write('C'+str(index+2),email)
+                    sheet_1.write('D'+str(index+2),country)
+                    sheet_1.write('E'+str(index+2),city)
+                    sheet_1.write('F'+str(index+2),applied_on)
+                    sheet_1.write('G'+str(index+2),no)
+                    sheet_1.write('H'+str(index+2),link)
+                    
+        
+        excel_file.close()
+        res = open(file_name+".xlsx",'rb')
+        
+        response = HttpResponse(FileWrapper(res), content_type='application/xlsx')
+        response['Content-Disposition'] = f'attachment; filename={file_name+".xlsx"}'
+        try:
+            os.remove(file_name+".xlsx")
+        except:
+            pass
+        return response        
