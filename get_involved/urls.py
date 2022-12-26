@@ -7,6 +7,8 @@ router = DefaultRouter()
 urlpatterns = [
     path('eminent-personality/', EminentPersonalityView.as_view()),
     path('eminent-personality/<pk>/', EminentPersonalityDetails.as_view()),
+    path('individual-supporter-detail/<pk>/', IndividualSupporterDetail.as_view()),
+    
 ]
 
 router.register('press-media',PressMediaView, basename='press-media')
