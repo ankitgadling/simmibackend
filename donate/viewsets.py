@@ -50,8 +50,7 @@ def PaymentPiechartViewset(request):
         total_women_empowerment_cause_objs = Transactions.objects.filter(cause="Women Empowerment").count()
         total_Health_cause_objs = Transactions.objects.filter(cause="Livlihood").count()
         total_livelyhood_cause_objs = Transactions.objects.filter(cause="HealthCare").count() 
-        total_other_cause_objs = Transactions.objects.filter(cause="Other" or "Simmi Foundation").count()
-
+        total_other_cause_objs = Transactions.objects.filter(cause="Other").count()
         # for donation in models.payment_details.objects.all():
         #     if getattr(donation,"cause_for_donation") == "Education":
         #         total_education_cause_objs += 1
@@ -64,12 +63,20 @@ def PaymentPiechartViewset(request):
         #     elif getattr(donation,"cause_for_donation") == "Other":
         #         total_other_cause_objs += 1
         
-        education = str((total_education_cause_objs/total_objs)*100)[0:5]
-        healthcare = str((total_Health_cause_objs/total_objs)*100)[0:5]
-        livelyhood = str((total_livelyhood_cause_objs/total_objs)*100)[0:5]
-        women_empowerment = str((total_women_empowerment_cause_objs/total_objs)*100)[0:5]
-        other = str((total_other_cause_objs/total_objs)*100)[0:5]
+        education = (total_education_cause_objs/total_objs)*100
+        healthcare = (total_Health_cause_objs/total_objs)*100
+        livelyhood = (total_livelyhood_cause_objs/total_objs)*100
+        women_empowerment = (total_women_empowerment_cause_objs/total_objs)*100
+        other = (total_other_cause_objs/total_objs)*100
         
+        education2 = int(education)
+        healthcare2 = int(healthcare)
+        livelyhood2 = int(livelyhood)
+        women_empowerment2 = int(women_empowerment)
+        other2 = int(other)
+        total =education2+healthcare2+women_empowerment2+livelyhood2+other2
+        val =100-total
+        education ,healthcare,livelyhood,women_empowerment,other = education2,healthcare2,livelyhood2,women_empowerment2,other2+val
         # if total_objs==0:
         #     return Response({"Education": 0,"HealthCare":0,"Woment Empowerment": 0,"Livlihood": 0,"Other":0})
         # education_cause_percentage = (total_education_cause_objs/total_objs)*100 
