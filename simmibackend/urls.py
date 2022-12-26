@@ -52,7 +52,8 @@ urlpatterns = [
     path("api/faq/",include("faq.urls")),
     path("api/research/",include("research.urls")),
     path("api/donate/",include('donate.urls')),
-    path("api/vol/",include('volunteer.url'))
+    path("api/vol/",include('volunteer.url')),
+    path("api/navbar/",include('navbar.urls'))
 ]
 
 if settings.DEBUG:

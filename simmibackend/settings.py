@@ -90,8 +90,8 @@ INSTALLED_APPS = [
     'admin_tender',
     'generate_certificate',
     'faq',
-    'research'
-
+    'research',
+    'navbar',
 ]
 
 MIDDLEWARE = [
