@@ -13,3 +13,11 @@ class Popup(models.Model):
     title=models.CharField(max_length=30)
     desc=models.TextField()
     img=models.ImageField(upload_to="popup/")
+    
+class SpendingMoneyPercentage(models.Model):
+    education = models.CharField(max_length=10)
+    healthcare = models.CharField(max_length=10)
+    livelyhood = models.CharField(max_length=10)
+    women_empowerment = models.CharField(max_length=10)
+    other = models.CharField(max_length=10)
+    date = models.DateField(auto_now_add=True)

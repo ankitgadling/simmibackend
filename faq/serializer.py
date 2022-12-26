@@ -15,3 +15,9 @@ class popserializer(ModelSerializer):
     class Meta:
         model=Popup
         fields="__all__"
+        
+        
+class SpendingMoneyPercentageSerializer(ModelSerializer):
+    class Meta:
+        model = SpendingMoneyPercentage
+        exclude = ['date']

@@ -3,9 +3,11 @@ from . import models
 from . import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView,ListCreateAPIView
 from rest_framework.mixins import ListModelMixin,UpdateModelMixin,RetrieveModelMixin,DestroyModelMixin,CreateModelMixin
-
+from Razorpay.models import Transactions
+from faq.serializer import SpendingMoneyPercentageSerializer
+from faq.models import SpendingMoneyPercentage
 class DonateViewset(viewsets.ModelViewSet):
     
     queryset=models.donate_form.objects.all()
@@ -43,24 +45,31 @@ class Upi_viewset(viewsets.ModelViewSet):
 def PaymentPiechartViewset(request):
     if request.method=="GET":
         
-        total_objs = len(models.payment_details.objects.all())
-        total_education_cause_objs = 0
-        total_women_empowerment_cause_objs = 0
-        total_Health_cause_objs = 0
-        total_livelyhood_cause_objs = 0 
-        total_other_cause_objs = 0
+        total_objs = Transactions.objects.all().count()
+        total_education_cause_objs = Transactions.objects.filter(cause="Education").count()
+        total_women_empowerment_cause_objs = Transactions.objects.filter(cause="Women Empowerment").count()
+        total_Health_cause_objs = Transactions.objects.filter(cause="Livlihood").count()
+        total_livelyhood_cause_objs = Transactions.objects.filter(cause="HealthCare").count() 
+        total_other_cause_objs = Transactions.objects.filter(cause="Other" or "Simmi Foundation").count()
 
-        for donation in models.payment_details.objects.all():
-            if getattr(donation,"cause_for_donation") == "Education":
-                total_education_cause_objs += 1
-            elif getattr(donation,"cause_for_donation")== "Women Empowerment":
-                total_women_empowerment_cause_objs += 1
-            elif getattr(donation,"cause_for_donation") == "Livlihood":
-                total_livelyhood_cause_objs += 1
-            elif getattr(donation,"cause_for_donation") == "HealthCare":
-                total_Health_cause_objs+= 1
-            elif getattr(donation,"cause_for_donation") == "Other":
-                total_other_cause_objs += 1
+        # for donation in models.payment_details.objects.all():
+        #     if getattr(donation,"cause_for_donation") == "Education":
+        #         total_education_cause_objs += 1
+        #     elif getattr(donation,"cause_for_donation")== "Women Empowerment":
+        #         total_women_empowerment_cause_objs += 1
+        #     elif getattr(donation,"cause_for_donation") == "Livlihood":
+        #         total_livelyhood_cause_objs += 1
+        #     elif getattr(donation,"cause_for_donation") == "HealthCare":
+        #         total_Health_cause_objs+= 1
+        #     elif getattr(donation,"cause_for_donation") == "Other":
+        #         total_other_cause_objs += 1
+        
+        education = str((total_education_cause_objs/total_objs)*100)[0:5]
+        healthcare = str((total_Health_cause_objs/total_objs)*100)[0:5]
+        livelyhood = str((total_livelyhood_cause_objs/total_objs)*100)[0:5]
+        women_empowerment = str((total_women_empowerment_cause_objs/total_objs)*100)[0:5]
+        other = str((total_other_cause_objs/total_objs)*100)[0:5]
+        
         # if total_objs==0:
         #     return Response({"Education": 0,"HealthCare":0,"Woment Empowerment": 0,"Livlihood": 0,"Other":0})
         # education_cause_percentage = (total_education_cause_objs/total_objs)*100 
@@ -69,12 +78,55 @@ def PaymentPiechartViewset(request):
         # livelyhood_cause_percentage = (total_livelyhood_cause_objs/total_objs)*100
         # other_cause_percentage = (total_other_cause_objs/total_objs)*100
         # return Response({"Education": education_cause_percentage ,"HealthCare": Health_cause_percentage,"Woment Empowerment": women_empowerment_cause_percentage,"Livlihood": livelyhood_cause_percentage,"Other":other_cause_percentage})
-        return Response ([{"Content":{"Title":"Education","Value":total_education_cause_objs,"color":"#FFFF00"}},
-                        {"Content":{"Title":"HealthCare","Value":total_women_empowerment_cause_objs,"color":"#FF0000"}},
-                        {"Content":{"Title":"Livlihood","Value":total_livelyhood_cause_objs,"color":"#f5f5f5"}},
-                        {"Content":{"Title":"Women Empowerment","Value":total_women_empowerment_cause_objs,"color":"#00FFFF"}} ,
-                        {"Content":{"Title":"Other","Value":total_other_cause_objs,"color":"#641975"}} 
+        return Response ([{"Content":{"Title":"Education","Value":education,"color":"#FFFF00"}},
+                        {"Content":{"Title":"HealthCare","Value":healthcare,"color":"#FF0000"}},
+                        {"Content":{"Title":"Livlihood","Value":livelyhood,"color":"#f5f5f5"}},
+                        {"Content":{"Title":"Women Empowerment","Value":women_empowerment,"color":"#00FFFF"}} ,
+                        {"Content":{"Title":"Other","Value":other,"color":"#641975"}} 
         ])
+
+
+class NewPiechartPost(GenericAPIView):
+    serializer_class = SpendingMoneyPercentageSerializer
+    queryset = SpendingMoneyPercentage.objects.all()
+    
+    def get(self,request):
+        try:
+            latest_percantages = SpendingMoneyPercentage.objects.all().last()
+            education = latest_percantages.education
+            women_empowerment = latest_percantages.women_empowerment
+            healthcare = latest_percantages.healthcare
+            livelyhood = latest_percantages.livelyhood
+            other = latest_percantages.other
+            
+            
+            return Response ([{"Content":{"Title":"Education","Value":education,"color":"#FFFF00"}},
+                            {"Content":{"Title":"HealthCare","Value":healthcare,"color":"#FF0000"}},
+                            {"Content":{"Title":"Livlihood","Value":livelyhood,"color":"#f5f5f5"}},
+                            {"Content":{"Title":"Women Empowerment","Value":women_empowerment,"color":"#00FFFF"}} ,
+                            {"Content":{"Title":"Other","Value":other,"color":"#641975"}} 
+            ])
+        except AttributeError:
+            return Response('There is no any latest percentages..!')
+    def post(self, request):        
+        education = request.data['education']
+        healthcare = request.data['healthcare']
+        livelyhood = request.data['livelyhood']
+        women_empowerment = request.data['women_empowerment']
+        other = request.data['other']
+        cause_tuple = (int(education),int(healthcare),int(livelyhood),int(women_empowerment),int(other))
+        if sum(cause_tuple) == 100:
+            res = self.queryset.create(education=str(education),healthcare=str(healthcare),women_empowerment=str(women_empowerment),livelyhood=str(livelyhood),other=str(other))
+            data = self.serializer_class(res).data
+            return Response(data)
+        else:
+            return Response("Total percentage should be equal to 100",400)
+
+
+
+
+
+
 class PaymentShortViews(GenericAPIView,ListModelMixin): 
     
     queryset=models.payment_details.objects.all()
