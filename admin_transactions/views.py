@@ -15,7 +15,6 @@ class admin_transactions_view(GenericAPIView):
     def get(self,request):
         transactions = Transactions.objects.all()
         data = []
-        action = ""
         for t in transactions:
             if t.is_paid:
                 action = "Success"
