@@ -24,6 +24,7 @@ class admin_transactions_view(GenericAPIView):
                 "date" : t.date.strftime("%d-%b-%Y"),
                 "cause" : t.cause,
                 "donation_id":t.id,
+                'user':t.user,
                 "ammount": amt,
                 "action":action,
             }
@@ -43,6 +44,7 @@ class admin_subscription_view(GenericAPIView):
                 "date" : s.date.strftime("%d-%b-%Y"),
                 "cause" : s.cause,
                 "donation_id":s.id,
+                'user':s.user,
                 "ammount": amt,
                 "period" : s.period,
                 "status":s.status,
