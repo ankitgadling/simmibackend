@@ -6,15 +6,51 @@ from .serializers import Userserializer,TransactionSerializer,SubscriptionSerial
 from wsgiref.util import FileWrapper
 from fpdf import FPDF
 from django.http import HttpResponse
+from generate_certificate.extras import indian_currency_format
 from datetime import datetime
 import xlsxwriter , os
-class admin_transactions_view(ListAPIView):
+class admin_transactions_view(GenericAPIView):
     queryset = Transactions.objects.all()
     serializer_class = TransactionSerializer
-        
-class admin_subscription_view(ListAPIView):
+    def get(self,request):
+        transactions = Transactions.objects.all()
+        data = []
+        action = "Failed"
+        for t in transactions:
+            action = "Success"
+            amt = indian_currency_format(int(t.amount))
+            amt = str(amt)+" "+t.currency
+            obj = {
+                "date" : t.date.strftime("%d-%b-%Y"),
+                "cause" : t.cause,
+                "donation_id":t.id,
+                "ammount": amt,
+                "action":action,
+            }
+            data.append(obj)
+        return Response(data)        
+class admin_subscription_view(GenericAPIView):
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
+    
+    def get(self,request):
+        subscriptions = Subscription.objects.all()
+        data = []
+        for s in subscriptions:
+            amt = indian_currency_format(int(s.amount))
+            amt = str(amt)+" "+s.currency
+            obj = {
+                "date" : s.date.strftime("%d-%b-%Y"),
+                "cause" : s.cause,
+                "donation_id":s.id,
+                "ammount": amt,
+                "period" : s.period,
+                "status":s.status,
+                }
+            data.append(obj)
+        return Response(data)        
+                
+            
     
     
 class Donwnload_Donations(GenericAPIView):
