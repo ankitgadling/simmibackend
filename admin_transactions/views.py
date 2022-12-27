@@ -15,17 +15,21 @@ class admin_transactions_view(GenericAPIView):
     def get(self,request):
         transactions = Transactions.objects.all()
         data = []
-        action = "Failed"
+        action = ""
         for t in transactions:
-            action = "Success"
+            if t.is_paid:
+                action = "Success"
+            else:
+                action = "Failed"
+            name = t.user.first_name+" "+t.user.last_name
             amt = indian_currency_format(int(t.amount))
             amt = str(amt)+" "+t.currency
             obj = {
                 "date" : t.date.strftime("%d-%b-%Y"),
                 "cause" : t.cause,
                 "donation_id":t.id,
-                'user':t.user,
-                "ammount": amt,
+                'name':name,
+                "amount": amt,
                 "action":action,
             }
             data.append(obj)
@@ -38,14 +42,15 @@ class admin_subscription_view(GenericAPIView):
         subscriptions = Subscription.objects.all()
         data = []
         for s in subscriptions:
+            name = s.user.first_name+" "+s.user.last_name
             amt = indian_currency_format(int(s.amount))
             amt = str(amt)+" "+s.currency
             obj = {
                 "date" : s.date.strftime("%d-%b-%Y"),
                 "cause" : s.cause,
-                "donation_id":s.id,
-                'user':s.user,
-                "ammount": amt,
+                "subscription_id":s.id,
+                'name':name,
+                "amount": amt,
                 "period" : s.period,
                 "status":s.status,
                 }
