@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from .serializers import Adminloginserializer,ChangePasswordSerializer
+from .serializers import Adminloginserializer,ChangePasswordSerializer,UpdateSerializer
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from account.models import SimmiUserDetails
@@ -85,7 +85,7 @@ class ChangePassword(GenericAPIView):
     permission_classes = [IsSuperAdminUser]
     
     def post(self,request):
-        email = request.data['email']
+        email = request.user.username
         old_password = request.data['old_password']
         new_password = request.data['new_password']
         confirm_password = request.data['confirm_password']
@@ -100,3 +100,31 @@ class ChangePassword(GenericAPIView):
         else:
             return Response('invalide confirm password..!',400)
         
+
+
+class ProfileUpdate(GenericAPIView):
+    queryset = User.objects.all()
+    serializer_class = UpdateSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsSuperAdminUser]
+    
+    def put(self,request):
+        email = request.user.username
+        name = request.data.get('name',None)
+        img = request.data.get('img',None)
+        
+        user = User.objects.get(username=email)
+        if name is not None:
+            user.first_name = name
+        try:
+            user2 = SimmiUserDetails.objects.get(user=user)
+            if name is not None:
+                user2.first_name = name
+            if img is not None:
+                user2.profile = img
+        except SimmiUserDetails.DoesNotExist:
+            user2 = SimmiUserDetails.objects.create(user=user,first_name=name,last_name="",ph_no="",profile=img)
+        user.save()
+        user2.save()
+        
+        return Response("updated....!")
