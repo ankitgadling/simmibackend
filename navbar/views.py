@@ -8,13 +8,6 @@ from rest_framework import permissions
 # Create your views here.
 
 
-class navbarAPI(GenericAPIView, CreateModelMixin, ListModelMixin):
-    queryset = upImages.objects.all()
-    serializer_class = navbarserializer
-    def post(self, request, *args, **kwargs):
-        return self.create(request,*args,**kwargs)
-    def get(self, request, *args, **kwargs):
-        return self.list(request,*args,**kwargs)
 
 class navbarupdateAPI(GenericAPIView, UpdateModelMixin, RetrieveModelMixin, DestroyModelMixin):
     queryset = upImages.objects.all()
