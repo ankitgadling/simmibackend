@@ -82,7 +82,7 @@ class ChangePassword(GenericAPIView):
     queryset = User.objects.all()
     serializer_class = ChangePasswordSerializer
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsSuperAdminUser]
+    permission_classes = [IsAdminUser]
     
     def post(self,request):
         email = request.user.username
@@ -106,8 +106,21 @@ class ProfileUpdate(GenericAPIView):
     queryset = User.objects.all()
     serializer_class = UpdateSerializer
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsSuperAdminUser]
+    permission_classes = [IsAdminUser]
     
+    def get(self,request):
+        email = "madhu"#request.user.username
+        user = User.objects.get(username=email)
+        name = user.first_name
+        try:
+            profile = "https://simmibackend.pythonanywhere.com"+SimmiUserDetails.objects.get(user=user).profile.url
+            if profile is None or len(profile) < 1 :
+                profile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
+        except:
+            profile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
+        return Response({'name':name,"profile":profile})    
+
+
     def put(self,request):
         email = request.user.username
         name = request.data.get('name',None)
@@ -128,3 +141,5 @@ class ProfileUpdate(GenericAPIView):
         user2.save()
         
         return Response("updated....!")
+    
+    
