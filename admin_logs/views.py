@@ -36,6 +36,9 @@ class admin_login(GenericAPIView):
                     profile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
             except SimmiUserDetails.DoesNotExist:
                 profile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
+            except ValueError:
+                profile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
+            
             if admin.is_staff == True:
                 refresh = RefreshToken.for_user(admin)
                 if admin.is_superuser == True:
