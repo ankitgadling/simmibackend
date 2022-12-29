@@ -112,7 +112,7 @@ class ProfileUpdate(GenericAPIView):
     permission_classes = [IsAdminUser]
     
     def get(self,request):
-        email = "madhu"#request.user.username
+        email = request.user.username
         user = User.objects.get(username=email)
         name = user.first_name
         try:
