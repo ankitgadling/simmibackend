@@ -36,6 +36,8 @@ class admin_login(GenericAPIView):
                     profile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
             except SimmiUserDetails.DoesNotExist:
                 profile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
+            except ValueError:
+                profile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
             if admin.is_staff == True:
                 refresh = RefreshToken.for_user(admin)
                 if admin.is_superuser == True:
@@ -84,6 +86,11 @@ class ChangePassword(GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdminUser]
     
+    def get(self,request):
+        return Response(request.user.username)
+    
+    
+    
     def post(self,request):
         email = request.user.username
         old_password = request.data['old_password']
@@ -125,7 +132,7 @@ class ProfileUpdate(GenericAPIView):
         email = request.user.username
         name = request.data.get('name',None)
         img = request.data.get('img',None)
-        
+        print(img)
         user = User.objects.get(username=email)
         if name is not None:
             user.first_name = name
