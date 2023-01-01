@@ -1,4 +1,3 @@
-from secrets import choice
 from django.core.validators import MaxLengthValidator,MinLengthValidator
 from django.db import models
 from django.contrib.auth.models import User
@@ -34,13 +33,14 @@ class upi_tran(models.Model):
 
 
 class payment_details(models.Model):
-    options={
+    options = [
         ("Education","Education"),
         ("Women Empowerment","Women Empowerment"),
         ("Livlihood","Livlihood"),
         ("HealthCare","HealthCare"),
         ("Other","Other")
-    }
+    ]
+
     subscription_plan=models.CharField(max_length=100)
     cause_for_donation=models.CharField(choices=options,max_length=100)
     amount_type=models.CharField(max_length=100)
