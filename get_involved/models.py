@@ -1,19 +1,17 @@
-from datetime import date
-from ssl import Options
-from unicodedata import category
 from django.db import models
 from django.utils import timezone
 
 class IndividualSupporter(models.Model):
-    options={
+    options=[
         ("Education","Education"),
         ("Women Empowerment","Women Empowerment"),
         ("Livelihood","Livelihood"),
         ("Healthcare","Healthcare"),
         ("Other","Other")
-    }
+    ]
     name = models.CharField(max_length=30)
     reason = models.CharField(choices = options, max_length=100)
+    country = models.CharField(max_length=100)
     message = models.TextField()
     file = models.FileField(upload_to='supporter', blank=True)
 
