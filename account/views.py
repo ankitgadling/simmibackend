@@ -86,7 +86,7 @@ class Login_api(generics.GenericAPIView):
                 'first_name':obj.data['first_name'],
                 'last_name':obj.data['last_name'],
                 'ph_no':obj.data['ph_no'],
-                'profile':obj.data['profile'],
+                'profile':"https://simmibackend.pythonanywhere.com"+obj.data['profile'],
             }
             if obj['profile'] is None:
                  obj['profile'] = "https://cdn0.iconfinder.com/data/icons/user-pictures/100/unknown_1-2-512.png"
