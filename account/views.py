@@ -41,26 +41,45 @@ class register_api(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         return Response({"msg": "Registration Successfull...!"})
-    
+
 
 class userdetailsupdateview(generics.GenericAPIView):
     queryset = SimmiUserDetails.objects.all()
     serializer_class = userupdateserializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def put(self,request,*args,**kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
+        first_name = request.data['first_name']
+        last_name = request.data['last_name']
+        ph_no = request.data['ph_no']
+        email = request.user.username
+        user = User.objects.get(username=email)
+        userdetails = SimmiUserDetails.objects.get(user= user)
+        userdetails.first_name = first_name
+        userdetails.last_name = last_name
+        userdetails.ph_no = ph_no
+        userdetails.save()
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
         return Response({"msg": "Update Successfull...!"})
 
 class userprofileupdateview(generics.GenericAPIView):
     queryset = SimmiUserDetails.objects.all()
     serializer_class = userprofileupdateserializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def put(self,request,*args,**kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
+
+        profile = request.data['profile']
+        email = request.user.username
+        user = User.objects.get(username=email)
+        # pk = self.context.get('pk')
+        user = SimmiUserDetails.objects.get(user=user)
+        user.profile = profile
+        user.save()
         return Response({"msg": "Profile updated...!"})
 
 
@@ -97,11 +116,11 @@ class Login_api(generics.GenericAPIView):
             return Response({
                 "msg": "User Not Found...!"
             },404)
-            
+
 class ChangePassword(generics.GenericAPIView):
     queryset = User.objects.all()
     serializer_class = ChangePasswordSerializer
-    
+
     def post(self,request):
         old_password = request.data['old_password']
         new_password = request.data['new_password']
@@ -114,12 +133,12 @@ class ChangePassword(generics.GenericAPIView):
                 user.save()
                 return Response('Password Changed...')
             else:
-                return Response('wrong old password..!',400)    
+                return Response('wrong old password..!',400)
         else:
             return Response('invalide confirm password..!',400)
-        
-        
-        
+
+
+
 class LogoutUser(generics.GenericAPIView):
     queryset = User.objects.all()
     serializer_class =userdetails
@@ -131,9 +150,9 @@ class LogoutUser(generics.GenericAPIView):
         user_logged_out.send(sender=request.user.__class__,
                              request=request, user=request.user)
         try:
-            del request.session['current_user']    
+            del request.session['current_user']
         except KeyError:
             pass
         return Response("Logout Successful!",200)
-        
-        
+
+
