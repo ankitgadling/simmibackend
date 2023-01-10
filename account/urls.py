@@ -1,4 +1,4 @@
-from .views import register_api, Login_api , userdetailsupdateview,userprofileupdateview,ChangePassword,LogoutUser
+from .views import register_api, Login_api , userdetailsupdateview,ChangePassword,LogoutUser,Userinfo
 from django.urls import path
 
 urlpatterns = [
@@ -6,6 +6,6 @@ urlpatterns = [
     path('login', Login_api.as_view(), name='login'),
     path('logout', LogoutUser.as_view(), name='logout'),
     path('user_details_update',userdetailsupdateview.as_view()),
-    path('user_profile_update',userprofileupdateview.as_view()),
+    path('userinfo/',Userinfo.as_view()),
     path('changepass',ChangePassword.as_view()),
     ]
