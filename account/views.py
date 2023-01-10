@@ -50,18 +50,26 @@ class userdetailsupdateview(generics.GenericAPIView):
     permission_classes = (IsAuthenticated,)
 
     def put(self,request,*args,**kwargs):
-        first_name = request.data['first_name']
-        last_name = request.data['last_name']
-        ph_no = request.data['ph_no']
+        first_name = request.data.get('first_name',None)
+        last_name = request.data.get('last_name',None)
+        ph_no = request.data.get('ph_no',None)
+        profile = request.data.get('profile',None)
         email = request.user.username
         user = User.objects.get(username=email)
         userdetails = SimmiUserDetails.objects.get(user= user)
-        userdetails.first_name = first_name
-        userdetails.last_name = last_name
-        userdetails.ph_no = ph_no
+        if first_name is not None:
+            userdetails.first_name = first_name
+        if last_name is not None:
+            userdetails.last_name = last_name
+        if ph_no is not None:
+            userdetails.ph_no = ph_no
+        if profile is not None:
+            userdetails.profile = profile
         userdetails.save()
-        user.first_name = first_name
-        user.last_name = last_name
+        if first_name is not None:
+            user.first_name = first_name
+        if last_name is not None:
+            user.last_name = last_name
         user.save()
         return Response({"msg": "Update Successfull...!"})
 
@@ -128,6 +136,7 @@ class ChangePassword(generics.GenericAPIView):
         new_password = request.data['new_password']
         confirm_password = request.data['confirm_password']
         email = request.user.username
+
         if confirm_password == new_password:
             user = User.objects.get(username=email)
             if check_password(old_password , user.password):
