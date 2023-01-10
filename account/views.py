@@ -166,4 +166,25 @@ class LogoutUser(generics.GenericAPIView):
             pass
         return Response("Logout Successful!",200)
 
+class Userinfo(generics.GenericAPIView):
+    queryset = User.objects.all()
+    serializer_class =userdetails
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        email = request.user.username
+        user = User.objects.get(username=email)
+        userinfo = SimmiUserDetails.objects.get(user=user)
+        data = {
+            'first_name':userinfo.first_name,
+            'last_name':userinfo.last_name,
+            'ph_no':userinfo.ph_no,
+            'profile':"https://simmibackend.pythonanywhere.com"+userinfo.profile.url
+            }
+        return Response(data,200)
+
+
+
+
 
