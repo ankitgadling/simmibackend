@@ -120,12 +120,14 @@ class Login_api(generics.GenericAPIView):
 class ChangePassword(generics.GenericAPIView):
     queryset = User.objects.all()
     serializer_class = ChangePasswordSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def post(self,request):
         old_password = request.data['old_password']
         new_password = request.data['new_password']
         confirm_password = request.data['confirm_password']
-        email = request.data['email']
+        email = request.user.username
         if confirm_password == new_password:
             user = User.objects.get(username=email)
             if check_password(old_password , user.password):
