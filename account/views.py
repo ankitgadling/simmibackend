@@ -117,8 +117,6 @@ class Login_api(generics.GenericAPIView):
             }
             if obj['profile'] is None:
                  obj['profile'] = "https://cdn0.iconfinder.com/data/icons/user-pictures/100/unknown_1-2-512.png"
-            request.session['current_user'] = user.id
-            print(request.session['current_user'])
             return Response({"msg": "Login Successfull...!","token":token,"user":accountserializer(user).data,"userdetals":obj })
         else:
             return Response({
