@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from PIL import Image as Img
 from PIL import ImageDraw,ImageFont
 from datetime import datetime,timedelta
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from wsgiref.util import FileWrapper
 import io
 import os
@@ -27,12 +29,14 @@ from rest_framework.parsers import BaseParser
 class Genarate(GenericAPIView):
     queryset = certfication.objects.all()
     serializer_class = Gen
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def post(self,request,*args,**kwargs):
         event_id = request.data['event_id']
         event = Event.objects.get(id=event_id)
-        user_email = request.data['user_email']
-        user = User.objects.get(username=user_email)
+        email = request.user.username
+        user = User.objects.get(username=email)
         first_name = user.first_name
         last_name = user.last_name
         username = user.username
@@ -95,11 +99,12 @@ class Genarate(GenericAPIView):
 class Certify(GenericAPIView):
     queryset = certfication.objects.all()
     serializer_class = Gen
-
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def post(self,request):
-        user_email = request.data['user_email']
-        user = User.objects.get(username=user_email)
+        email = request.user.username
+        user = User.objects.get(username=email)
         username = user.username
         certificate_id = get_session_by_key(key=username)
         event_id = get_session_by_key(key=username+"currentevent")
@@ -120,6 +125,8 @@ class Certify(GenericAPIView):
 class Genarate_Donation_Certificate(GenericAPIView):
     queryset = Transactions.objects.all()
     serializer_class = GenarateDonationSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self,request,email=None):
         user = User.objects.get(username=email)
@@ -201,6 +208,8 @@ class Genarate_Donation_Certificate(GenericAPIView):
 class Genarate_Subscription_Certificate(GenericAPIView):
     queryset = Subscription.objects.all()
     serializer_class = GenarateDonationSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self,request,email=None):
         user = User.objects.get(username=email)
@@ -294,9 +303,12 @@ class PassthroughRenderer(renderers.BaseRenderer):
 class donation_certificate_download(GenericAPIView):
     queryset = DonationCetificates.objects.all()
     serializer_class = DonationDownloadSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def post(self,request):
+        email = request.user.username
         id = request.data['id']
-        user = User.objects.get(username=request.data['email'])
+        user = User.objects.get(username=email)
         donation = DonationCetificates.objects.get(transactions_id=id,user=user)
         path = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
         #path = "http://127.0.0.1:8000"+donation.certificate.url
@@ -314,9 +326,12 @@ class donation_certificate_download(GenericAPIView):
 class subscription_certificate_download(GenericAPIView):
     queryset = SubscriptionCetificates.objects.all()
     serializer_class = SubscriptionDownloadSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
     def post(self,request):
         id = request.data['id']
-        user = User.objects.get(username=request.data['email'])
+        user = User.objects.get(username=email)
         donation = SubscriptionCetificates.objects.get(subscription_id=id,user=user)
         path = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
         # #path = "http://127.0.0.1:8000"+donation.certificate.url
@@ -332,6 +347,9 @@ class subscription_certificate_download(GenericAPIView):
 class event_certificate_download(GenericAPIView):
     queryset = certfication.objects.all()
     serializer_class = SubscriptionDownloadSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
     def get(self,request,pk=None):
         #id = request.data['id']
         crt = certfication.objects.get(id=pk)
