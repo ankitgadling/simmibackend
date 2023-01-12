@@ -107,16 +107,22 @@ class Login_api(generics.GenericAPIView):
                 obj = None
             token = AuthToken.objects.create(user)[1]
             obj = userdetails(obj)
+            if obj.data['profile'] is not None:
+                profile = "https://simmibackend.pythonanywhere.com"+obj.data['profile']
+            else:
+                profile = "https://cdn0.iconfinder.com/data/icons/user-pictures/100/unknown_1-2-512.png"
             obj ={
                 'id':user.id,
                 'email':user.username,
                 'first_name':obj.data['first_name'],
                 'last_name':obj.data['last_name'],
                 'ph_no':obj.data['ph_no'],
-                'profile':"https://simmibackend.pythonanywhere.com"+obj.data['profile'],
+                'profile':profile,
             }
             if obj['profile'] is None:
-                 obj['profile'] = "https://cdn0.iconfinder.com/data/icons/user-pictures/100/unknown_1-2-512.png"
+                 pass
+            request.session['current_user'] = user.id
+            print(request.session['current_user'])
             return Response({"msg": "Login Successfull...!","token":token,"user":accountserializer(user).data,"userdetals":obj })
         else:
             return Response({
@@ -174,13 +180,22 @@ class Userinfo(generics.GenericAPIView):
         email = request.user.username
         user = User.objects.get(username=email)
         userinfo = SimmiUserDetails.objects.get(user=user)
-        data = {
+        try:
+            data = {
+                'first_name':userinfo.first_name,
+                'last_name':userinfo.last_name,
+                'ph_no':userinfo.ph_no,
+                'profile':"https://simmibackend.pythonanywhere.com"+userinfo.profile.url
+                }
+        except:
+            data = {
             'first_name':userinfo.first_name,
             'last_name':userinfo.last_name,
             'ph_no':userinfo.ph_no,
-            'profile':"https://simmibackend.pythonanywhere.com"+userinfo.profile.url
+            'profile':"https://cdn0.iconfinder.com/data/icons/user-pictures/100/unknown_1-2-512.png"
             }
         return Response(data,200)
+
 
 
 
