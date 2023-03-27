@@ -31,7 +31,7 @@ class admin_login(GenericAPIView):
         if admin is not None:
             try:
                 profile3 = SimmiUserDetails.objects.get(user=admin)
-                profile = "https://simmibackend.pythonanywhere.com"+profile3.profile.url
+                profile = "https://api.simmifoundation.tech"+profile3.profile.url
                 if profile is None:
                     profile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
             except SimmiUserDetails.DoesNotExist:
@@ -120,7 +120,7 @@ class ProfileUpdate(GenericAPIView):
         user = User.objects.get(username=email)
         name = user.first_name
         try:
-            profile = "https://simmibackend.pythonanywhere.com"+SimmiUserDetails.objects.get(user=user).profile.url
+            profile = "https://api.simmifoundation.tech"+SimmiUserDetails.objects.get(user=user).profile.url
             if profile is None or len(profile) < 1 :
                 profile = "https://tse4.mm.bing.net/th?id=OIP.nFy1XtLSOTDIfte9BdtvQwHaHa&pid=Api&P=0"
         except:

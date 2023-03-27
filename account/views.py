@@ -108,7 +108,7 @@ class Login_api(generics.GenericAPIView):
             token = AuthToken.objects.create(user)[1]
             obj = userdetails(obj)
             if obj.data['profile'] is not None:
-                profile = "https://simmibackend.pythonanywhere.com"+obj.data['profile']
+                profile = "https://api.simmifoundation.tech"+obj.data['profile']
             else:
                 profile = "https://cdn0.iconfinder.com/data/icons/user-pictures/100/unknown_1-2-512.png"
             obj ={
@@ -185,7 +185,7 @@ class Userinfo(generics.GenericAPIView):
                 'first_name':userinfo.first_name,
                 'last_name':userinfo.last_name,
                 'ph_no':userinfo.ph_no,
-                'profile':"https://simmibackend.pythonanywhere.com"+userinfo.profile.url
+                'profile':"https://api.simmifoundation.tech"+userinfo.profile.url
                 }
         except:
             data = {

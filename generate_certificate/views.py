@@ -191,7 +191,7 @@ class Genarate_Donation_Certificate(GenericAPIView):
             certificate = None
             if current_transaction.is_paid:
                 action = "Success"
-                certificate = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
+                certificate = "https://api.simmifoundation.tech"+donation.certificate.url
             obj = {
                 "date" : current_transaction.date.strftime("%d-%b-%Y"),
                 "cause" : current_transaction.cause,
@@ -271,7 +271,7 @@ class Genarate_Subscription_Certificate(GenericAPIView):
                 amt = str(amt)+" "+current_transaction.currency
                 certificate = None
                 if current_transaction.status == "completed" or not current_transaction.status == "created" :
-                    certificate = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
+                    certificate = "https://api.simmifoundation.tech"+donation.certificate.url
                 obj = {
                     "date" : current_transaction.date.strftime("%d-%b-%Y"),
                     "cause" : current_transaction.cause,
@@ -310,7 +310,7 @@ class donation_certificate_download(GenericAPIView):
         id = request.data['id']
         user = User.objects.get(username=email)
         donation = DonationCetificates.objects.get(transactions_id=id,user=user)
-        path = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
+        path = "https://api.simmifoundation.tech"+donation.certificate.url
         #path = "http://127.0.0.1:8000"+donation.certificate.url
         #file_name = user.username+"Donation"+id+".pdf"
         # urllib.request.urlretrieve(path+".pdf",file_name)
@@ -333,7 +333,7 @@ class subscription_certificate_download(GenericAPIView):
         id = request.data['id']
         user = User.objects.get(username=email)
         donation = SubscriptionCetificates.objects.get(subscription_id=id,user=user)
-        path = "https://simmibackend.pythonanywhere.com"+donation.certificate.url
+        path = "https://api.simmifoundation.tech"+donation.certificate.url
         # #path = "http://127.0.0.1:8000"+donation.certificate.url
         # file_name = user.username+"Subscription"+id+".pdf"
         # #urllib.request.urlretrieve(path+".pdf",file_name)
@@ -353,7 +353,7 @@ class event_certificate_download(GenericAPIView):
     def get(self,request,pk=None):
         #id = request.data['id']
         crt = certfication.objects.get(id=pk)
-        path = "https://simmibackend.pythonanywhere.com"+crt.img.url
+        path = "https://api.simmifoundation.tech"+crt.img.url
         # #path = "http://127.0.0.1:8000"+crt.img.url
         # file_name = "event_certification"+str(pk)+".pdf"
         # urllib.request.urlretrieve(path,file_name)

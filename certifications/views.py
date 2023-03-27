@@ -62,7 +62,7 @@ class CurrentUserCertificates(generics.GenericAPIView):
         for c in crts:
             certificate = None
             if c.status == "Completed":
-                certificate = "https://simmibackend.pythonanywhere.com"+c.img.url
+                certificate = "https://api.simmifoundation.tech"+c.img.url
             obj = {
                 'id':c.id,
                 "event_name":c.event_name,

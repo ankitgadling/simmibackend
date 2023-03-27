@@ -83,5 +83,5 @@ class AdmineditCopatnerapi(GenericAPIView,UpdateModelMixin,RetrieveModelMixin,De
 #                 image_objs = multi.objects.get(id=pk)
 #                 images = []
 #                 for img in image_objs:
-#                     images.append("https://simmibackend.pythonanywhere.com"+img.image.url)
+#                     images.append("https://api.simmifoundation.tech"+img.image.url)
 #                 print(images)

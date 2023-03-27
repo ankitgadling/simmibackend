@@ -130,7 +130,7 @@ class excel_file_for_job_respones(GenericAPIView):
                     except:
                         no = "None"
                     #link = "http://localhost:8000"+item.resume.url
-                    link = "https://simmibackend.pythonanywhere.com"+item.resume.url
+                    link = "https://api.simmifoundation.tech"+item.resume.url
                     
                     sheet_1.write('A'+str(index+2),fn)
                     sheet_1.write('B'+str(index+2),ln)

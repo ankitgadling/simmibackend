@@ -54,7 +54,7 @@ class GalleryView(GenericAPIView):
             print(galler_image, type(galler_image))
             images =[]
             for img in galler_image:
-                images.append("https://simmibackend.pythonanywhere.com"+img.image.url)
+                images.append("https://api.simmifoundation.tech"+img.image.url)
                 
             data = {
                 "id": obj.id,
@@ -99,7 +99,7 @@ class GalleryDetailView(GenericAPIView):
             gallery_images = GalleryImages.objects.filter(gallery_id=gallery_obj.id)
             images=[]
             for img in gallery_images:
-                images.append("https://simmibackend.pythonanywhere.com"+img.image.url)
+                images.append("https://api.simmifoundation.tech"+img.image.url)
             print(gallery_images)
             print(images)
             data = {
