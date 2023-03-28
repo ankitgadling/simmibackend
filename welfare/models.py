@@ -23,6 +23,7 @@ class Blog(models.Model):
     content = models.TextField()
     image = models.ImageField(upload_to='welfare/blogs')
     date_posted = models.DateField(default=date.today())
+    created_by=models.CharField(max_length=50,default='someone')
 
     def __str__(self) -> str:
         return self.title
