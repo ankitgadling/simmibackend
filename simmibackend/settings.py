@@ -27,7 +27,7 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER =config('Email')
 EMAIL_HOST_PASSWORD = config('Password')
-
+CSRF_TRUSTED_ORIGINS = ['https://api.simmifoundation.tech']
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -39,7 +39,7 @@ SUPER_USER_KEY = config('SUPER_USER_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://api.simmifoundation.tech']
+
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
