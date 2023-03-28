@@ -1,4 +1,5 @@
 venv/
+env/
 *.cfg
 
 .DS_STORE
